@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>CareWay – Transport Sanitaire Connecté</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+/* ═══════════════════════════════════════════════
+   THEMES — 3 designs via CSS variables
+═══════════════════════════════════════════════ */
+[data-theme="dark"] {
+  --bg:          #060E1B;
+  --bg2:         #0B1628;
+  --bg3:         #0F1E35;
+  --card:        rgba(255,255,255,.04);
+  --card-border: rgba(255,255,255,.08);
+  --primary:     #00D9C8;
+  --primary-dk:  #00A89A;
+  --accent:      #4F8EF7;
+  --accent2:     #7C5CFC;
+  --text:        #FFFFFF;
+  --text-mid:    rgba(255,255,255,.7);
+  --text-muted:  rgba(255,255,255,.4);
+  --border:      rgba(255,255,255,.08);
+  --hero-grad:   linear-gradient(135deg,#060E1B 0%,#0A1A32 60%,#0C2040 100%);
+  --nav-bg:      rgba(6,14,27,.9);
+  --stat-bg:     linear-gradient(90deg,#0057B8,#003d85);
+  --section-alt: #0B1628;
+  --chip-bg:     rgba(0,217,200,.12);
+  --chip-color:  #00D9C8;
+  --shadow:      0 20px 60px rgba(0,0,0,.5);
+  --shadow-sm:   0 4px 20px rgba(0,0,0,.3);
+  --btn-txt:     #060E1B;
+}
+[data-theme="light"] {
+  --bg:          #FFFFFF;
+  --bg2:         #F0F6FF;
+  --bg3:         #E8F0FB;
+  --card:        #FFFFFF;
+  --card-border: #D8E6F2;
+  --primary:     #0057B8;
+  --primary-dk:  #003d85;
+  --accent:      #00B4A6;
+  --accent2:     #6366F1;
+  --text:        #0B1F3A;
+  --text-mid:    #3D5166;
+  --text-muted:  #6B8299;
+  --border:      #D8E6F2;
+  --hero-grad:   linear-gradient(135deg,#EEF5FF 0%,#DDEEFF 100%);
+  --nav-bg:      rgba(255,255,255,.95);
+  --stat-bg:     linear-gradient(90deg,#0057B8,#0072E5);
+  --section-alt: #F0F6FF;
+  --chip-bg:     #E0F7F5;
+  --chip-color:  #007A6E;
+  --shadow:      0 20px 60px rgba(0,87,184,.12);
+  --shadow-sm:   0 4px 20px rgba(0,87,184,.08);
+  --btn-txt:     #FFFFFF;
+}
+[data-theme="warm"] {
+  --bg:          #FAFAF7;
+  --bg2:         #F0F7F4;
+  --bg3:         #E8F4EF;
+  --card:        #FFFFFF;
+  --card-border: #C8E6D8;
+  --primary:     #059669;
+  --primary-dk:  #047857;
+  --accent:      #2563EB;
+  --accent2:     #F59E0B;
+  --text:        #1A2B1E;
+  --text-mid:    #3D5A47;
+  --text-muted:  #6B8B77;
+  --border:      #C8E6D8;
+  --hero-grad:   linear-gradient(135deg,#F0F7F4 0%,#E8F4EF 100%);
+  --nav-bg:      rgba(250,250,247,.95);
+  --stat-bg:     linear-gradient(90deg,#059669,#047857);
+  --section-alt: #F0F7F4;
+  --chip-bg:     #D1FAE5;
+  --chip-color:  #065F46;
+  --shadow:      0 20px 60px rgba(5,150,105,.12);
+  --shadow-sm:   0 4px 20px rgba(5,150,105,.08);
+  --btn-txt:     #FFFFFF;
+}
+
+/* ═══════════════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:var(--text);background:var(--bg);line-height:1.65;-webkit-font-smoothing:antialiased;transition:background .4s,color .4s}
+img{display:block;max-width:100%}
+a{text-decoration:none;color:inherit}
+
+/* ═══════════════════════════════════════════════
+   THEME SWITCHER — floating top bar
+═══════════════════════════════════════════════ */
+.theme-bar{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  background:rgba(0,0,0,.85);backdrop-filter:blur(12px);
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:8px 16px;border-bottom:1px solid rgba(255,255,255,.1);
+  font-size:.78rem;color:rgba(255,255,255,.6);
+}
+.theme-bar span{margin-right:8px;font-weight:600;color:rgba(255,255,255,.8)}
+.tb-btn{
+  border:1px solid rgba(255,255,255,.2);background:transparent;
+  color:rgba(255,255,255,.7);padding:4px 14px;border-radius:100px;
+  cursor:pointer;font-size:.76rem;font-family:'Inter',sans-serif;
+  transition:all .2s;
+}
+.tb-btn:hover,.tb-btn.active{background:rgba(255,255,255,.15);color:#fff;border-color:rgba(255,255,255,.5)}
+.tb-sep{width:1px;height:16px;background:rgba(255,255,255,.15);margin:0 4px}
+.tb-edit{background:rgba(0,217,200,.15);border-color:rgba(0,217,200,.4);color:#00D9C8}
+.tb-edit:hover,.tb-edit.active{background:rgba(0,217,200,.3);border-color:#00D9C8}
+
+/* ═══════════════════════════════════════════════
+   EDIT MODE
+═══════════════════════════════════════════════ */
+body.edit-on [data-e]{
+  outline:2px dashed rgba(0,217,200,.6);outline-offset:2px;
+  cursor:text;border-radius:4px;min-width:20px;display:inline-block;
+}
+body.edit-on [data-e]:hover{background:rgba(0,217,200,.08)}
+.edit-hint{
+  display:none;position:fixed;bottom:20px;right:20px;
+  background:#00D9C8;color:#060E1B;padding:10px 18px;
+  border-radius:10px;font-size:.82rem;font-weight:700;z-index:9999;
+  box-shadow:0 8px 32px rgba(0,217,200,.4);
+}
+body.edit-on .edit-hint{display:block}
+
+/* ═══════════════════════════════════════════════
+   NAV
+═══════════════════════════════════════════════ */
+nav{
+  position:sticky;top:38px;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 6%;height:68px;
+  background:var(--nav-bg);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  transition:background .4s,border-color .4s;
+}
+.logo{display:flex;align-items:center;gap:11px}
+.logo-mark{
+  width:40px;height:40px;border-radius:11px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  display:flex;align-items:center;justify-content:center;
+}
+.logo-mark svg{width:22px;height:22px}
+.logo-name{font-family:'Sora',sans-serif;font-size:1.35rem;font-weight:800;letter-spacing:-.02em}
+.logo-name em{font-style:normal;color:var(--primary)}
+.nav-links{display:flex;align-items:center;gap:32px}
+.nav-links a{font-size:.88rem;font-weight:500;color:var(--text-mid);transition:color .2s}
+.nav-links a:hover{color:var(--primary)}
+.btn-nav{
+  background:var(--primary);color:var(--btn-txt)!important;
+  padding:9px 22px;border-radius:8px;font-weight:700!important;
+  font-size:.86rem!important;transition:opacity .2s,transform .2s!important;
+  box-shadow:0 4px 16px rgba(0,0,0,.2);
+}
+.btn-nav:hover{opacity:.9;transform:translateY(-1px)}
+
+/* ═══════════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════════ */
+.hero{
+  background:var(--hero-grad);
+  padding:80px 6% 70px;
+  display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;
+  position:relative;overflow:hidden;min-height:600px;
+  transition:background .4s;
+}
+/* decorative blobs */
+.hero::before{content:'';position:absolute;width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(79,142,247,.12),transparent 70%);
+  top:-200px;right:-100px;pointer-events:none}
+.hero::after{content:'';position:absolute;width:400px;height:400px;border-radius:50%;
+  background:radial-gradient(circle,rgba(0,217,200,.08),transparent 70%);
+  bottom:-100px;left:10%;pointer-events:none}
+
+.hero-left{position:relative;z-index:1}
+.badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--chip-bg);border:1px solid rgba(0,217,200,.25);
+  color:var(--chip-color);font-size:.76rem;font-weight:700;
+  padding:5px 14px;border-radius:100px;margin-bottom:24px;
+  letter-spacing:.06em;text-transform:uppercase;
+}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:var(--primary);animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+h1{font-family:'Sora',sans-serif;font-size:clamp(2rem,3.5vw,3.2rem);
+  font-weight:800;line-height:1.12;letter-spacing:-.03em;margin-bottom:20px}
+[data-theme="dark"] h1{color:#fff}
+[data-theme="light"] h1,[data-theme="warm"] h1{color:var(--text)}
+.hl{background:linear-gradient(90deg,var(--primary),var(--accent));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent}
+
+.hero-desc{font-size:1.05rem;color:var(--text-mid);line-height:1.75;margin-bottom:36px;max-width:460px}
+.hero-cta{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.btn-hero{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--primary);color:var(--btn-txt);
+  font-weight:700;font-size:.95rem;padding:14px 28px;border-radius:10px;
+  box-shadow:0 6px 24px rgba(0,0,0,.25);transition:transform .2s,box-shadow .2s;
+}
+.btn-hero:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(0,0,0,.35)}
+.btn-ghost{
+  display:inline-flex;align-items:center;gap:6px;
+  color:var(--text-mid);font-size:.9rem;font-weight:500;
+  border:1.5px solid var(--border);padding:13px 24px;border-radius:10px;
+  transition:border-color .2s,color .2s;
+}
+.btn-ghost:hover{border-color:var(--primary);color:var(--primary)}
+
+/* ── HERO VISUAL (right side) ── */
+.hero-right{position:relative;z-index:1;display:flex;justify-content:center;align-items:center;min-height:440px}
+
+/* Animation zone */
+.anim-zone{position:relative;width:100%;max-width:480px}
+
+/* Ambulance + logo animation */
+.anim-stage{
+  position:relative;height:120px;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:24px;
+}
+.ambulance-wrap{
+  position:absolute;
+  animation:ambulanceDrive 3.5s cubic-bezier(.4,0,.2,1) forwards;
+}
+@keyframes ambulanceDrive{
+  0%{transform:translateX(280px) scaleX(-1);opacity:0}
+  15%{opacity:1}
+  45%{transform:translateX(0) scaleX(-1);opacity:1}
+  62%{transform:translateX(0) scaleX(-1) scale(1);opacity:1}
+  78%{transform:translateX(0) scaleX(-1) scale(.15);opacity:.6}
+  85%{transform:scale(0);opacity:0}
+  100%{transform:scale(0);opacity:0}
+}
+.flash-burst{
+  position:absolute;width:80px;height:80px;border-radius:50%;
+  background:radial-gradient(circle,var(--primary),transparent 70%);
+  animation:burstAnim 3.5s forwards;
+  pointer-events:none;
+}
+@keyframes burstAnim{
+  0%,70%{transform:scale(0);opacity:0}
+  78%{transform:scale(2.5);opacity:.9}
+  90%{transform:scale(0);opacity:0}
+  100%{transform:scale(0);opacity:0}
+}
+.logo-reveal{
+  position:absolute;
+  display:flex;align-items:center;gap:10px;
+  animation:logoAppear 3.5s forwards;
+}
+@keyframes logoAppear{
+  0%,72%{opacity:0;transform:scale(.4)}
+  85%{opacity:1;transform:scale(1.05)}
+  100%{opacity:1;transform:scale(1)}
+}
+.logo-reveal .mark{
+  width:52px;height:52px;border-radius:14px;
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  display:flex;align-items:center;justify-content:center;
+}
+.logo-reveal .mark svg{width:30px;height:30px}
+.logo-reveal .wordmark{
+  font-family:'Sora',sans-serif;font-size:2rem;font-weight:800;
+  letter-spacing:-.03em;
+}
+[data-theme="dark"] .logo-reveal .wordmark{color:#fff}
+[data-theme="light"] .logo-reveal .wordmark,[data-theme="warm"] .logo-reveal .wordmark{color:var(--text)}
+.logo-reveal .wordmark em{font-style:normal;color:var(--primary)}
+
+/* lights on ambulance */
+.amb-light{animation:lightFlash .4s infinite alternate}
+@keyframes lightFlash{from{fill:#FF5252}to{fill:#4FC3F7}}
+
+/* Floating devices */
+.devices-wrap{
+  display:grid;grid-template-columns:1fr 1fr;gap:16px;
+  perspective:800px;
+}
+.device{
+  border-radius:16px;overflow:hidden;
+  box-shadow:var(--shadow-sm);
+  animation:deviceFloat 4s ease-in-out infinite;
+  border:1px solid var(--card-border);
+}
+.device:nth-child(2){animation-delay:-2s;animation-duration:3.5s}
+.device-screen{
+  background:var(--bg3);padding:12px;
+  display:flex;flex-direction:column;gap:8px;
+}
+.device-top{height:8px;background:var(--bg2);border-radius:4px;display:flex;gap:4px;align-items:center;padding:0 6px}
+.device-dot{width:4px;height:4px;border-radius:50%}
+.d1{background:#ff5f56}.d2{background:#ffbd2e}.d3{background:#27c93f}
+.device-content{display:flex;flex-direction:column;gap:6px}
+.dc-row{height:10px;background:var(--card-border);border-radius:3px}
+.dc-row.w60{width:60%}.dc-row.w80{width:80%}.dc-row.w40{width:40%}
+.dc-card{background:var(--card);border:1px solid var(--card-border);border-radius:8px;padding:10px}
+.dc-card-header{display:flex;align-items:center;gap:6px;margin-bottom:8px}
+.dc-avatar{width:18px;height:18px;border-radius:50%;background:var(--primary);opacity:.7}
+.dc-label{width:50px;height:6px;background:var(--border);border-radius:3px}
+.dc-bar-wrap{display:flex;flex-direction:column;gap:4px}
+.dc-bar{height:6px;border-radius:3px;background:linear-gradient(90deg,var(--primary),var(--accent));opacity:.6}
+.dc-bar.b70{width:70%}.dc-bar.b50{width:50%}.dc-bar.b85{width:85%}
+.dc-status{display:flex;align-items:center;gap:6px;padding:6px 8px;background:rgba(0,217,200,.1);border-radius:6px;margin-top:6px}
+.dc-status-dot{width:6px;height:6px;border-radius:50%;background:var(--primary);animation:blink 1.5s infinite}
+.dc-status-txt{font-size:.6rem;color:var(--primary);font-weight:600}
+
+.phone-device{
+  background:var(--bg2);border-radius:20px;padding:8px;
+  border:2px solid var(--card-border);
+  animation:deviceFloat 5s ease-in-out infinite .5s;
+  box-shadow:var(--shadow-sm);
+  transform:rotate3d(1,1,0,12deg);
+}
+.phone-notch{height:12px;background:var(--bg);border-radius:8px;margin-bottom:8px}
+.phone-content{display:flex;flex-direction:column;gap:6px}
+.phone-row{display:flex;align-items:center;gap:6px}
+.phone-icon{width:24px;height:24px;border-radius:8px;background:linear-gradient(135deg,var(--primary),var(--accent));opacity:.7}
+.phone-txt{display:flex;flex-direction:column;gap:3px;flex:1}
+.phone-line{height:5px;background:var(--border);border-radius:3px}
+.phone-line.short{width:60%}
+.phone-mission{background:rgba(0,217,200,.1);border-radius:8px;padding:8px;border:1px solid rgba(0,217,200,.2)}
+.phone-mission-tag{font-size:.55rem;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.phone-mission-line{height:5px;background:rgba(0,217,200,.3);border-radius:3px;margin:2px 0}
+.phone-mission-line.full{width:100%}.phone-mission-line.s{width:65%}
+
+@keyframes deviceFloat{
+  0%,100%{transform:translateY(0) rotate3d(1,1,0,12deg)}
+  50%{transform:translateY(-12px) rotate3d(1,1,0,15deg)}
+}
+
+/* ── HERO FLOATING BADGE ── */
+.hero-badge-float{
+  position:absolute;bottom:-10px;left:-20px;
+  background:var(--card);border:1px solid var(--card-border);
+  border-radius:12px;padding:14px 18px;
+  display:flex;align-items:center;gap:12px;
+  box-shadow:var(--shadow-sm);z-index:2;
+  animation:floatBadge 3s ease-in-out infinite;
+}
+@keyframes floatBadge{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.hbf-icon{font-size:24px}
+.hbf-val{font-family:'Sora',sans-serif;font-size:1.3rem;font-weight:800;color:var(--text);line-height:1}
+.hbf-lbl{font-size:.7rem;color:var(--text-muted);margin-top:2px}
+
+/* ═══════════════════════════════════════════════
+   TRUST BAR
+═══════════════════════════════════════════════ */
+.trust-bar{
+  background:var(--section-alt);border-bottom:1px solid var(--border);
+  padding:24px 6%;display:flex;align-items:center;justify-content:center;
+  gap:40px;flex-wrap:wrap;transition:background .4s;
+}
+.trust-item{
+  display:flex;align-items:center;gap:8px;
+  font-size:.83rem;font-weight:500;color:var(--text-mid);
+}
+.trust-icon{width:20px;height:20px;color:var(--primary)}
+
+/* ═══════════════════════════════════════════════
+   STATS
+═══════════════════════════════════════════════ */
+.stats-band{
+  background:var(--stat-bg);
+  padding:56px 6%;display:grid;grid-template-columns:repeat(4,1fr);
+  transition:background .4s;
+}
+.stat-cell{text-align:center;padding:12px 20px;border-right:1px solid rgba(255,255,255,.15)}
+.stat-cell:last-child{border:none}
+.stat-val{font-family:'Sora',sans-serif;font-size:clamp(1.8rem,3vw,2.5rem);font-weight:800;color:#fff;line-height:1}
+.stat-val em{font-style:normal;color:#5DE8DE}
+.stat-lbl{font-size:.8rem;color:rgba(255,255,255,.6);margin-top:6px;line-height:1.4}
+
+/* ═══════════════════════════════════════════════
+   SECTIONS COMMON
+═══════════════════════════════════════════════ */
+section{padding:96px 6%;transition:background .4s}
+.section-alt-bg{background:var(--section-alt)}
+.chip{
+  display:inline-flex;align-items:center;
+  background:var(--chip-bg);color:var(--chip-color);
+  font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  padding:4px 14px;border-radius:100px;margin-bottom:14px;
+}
+h2{font-family:'Sora',sans-serif;font-size:clamp(1.7rem,2.8vw,2.4rem);
+  font-weight:800;line-height:1.18;letter-spacing:-.025em;margin-bottom:14px;color:var(--text)}
+.lead{font-size:1.02rem;color:var(--text-mid);line-height:1.75}
+.intro-block{max-width:580px;margin-bottom:56px}
+.intro-block.centered{margin:0 auto 56px;text-align:center}
+
+/* ═══════════════════════════════════════════════
+   PROBLEM
+═══════════════════════════════════════════════ */
+.problem-layout{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.problem-img{border-radius:20px;overflow:hidden;box-shadow:var(--shadow);position:relative}
+.problem-img img{width:100%;height:420px;object-fit:cover}
+.problem-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.4),transparent 50%)}
+.img-badge{
+  position:absolute;top:20px;left:20px;z-index:1;
+  background:rgba(220,38,38,.9);color:#fff;
+  font-size:.78rem;font-weight:700;padding:6px 14px;border-radius:8px;
+  display:flex;align-items:center;gap:6px;
+}
+.problems-list{display:flex;flex-direction:column;gap:16px}
+.problem-item{
+  background:var(--card);border:1px solid var(--card-border);
+  border-radius:14px;padding:22px;display:flex;gap:16px;align-items:flex-start;
+  transition:transform .2s,box-shadow .2s;
+}
+.problem-item:hover{transform:translateY(-3px);box-shadow:var(--shadow-sm)}
+.pi-icon{width:44px;height:44px;border-radius:12px;background:rgba(239,68,68,.12);
+  display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.pi-body h3{font-size:.97rem;font-weight:700;color:var(--text);margin-bottom:5px}
+.pi-body p{font-size:.86rem;color:var(--text-muted);line-height:1.6}
+
+/* ═══════════════════════════════════════════════
+   FEATURES
+═══════════════════════════════════════════════ */
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.feat-card{
+  background:var(--card);border:1px solid var(--card-border);
+  border-radius:18px;padding:30px 26px;
+  transition:transform .25s,box-shadow .25s;
+}
+.feat-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-sm)}
+.feat-card.feat-primary{
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  border-color:transparent;
+}
+.feat-card.feat-dark{
+  background:linear-gradient(135deg,#0B1628,#162840);
+  border-color:rgba(255,255,255,.06);
+}
+[data-theme="light"] .feat-card.feat-dark,[data-theme="warm"] .feat-card.feat-dark{
+  background:linear-gradient(135deg,var(--text),#2D4060);
+}
+.feat-icon{width:50px;height:50px;border-radius:13px;font-size:22px;
+  display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+.fi-teal{background:rgba(0,217,200,.15)}
+.fi-blue{background:rgba(79,142,247,.15)}
+.fi-white{background:rgba(255,255,255,.15)}
+.feat-card h3{font-size:.98rem;font-weight:700;color:var(--text);margin-bottom:10px}
+.feat-card p{font-size:.86rem;color:var(--text-mid);line-height:1.7}
+.feat-primary h3,.feat-primary p,.feat-dark h3,.feat-dark p{color:rgba(255,255,255,.9)}
+.feat-primary p,.feat-dark p{color:rgba(255,255,255,.7)}
+
+/* ═══════════════════════════════════════════════
+   HOW IT WORKS
+═══════════════════════════════════════════════ */
+.how-layout{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.steps{display:flex;flex-direction:column}
+.step{display:flex;gap:18px;position:relative}
+.step-side{display:flex;flex-direction:column;align-items:center;padding-bottom:32px}
+.step:last-child .step-side{padding-bottom:0}
+.step-num{
+  width:46px;height:46px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  color:var(--btn-txt);font-family:'Sora',sans-serif;font-weight:800;font-size:.95rem;
+  display:flex;align-items:center;justify-content:center;z-index:1;
+  box-shadow:0 4px 16px rgba(0,0,0,.2);
+}
+.step-line{width:2px;flex:1;min-height:28px;background:var(--border);margin-top:4px;opacity:.6}
+.step:last-child .step-line{display:none}
+.step-body{padding:10px 0 32px}
+.step:last-child .step-body{padding-bottom:0}
+.step-body h3{font-size:.97rem;font-weight:700;color:var(--text);margin-bottom:6px}
+.step-body p{font-size:.86rem;color:var(--text-muted);line-height:1.6}
+.how-img-wrap{border-radius:20px;overflow:hidden;box-shadow:var(--shadow);position:relative}
+.how-img-wrap img{width:100%;height:460px;object-fit:cover}
+.how-img-wrap::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,87,184,.5),transparent 55%)}
+.how-caption{
+  position:absolute;bottom:24px;left:24px;right:24px;z-index:1;
+  background:rgba(255,255,255,.1);backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:16px 20px;
+}
+.how-caption strong{display:block;color:#fff;font-size:.95rem;font-weight:700;margin-bottom:4px}
+.how-caption span{font-size:.82rem;color:rgba(255,255,255,.75)}
+
+/* ═══════════════════════════════════════════════
+   WHO
+═══════════════════════════════════════════════ */
+.who-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.who-card{border-radius:18px;overflow:hidden;box-shadow:var(--shadow-sm);
+  border:1px solid var(--card-border);transition:transform .25s,box-shadow .25s}
+.who-card:hover{transform:translateY(-6px);box-shadow:var(--shadow)}
+.who-img{position:relative}
+.who-img img{width:100%;height:200px;object-fit:cover}
+.who-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.65),transparent 55%)}
+.who-label{position:absolute;bottom:16px;left:18px;color:#fff;font-family:'Sora',sans-serif;font-size:1rem;font-weight:700}
+.who-body{background:var(--card);padding:22px;border-top:1px solid var(--card-border)}
+.who-body li{display:flex;align-items:flex-start;gap:8px;font-size:.86rem;color:var(--text-mid);padding:4px 0}
+.who-body li::before{content:'✓';color:var(--primary);font-weight:700;flex-shrink:0}
+
+/* ═══════════════════════════════════════════════
+   TESTIMONIALS
+═══════════════════════════════════════════════ */
+.testi-section{
+  background:linear-gradient(135deg,var(--bg2),var(--bg3));
+  transition:background .4s;
+}
+.testi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.tcard{background:var(--card);border:1px solid var(--card-border);border-radius:18px;padding:30px}
+.tcard-quote{font-size:2.5rem;color:var(--primary);line-height:1;margin-bottom:14px}
+.tcard p{font-size:.93rem;color:var(--text-mid);line-height:1.8;margin-bottom:22px;font-style:italic}
+.tcard-author{display:flex;align-items:center;gap:12px}
+.tcard-av{
+  width:42px;height:42px;border-radius:50%;
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Sora',sans-serif;font-weight:700;color:var(--btn-txt);font-size:.9rem;
+}
+.tcard-name{font-weight:700;font-size:.9rem;color:var(--text)}
+.tcard-role{font-size:.76rem;color:var(--text-muted);margin-top:2px}
+
+/* ═══════════════════════════════════════════════
+   TEAM
+═══════════════════════════════════════════════ */
+.team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:28px;max-width:700px;margin:0 auto}
+.team-card{
+  background:var(--card);border:1px solid var(--card-border);
+  border-radius:18px;overflow:hidden;text-align:center;
+  transition:transform .25s,box-shadow .25s;
+}
+.team-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-sm)}
+.team-photo{width:100%;height:220px;object-fit:cover}
+.team-photo-placeholder{
+  width:100%;height:220px;
+  background:linear-gradient(135deg,var(--bg2),var(--bg3));
+  display:flex;align-items:center;justify-content:center;
+  font-size:60px;
+}
+.team-body{padding:20px}
+.team-name{font-family:'Sora',sans-serif;font-weight:700;font-size:1rem;color:var(--text);margin-bottom:4px}
+.team-role{font-size:.82rem;color:var(--primary);font-weight:600;margin-bottom:8px}
+.team-bio{font-size:.82rem;color:var(--text-muted);line-height:1.6}
+
+/* ═══════════════════════════════════════════════
+   CONTACT
+═══════════════════════════════════════════════ */
+.contact-layout{display:grid;grid-template-columns:1fr 1.1fr;gap:60px;align-items:start}
+.contact-info .lead{margin-bottom:32px}
+.cinfo-list{display:flex;flex-direction:column;gap:16px}
+.cinfo-row{
+  display:flex;align-items:flex-start;gap:14px;
+  background:var(--card);border:1px solid var(--card-border);
+  border-radius:12px;padding:18px;
+}
+.cinfo-icon{
+  width:42px;height:42px;border-radius:11px;
+  background:linear-gradient(135deg,rgba(0,217,200,.15),rgba(79,142,247,.15));
+  display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;
+}
+.cinfo-row h4{font-size:.88rem;font-weight:700;color:var(--text);margin-bottom:3px}
+.cinfo-row a,.cinfo-row p{font-size:.84rem;color:var(--text-muted)}
+.cinfo-row a{color:var(--primary);font-weight:500}
+.cinfo-row a:hover{text-decoration:underline}
+
+.contact-form-wrap{
+  background:var(--card);border:1px solid var(--card-border);
+  border-radius:22px;padding:40px;box-shadow:var(--shadow);
+}
+.contact-form-wrap h3{
+  font-family:'Sora',sans-serif;font-size:1.4rem;font-weight:800;
+  color:var(--text);margin-bottom:6px;
+}
+.contact-form-wrap .sub{font-size:.87rem;color:var(--text-muted);margin-bottom:28px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fg{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.fg label{font-size:.81rem;font-weight:600;color:var(--text-mid)}
+.fg input,.fg select,.fg textarea{
+  border:1.5px solid var(--border);border-radius:8px;
+  padding:11px 14px;font-size:.9rem;font-family:'Inter',sans-serif;
+  color:var(--text);background:var(--bg);outline:none;
+  transition:border-color .2s,box-shadow .2s;width:100%;
+}
+.fg input:focus,.fg select:focus,.fg textarea:focus{
+  border-color:var(--primary);box-shadow:0 0 0 3px rgba(0,217,200,.1);
+}
+.fg select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B8299' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:36px}
+.fg textarea{resize:vertical;min-height:100px}
+.btn-submit{
+  width:100%;padding:14px;border:none;cursor:pointer;font-family:'Inter',sans-serif;
+  background:var(--primary);color:var(--btn-txt);font-weight:700;font-size:.95rem;
+  border-radius:9px;display:flex;align-items:center;justify-content:center;gap:8px;
+  transition:opacity .2s,transform .2s;box-shadow:0 6px 20px rgba(0,0,0,.2);
+}
+.btn-submit:hover{opacity:.9;transform:translateY(-1px)}
+.form-ok{
+  display:none;margin-top:16px;background:rgba(0,217,200,.1);
+  border:1px solid rgba(0,217,200,.3);border-radius:10px;
+  padding:16px;text-align:center;color:var(--primary);font-weight:600;font-size:.9rem;
+}
+
+/* ═══════════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════════ */
+footer{
+  background:var(--bg2);border-top:1px solid var(--border);
+  padding:52px 6% 28px;transition:background .4s;
+}
+.footer-top{
+  display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:48px;
+  padding-bottom:36px;border-bottom:1px solid var(--border);margin-bottom:28px;
+}
+.footer-brand .logo-name{font-size:1.2rem}
+.footer-brand p{font-size:.84rem;color:var(--text-muted);margin-top:12px;max-width:260px;line-height:1.7}
+.footer-col h4{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:.85rem;color:var(--text-muted);transition:color .2s}
+.footer-col a:hover{color:var(--primary)}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-copy{font-size:.78rem;color:var(--text-muted)}
+.footer-legal{display:flex;gap:18px}
+.footer-legal a{font-size:.78rem;color:var(--text-muted);transition:color .2s}
+.footer-legal a:hover{color:var(--primary)}
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════ */
+@media(max-width:1024px){.features-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){
+  nav{padding:0 4%}
+  .nav-links a:not(.btn-nav){display:none}
+  .hero{grid-template-columns:1fr;padding:64px 4% 60px;gap:40px}
+  .hero-right{display:none}
+  .stats-band{grid-template-columns:repeat(2,1fr)}
+  .stat-cell{border-right:none;border-bottom:1px solid rgba(255,255,255,.15)}
+  .stat-cell:nth-child(odd){border-right:1px solid rgba(255,255,255,.15)}
+  .stat-cell:last-child,.stat-cell:nth-last-child(2):nth-child(odd){border-bottom:none}
+  section{padding:64px 4%}
+  .problem-layout,.how-layout,.contact-layout{grid-template-columns:1fr;gap:36px}
+  .problem-img,.how-img-wrap{order:-1}
+  .features-grid,.who-grid,.testi-grid{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr;gap:28px}
+  .form-row{grid-template-columns:1fr}
+  .trust-bar{gap:16px}
+}
+</style>
+</head>
+<body>
+
+<!-- THEME + EDIT BAR -->
+<div class="theme-bar">
+  <span>🎨 Design :</span>
+  <button class="tb-btn active" onclick="setTheme('dark',this)">① Digital Dark</button>
+  <button class="tb-btn" onclick="setTheme('light',this)">② Médical Clair</button>
+  <button class="tb-btn" onclick="setTheme('warm',this)">③ Humain & Chaleureux</button>
+  <div class="tb-sep"></div>
+  <button class="tb-btn tb-edit" id="editBtn" onclick="toggleEdit()">✏️ Mode édition</button>
+</div>
+<div class="edit-hint">✏️ Cliquez sur n'importe quel texte pour le modifier — sauvegarde auto</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M19 10H17V7C17 5.34 15.66 4 14 4H4C2.34 4 1 5.34 1 7V15C1 16.66 2.34 18 4 18H5C5 19.66 6.34 21 8 21C9.66 21 11 19.66 11 18H15C15 19.66 16.34 21 18 21C19.66 21 21 19.66 21 18H22C22.55 18 23 17.55 23 17V13.67C23 12.62 22.41 11.65 21.47 11.18L19 10Z" fill="white" fill-opacity=".95"/><rect x="9" y="8" width="2" height="6" rx="1" fill="#0B1628"/><rect x="7" y="10" width="6" height="2" rx="1" fill="#0B1628"/></svg>
+    </div>
+    <span class="logo-name">Care<em>Way</em></span>
+  </a>
+  <div class="nav-links">
+    <a href="#solution">Solution</a>
+    <a href="#fonctionnement">Fonctionnement</a>
+    <a href="#equipe">Équipe</a>
+    <a href="#contact">Contact</a>
+    <a href="#contact" class="btn-nav">Demander une démo</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-left">
+    <div class="badge"><span class="badge-dot"></span><span data-e="badge">Startup e-santé · Concours CRECE 2026</span></div>
+    <h1><span data-e="h1a">Le transport sanitaire,</span><br/><span class="hl" data-e="h1b">enfin coordonné</span><br/><span data-e="h1c">numériquement</span></h1>
+    <p class="hero-desc" data-e="hero-desc">CareWay connecte prescripteurs, patients et transporteurs sanitaires sur une seule plateforme. De la prescription médicale à la facturation CPAM, chaque étape est automatisée et traçable en temps réel.</p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn-hero" data-e="cta1">Demander une démo →</a>
+      <a href="#solution" class="btn-ghost" data-e="cta2">Découvrir la solution</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <!-- ANIMATION AMBULANCE → LOGO -->
+    <div class="anim-zone">
+      <div class="anim-stage">
+        <div class="ambulance-wrap">
+          <svg width="160" height="72" viewBox="0 0 160 72" fill="none">
+            <!-- body -->
+            <rect x="28" y="22" width="118" height="36" rx="6" fill="#F5F5F5"/>
+            <!-- cabin -->
+            <rect x="8" y="28" width="38" height="30" rx="5" fill="#E8E8E8"/>
+            <!-- red stripe -->
+            <rect x="28" y="34" width="118" height="10" fill="#E53935"/>
+            <!-- cross -->
+            <rect x="74" y="25" width="15" height="30" rx="3" fill="white"/>
+            <rect x="66" y="33" width="31" height="14" rx="3" fill="white"/>
+            <rect x="78" y="27" width="7" height="26" fill="#E53935"/>
+            <rect x="68" y="35" width="27" height="10" fill="#E53935"/>
+            <!-- windows -->
+            <rect x="12" y="31" width="16" height="14" rx="3" fill="#87CEEB"/>
+            <rect x="34" y="25" width="24" height="13" rx="3" fill="#87CEEB"/>
+            <!-- wheels -->
+            <circle cx="42" cy="58" r="10" fill="#333"/>
+            <circle cx="42" cy="58" r="5" fill="#555"/>
+            <circle cx="120" cy="58" r="10" fill="#333"/>
+            <circle cx="120" cy="58" r="5" fill="#555"/>
+            <!-- lightbar -->
+            <rect x="54" y="18" width="44" height="7" rx="3" fill="#e53935"/>
+            <rect x="56" y="19" width="10" height="5" rx="2" fill="#FF8A80"/>
+            <rect x="70" y="19" width="10" height="5" rx="2" class="amb-light"/>
+            <rect x="84" y="19" width="10" height="5" rx="2" fill="#4FC3F7"/>
+          </svg>
+        </div>
+        <div class="flash-burst"></div>
+        <div class="logo-reveal">
+          <div class="mark">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M19 10H17V7C17 5.34 15.66 4 14 4H4C2.34 4 1 5.34 1 7V15C1 16.66 2.34 18 4 18H5C5 19.66 6.34 21 8 21C9.66 21 11 19.66 11 18H15C15 19.66 16.34 21 18 21C19.66 21 21 19.66 21 18H22C22.55 18 23 17.55 23 17V13.67C23 12.62 22.41 11.65 21.47 11.18L19 10Z" fill="white" fill-opacity=".9"/><rect x="9" y="8" width="2" height="6" rx="1" fill="#0B1628"/><rect x="7" y="10" width="6" height="2" rx="1" fill="#0B1628"/></svg>
+          </div>
+          <div class="wordmark">Care<em>Way</em></div>
+        </div>
+      </div>
+
+      <!-- Floating devices -->
+      <div class="devices-wrap">
+        <div class="device">
+          <div class="device-screen">
+            <div class="device-top"><div class="device-dot d1"></div><div class="device-dot d2"></div><div class="device-dot d3"></div></div>
+            <div class="device-content">
+              <div class="dc-row w80"></div>
+              <div class="dc-row w60"></div>
+              <div class="dc-card">
+                <div class="dc-card-header"><div class="dc-avatar"></div><div class="dc-label"></div></div>
+                <div class="dc-bar-wrap">
+                  <div class="dc-bar b85"></div><div class="dc-bar b70"></div><div class="dc-bar b50"></div>
+                </div>
+                <div class="dc-status"><div class="dc-status-dot"></div><div class="dc-status-txt">Mission en cours</div></div>
+              </div>
+              <div class="dc-row w40"></div>
+            </div>
+          </div>
+        </div>
+        <div class="phone-device">
+          <div class="phone-notch"></div>
+          <div class="phone-content">
+            <div class="phone-mission">
+              <div class="phone-mission-tag">🚑 Nouvelle mission</div>
+              <div class="phone-mission-line full"></div>
+              <div class="phone-mission-line s"></div>
+            </div>
+            <div class="phone-row"><div class="phone-icon"></div><div class="phone-txt"><div class="phone-line"></div><div class="phone-line short"></div></div></div>
+            <div class="phone-row"><div class="phone-icon" style="opacity:.4"></div><div class="phone-txt"><div class="phone-line"></div><div class="phone-line short"></div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-badge-float">
+        <div class="hbf-icon">🚑</div>
+        <div><div class="hbf-val" data-e="stat-hero-val">120M+</div><div class="hbf-lbl" data-e="stat-hero-lbl">transports/an en France</div></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-item"><svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span data-e="t1">Conforme HDS & RGPD</span></div>
+  <div class="trust-item"><svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span data-e="t2">Standard FHIR R4</span></div>
+  <div class="trust-item"><svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span data-e="t3">Suivi temps réel</span></div>
+  <div class="trust-item"><svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg><span data-e="t4">Intégration logiciels médicaux</span></div>
+  <div class="trust-item"><svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg><span data-e="t5">Facturation CPAM automatisée</span></div>
+</div>
+
+<!-- STATS -->
+<div class="stats-band">
+  <div class="stat-cell"><div class="stat-val">120<em>M+</em></div><div class="stat-lbl" data-e="sv1">transports sanitaires<br/>par an en France</div></div>
+  <div class="stat-cell"><div class="stat-val">6,5<em> Md€</em></div><div class="stat-lbl" data-e="sv2">coût annuel pour<br/>l'Assurance Maladie</div></div>
+  <div class="stat-cell"><div class="stat-val">80<em>%</em></div><div class="stat-lbl" data-e="sv3">encore gérés<br/>par téléphone ou fax</div></div>
+  <div class="stat-cell"><div class="stat-val">−40<em>%</em></div><div class="stat-lbl" data-e="sv4">d'erreurs administratives<br/>visées avec CareWay</div></div>
+</div>
+
+<!-- PROBLEM -->
+<section class="section-alt-bg" id="probleme">
+  <div class="problem-layout">
+    <div class="problem-img">
+      <img src="https://images.unsplash.com/photo-1584982751601-97dcc096659c?w=700&q=80&auto=format&fit=crop" alt="Coordination médicale" loading="lazy"/>
+      <div class="img-badge">⚠️ Problème actuel</div>
+    </div>
+    <div>
+      <div class="intro-block">
+        <div class="chip">Le problème</div>
+        <h2 data-e="pb-h2">Un secteur fragmenté qui met les patients en danger</h2>
+        <p class="lead" data-e="pb-lead">80 % des transports sanitaires sont encore coordonnés par téléphone ou fax. Résultat : erreurs, retards, et transports manqués.</p>
+      </div>
+      <div class="problems-list">
+        <div class="problem-item"><div class="pi-icon">📞</div><div class="pi-body"><h3 data-e="pi1h">23 minutes perdues par transport</h3><p data-e="pi1p">Les secrétaires médicales passent en moyenne 23 min à coordonner chaque transport par téléphone.</p></div></div>
+        <div class="problem-item"><div class="pi-icon">⚠️</div><div class="pi-body"><h3 data-e="pi2h">Transports manqués, soins en péril</h3><p data-e="pi2p">Sans confirmation numérique, oublis et erreurs d'horaires impactent directement la continuité des soins.</p></div></div>
+        <div class="problem-item"><div class="pi-icon">💸</div><div class="pi-body"><h3 data-e="pi3h">Fraude et facturation opaque</h3><p data-e="pi3p">L'absence de traçabilité numérique facilite les fraudes, estimées à plusieurs centaines de millions d'euros/an.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section id="solution">
+  <div class="intro-block centered">
+    <div class="chip">La solution</div>
+    <h2 data-e="sol-h2">Une plateforme unifiée pour tout le parcours transport</h2>
+    <p class="lead" data-e="sol-lead">CareWay s'intègre aux logiciels médicaux existants et automatise chaque étape — de la prescription à la facturation CPAM.</p>
+  </div>
+  <div class="features-grid">
+    <div class="feat-card"><div class="feat-icon fi-blue">🔌</div><h3 data-e="f1h">Intégration transparente</h3><p data-e="f1p">Connexion aux logiciels métiers (Maincare, Crossway…) via API FHIR R4. Aucune saisie supplémentaire.</p></div>
+    <div class="feat-card feat-primary"><div class="feat-icon fi-white">⚡</div><h3 data-e="f2h">Attribution automatique</h3><p data-e="f2p">Notre algorithme sélectionne le meilleur transporteur disponible en quelques secondes.</p></div>
+    <div class="feat-card"><div class="feat-icon fi-teal">📱</div><h3 data-e="f3h">Application mobile chauffeur</h3><p data-e="f3p">Missions en temps réel, scan QR code, signature électronique à chaque étape de la mission.</p></div>
+    <div class="feat-card"><div class="feat-icon fi-teal">🧾</div><h3 data-e="f4h">Facturation CPAM automatisée</h3><p data-e="f4p">Feuilles de soin et justificatifs conformes générés automatiquement. Zéro ressaisie.</p></div>
+    <div class="feat-card feat-dark"><div class="feat-icon fi-white">📊</div><h3 data-e="f5h">Tableau de bord temps réel</h3><p data-e="f5p">Suivi GPS, statut de chaque transport, historique complet et alertes proactives.</p></div>
+    <div class="feat-card"><div class="feat-icon fi-blue">🔒</div><h3 data-e="f6h">Conformité HDS & RGPD</h3><p data-e="f6p">Hébergement certifié HDS. Architecture conforme SEGUR et exigences CNIL.</p></div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section-alt-bg" id="fonctionnement">
+  <div class="how-layout">
+    <div>
+      <div class="intro-block">
+        <div class="chip">Fonctionnement</div>
+        <h2 data-e="how-h2">De la prescription à la facturation en 5 étapes</h2>
+        <p class="lead" data-e="how-lead">CareWay remplace des dizaines d'appels téléphoniques par un flux numérique entièrement automatisé.</p>
+      </div>
+      <div class="steps">
+        <div class="step"><div class="step-side"><div class="step-num">1</div><div class="step-line"></div></div><div class="step-body"><h3 data-e="s1h">Le médecin prescrit</h3><p data-e="s1p">La prescription est saisie dans le logiciel médical habituel — aucune interface supplémentaire.</p></div></div>
+        <div class="step"><div class="step-side"><div class="step-num">2</div><div class="step-line"></div></div><div class="step-body"><h3 data-e="s2h">CareWay reçoit la demande</h3><p data-e="s2p">Transmission automatique via API FHIR R4 vers la plateforme en temps réel.</p></div></div>
+        <div class="step"><div class="step-side"><div class="step-num">3</div><div class="step-line"></div></div><div class="step-body"><h3 data-e="s3h">Attribution au meilleur transporteur</h3><p data-e="s3p">L'algorithme sélectionne et notifie le transporteur adapté en quelques secondes.</p></div></div>
+        <div class="step"><div class="step-side"><div class="step-num">4</div><div class="step-line"></div></div><div class="step-body"><h3 data-e="s4h">Exécution traçée par QR codes</h3><p data-e="s4p">Le chauffeur scanne les codes à la prise en charge et à la livraison du patient.</p></div></div>
+        <div class="step"><div class="step-side"><div class="step-num">5</div><div class="step-line"></div></div><div class="step-body"><h3 data-e="s5h">Facturation CPAM générée</h3><p data-e="s5p">Les justificatifs conformes sont créés automatiquement. Aucune ressaisie.</p></div></div>
+      </div>
+    </div>
+    <div class="how-img-wrap">
+      <img src="https://images.unsplash.com/photo-1559757175-5700dde675bc?w=700&q=80&auto=format&fit=crop" alt="Application mobile transport" loading="lazy"/>
+      <div class="how-caption"><strong data-e="how-cap-t">Mission en temps réel</strong><span data-e="how-cap-s">Le chauffeur suit ses missions directement sur l'application mobile CareWay</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO -->
+<section id="utilisateurs">
+  <div class="intro-block centered">
+    <div class="chip">Pour qui ?</div>
+    <h2 data-e="who-h2">Trois acteurs, une seule plateforme</h2>
+    <p class="lead" data-e="who-lead">CareWay est conçue pour tous les maillons de la chaîne du transport sanitaire programmé.</p>
+  </div>
+  <div class="who-grid">
+    <div class="who-card">
+      <div class="who-img"><img src="https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=600&q=80&auto=format&fit=crop" alt="Établissement de santé" loading="lazy"/><div class="who-label" data-e="who1-lbl">🏥 Établissements & médecins</div></div>
+      <div class="who-body"><ul><li data-e="who1-1">Prescription en un clic depuis votre logiciel</li><li data-e="who1-2">Suivi en temps réel de tous les transports</li><li data-e="who1-3">Réduction des transports manqués</li><li data-e="who1-4">Conformité SEGUR automatique</li></ul></div>
+    </div>
+    <div class="who-card">
+      <div class="who-img"><img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=600&q=80&auto=format&fit=crop" alt="Transporteur sanitaire" loading="lazy"/><div class="who-label" data-e="who2-lbl">🚑 Transporteurs sanitaires</div></div>
+      <div class="who-body"><ul><li data-e="who2-1">Missions reçues sur l'app mobile</li><li data-e="who2-2">Optimisation des tournées chauffeurs</li><li data-e="who2-3">Facturation CPAM sans ressaisie</li><li data-e="who2-4">Réduction des litiges et impayés</li></ul></div>
+    </div>
+    <div class="who-card">
+      <div class="who-img"><img src="https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=600&q=80&auto=format&fit=crop" alt="Patient" loading="lazy"/><div class="who-label" data-e="who3-lbl">🧑‍⚕️ Patients</div></div>
+      <div class="who-body"><ul><li data-e="who3-1">Confirmations de transport automatiques</li><li data-e="who3-2">Plus de transports manqués ou en retard</li><li data-e="who3-3">Suivi de l'arrivée du véhicule</li><li data-e="who3-4">Expérience de soin améliorée</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testi-section">
+  <div class="intro-block centered">
+    <div class="chip">Retours terrain</div>
+    <h2 data-e="testi-h2">Ce que disent nos premiers utilisateurs</h2>
+  </div>
+  <div class="testi-grid">
+    <div class="tcard"><div class="tcard-quote">"</div><p data-e="t1p">Avant CareWay, je passais ma matinée au téléphone pour organiser les transports de la semaine. Maintenant tout est automatique. C'est un gain de temps énorme pour mon équipe.</p><div class="tcard-author"><div class="tcard-av">ML</div><div><div class="tcard-name" data-e="t1n">Marie-Laure D.</div><div class="tcard-role" data-e="t1r">Secrétaire médicale, CHU de Bordeaux</div></div></div></div>
+    <div class="tcard"><div class="tcard-quote">"</div><p data-e="t2p">La facturation CPAM nous prenait une demi-journée par semaine. Avec CareWay, les feuilles de soin sont générées automatiquement. On a réduit nos erreurs de facturation de plus de 60 %.</p><div class="tcard-author"><div class="tcard-av">JB</div><div><div class="tcard-name" data-e="t2n">Jean-Baptiste M.</div><div class="tcard-role" data-e="t2r">Dirigeant, Ambulances du Sud-Ouest</div></div></div></div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="equipe" class="section-alt-bg">
+  <div class="intro-block centered">
+    <div class="chip">L'équipe</div>
+    <h2 data-e="team-h2">Portée par une expertise e-santé</h2>
+    <p class="lead" data-e="team-lead">CareWay est fondée par une ingénieure spécialisée en systèmes d'information de santé, avec une connaissance intime du terrain médical et des enjeux réglementaires.</p>
+  </div>
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="team-photo-placeholder">👩‍💼</div>
+      <div class="team-body">
+        <div class="team-name" data-e="team1-name">Romane Cano</div>
+        <div class="team-role" data-e="team1-role">Fondatrice & CEO</div>
+        <div class="team-bio" data-e="team1-bio">Ingénieure e-santé, spécialisée en interopérabilité des systèmes de santé et coordination des parcours de soins.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-layout">
+    <div class="contact-info">
+      <div class="chip">Contact</div>
+      <h2 data-e="ct-h2">Intéressé ?<br/>Parlons-en.</h2>
+      <p class="lead" data-e="ct-lead">Établissement de santé, société de transport, investisseur ou partenaire institutionnel — nous répondons sous 24h.</p>
+      <div class="cinfo-list">
+        <div class="cinfo-row"><div class="cinfo-icon">✉️</div><div><h4>Email</h4><a href="mailto:contact@carewaytransport.fr" data-e="ct-email">contact@carewaytransport.fr</a></div></div>
+        <div class="cinfo-row"><div class="cinfo-icon">🌐</div><div><h4>Site</h4><a href="https://carewaytransport.fr" data-e="ct-site">carewaytransport.fr</a></div></div>
+        <div class="cinfo-row"><div class="cinfo-icon">⏱️</div><div><h4>Réponse sous 24h</h4><p data-e="ct-delay">Nous répondons à toutes les demandes sous 24 heures ouvrées.</p></div></div>
+      </div>
+    </div>
+    <div class="contact-form-wrap">
+      <h3 data-e="form-h">Envoyer un message</h3>
+      <p class="sub" data-e="form-sub">Notre équipe vous recontacte rapidement.</p>
+      <form name="carewaytransport-contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="handleForm(event)">
+        <input type="hidden" name="form-name" value="carewaytransport-contact"/>
+        <p style="display:none"><label>Bot: <input name="bot-field"/></label></p>
+        <div class="form-row">
+          <div class="fg"><label>Prénom *</label><input type="text" name="prenom" placeholder="Marie" required/></div>
+          <div class="fg"><label>Nom *</label><input type="text" name="nom" placeholder="Dupont" required/></div>
+        </div>
+        <div class="fg"><label>Email professionnel *</label><input type="email" name="email" placeholder="m.dupont@hopital.fr" required/></div>
+        <div class="fg"><label>Structure</label><input type="text" name="structure" placeholder="CHU de Paris, Ambulances Martin…"/></div>
+        <div class="fg"><label>Vous êtes *</label>
+          <select name="profil" required>
+            <option value="" disabled selected>Sélectionnez votre profil</option>
+            <option>Établissement de santé / Médecin</option>
+            <option>Société de transport sanitaire</option>
+            <option>Investisseur</option>
+            <option>Partenaire institutionnel</option>
+            <option>Journaliste / Presse</option>
+            <option>Autre</option>
+          </select>
+        </div>
+        <div class="fg"><label>Message *</label><textarea name="message" placeholder="Décrivez votre besoin…" required></textarea></div>
+        <button type="submit" class="btn-submit">Envoyer ma demande <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+        <div class="form-ok" id="formOk">✓ Message envoyé ! Réponse sous 24h à contact@carewaytransport.fr</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="logo"><div class="logo-mark"><svg viewBox="0 0 24 24" fill="none"><path d="M19 10H17V7C17 5.34 15.66 4 14 4H4C2.34 4 1 5.34 1 7V15C1 16.66 2.34 18 4 18H5C5 19.66 6.34 21 8 21C9.66 21 11 19.66 11 18H15C15 19.66 16.34 21 18 21C19.66 21 21 19.66 21 18H22C22.55 18 23 17.55 23 17V13.67C23 12.62 22.41 11.65 21.47 11.18L19 10Z" fill="white" fill-opacity=".9"/><rect x="9" y="8" width="2" height="6" rx="1" fill="#0B1628"/><rect x="7" y="10" width="6" height="2" rx="1" fill="#0B1628"/></svg></div><span class="logo-name">Care<em>Way</em></span></div>
+      <p data-e="footer-desc">La plateforme numérique du transport sanitaire programmé en France.</p>
+    </div>
+    <div class="footer-col"><h4>Solution</h4><ul><li><a href="#solution">Fonctionnalités</a></li><li><a href="#fonctionnement">Comment ça marche</a></li><li><a href="#utilisateurs">Pour qui ?</a></li></ul></div>
+    <div class="footer-col"><h4>Contact</h4><ul><li><a href="mailto:contact@carewaytransport.fr">contact@carewaytransport.fr</a></li><li><a href="#contact">Demander une démo</a></li><li><a href="#equipe">L'équipe</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 CareWay — Tous droits réservés</div>
+    <div class="footer-legal"><a href="#">Mentions légales</a><a href="#">Confidentialité</a></div>
+  </div>
+</footer>
+
+<script>
+// ── THEME SWITCHER ──────────────────────────
+function setTheme(t,btn){
+  document.documentElement.setAttribute('data-theme',t);
+  document.querySelectorAll('.tb-btn:not(.tb-edit)').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  localStorage.setItem('cw-theme',t);
+}
+// restore saved theme
+const saved=localStorage.getItem('cw-theme');
+if(saved){
+  document.documentElement.setAttribute('data-theme',saved);
+  document.querySelectorAll('.tb-btn:not(.tb-edit)').forEach(b=>{
+    if(b.textContent.toLowerCase().includes(saved==='dark'?'digital':saved==='light'?'médical':'humain'))b.classList.add('active');
+  });
+}
+
+// ── EDIT MODE ────────────────────────────────
+let editOn=false;
+function toggleEdit(){
+  editOn=!editOn;
+  document.body.classList.toggle('edit-on',editOn);
+  const btn=document.getElementById('editBtn');
+  btn.textContent=editOn?'✓ Terminer édition':'✏️ Mode édition';
+  btn.classList.toggle('active',editOn);
+  document.querySelectorAll('[data-e]').forEach(el=>{
+    el.contentEditable=editOn;
+    if(!editOn)saveContent();
+  });
+}
+function saveContent(){
+  const data={};
+  document.querySelectorAll('[data-e]').forEach(el=>data[el.dataset.e]=el.innerHTML);
+  localStorage.setItem('cw-content',JSON.stringify(data));
+}
+function loadContent(){
+  const raw=localStorage.getItem('cw-content');
+  if(!raw)return;
+  const data=JSON.parse(raw);
+  Object.entries(data).forEach(([k,v])=>{
+    const el=document.querySelector(`[data-e="${k}"]`);
+    if(el)el.innerHTML=v;
+  });
+}
+loadContent();
+
+// auto-save on input
+document.addEventListener('input',e=>{if(e.target.dataset.e)saveContent()});
+
+// ── CONTACT FORM ─────────────────────────────
+function handleForm(e){
+  e.preventDefault();
+  const form=e.target;
+  fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(form)).toString()})
+    .then(()=>{form.style.opacity='.4';form.style.pointerEvents='none';document.getElementById('formOk').style.display='block'})
+    .catch(()=>alert('Erreur. Écrivez-nous à contact@carewaytransport.fr'));
+}
+</script>
+</body>
+</html>

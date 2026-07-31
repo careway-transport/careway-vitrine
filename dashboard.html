@@ -1,0 +1,1637 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Mon espace | CareWay</title>
+<link rel="icon" type="image/png" href="./photos/logo_CW_officiel.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+<style>
+/* ── TOKENS ───────────────────────────────────────────── */
+:root{
+  --sb:#0B1F3A; --bg:#F0F4FA; --card:#fff;
+  --text:#0B1F3A; --muted:#6B7A90; --border:#DDE5F0;
+  --green:#16A34A; --green-l:#DCFCE7;
+  --amber:#B45309; --amber-l:#FEF3C7;
+  --red:#DC2626;   --red-l:#FEE2E2;
+  --shadow:0 1px 4px rgba(11,31,58,.08);
+  --shad-m:0 4px 20px rgba(11,31,58,.12);
+  --r:12px; --sidebar:252px;
+  /* accent = per-profile */
+  --accent:#0072E5; --accent-l:#EBF3FF; --accent-d:#0057B8; --accent-t:rgba(0,114,229,.10);
+}
+.p-patient     {--accent:#0072E5;--accent-l:#EBF3FF;--accent-d:#0057B8;--accent-t:rgba(0,114,229,.10);--grad:linear-gradient(135deg,#0057B8 0%,#0ea5e9 100%)}
+.p-aidant      {--accent:#7C3AED;--accent-l:#F5F3FF;--accent-d:#5B21B6;--accent-t:rgba(124,58,237,.10);--grad:linear-gradient(135deg,#5B21B6 0%,#a78bfa 100%)}
+.p-prescripteur{--accent:#00B4A6;--accent-l:#E6F9F8;--accent-d:#008F84;--accent-t:rgba(0,180,166,.10);--grad:linear-gradient(135deg,#008F84 0%,#2dd4bf 100%)}
+.p-transporteur{--accent:#EA580C;--accent-l:#FFF7ED;--accent-d:#C2410C;--accent-t:rgba(234,88,12,.10);--grad:linear-gradient(135deg,#C2410C 0%,#fb923c 100%)}
+.p-coordinateur{--accent:#059669;--accent-l:#ECFDF5;--accent-d:#047857;--accent-t:rgba(5,150,105,.10);--grad:linear-gradient(135deg,#047857 0%,#34d399 100%)}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:var(--text)}
+a{text-decoration:none;color:inherit} img{display:block;max-width:100%} button{cursor:pointer;font-family:inherit;border:none}
+
+/* ── LAYOUT ──────────────────────────────────────────── */
+.layout{display:flex;min-height:100vh}
+
+/* ── SIDEBAR ─────────────────────────────────────────── */
+.sidebar{width:var(--sidebar);min-height:100vh;background:var(--sb);display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:200;transition:transform .28s}
+.sb-logo{display:flex;align-items:center;gap:10px;padding:22px 20px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sb-logo img{width:32px;height:32px;object-fit:contain}
+.sb-logo-txt{font-family:'Sora',sans-serif;font-size:1.1rem;font-weight:700;color:#fff}
+.sb-logo-txt b{color:var(--accent)}
+.sb-section{font-size:.6rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:rgba(255,255,255,.3);padding:16px 18px 5px}
+.sb-nav{flex:1;padding:10px 10px;display:flex;flex-direction:column;gap:2px;overflow-y:auto}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:9px;font-size:.88rem;font-weight:500;color:rgba(255,255,255,.5);transition:all .18s;cursor:pointer;position:relative;user-select:none}
+.nav-item:hover{background:rgba(255,255,255,.07);color:#fff}
+.nav-item.active{background:var(--accent-t);color:#fff}
+.nav-item.active::before{content:'';position:absolute;left:0;top:25%;bottom:25%;width:3px;background:var(--accent);border-radius:0 3px 3px 0}
+.nav-item i{font-size:.95rem;width:18px;text-align:center;flex-shrink:0}
+.nav-badge{margin-left:auto;background:var(--accent);color:#fff;font-size:.65rem;font-weight:700;padding:1px 7px;border-radius:20px;min-width:20px;text-align:center}
+.sb-user{padding:12px 10px;border-top:1px solid rgba(255,255,255,.08)}
+.user-card{display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:9px;background:rgba(255,255,255,.06)}
+.user-av{width:34px;height:34px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;color:#fff;flex-shrink:0}
+.user-info{flex:1;min-width:0}
+.user-name{font-size:.82rem;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.user-role{font-size:.7rem;color:var(--accent);margin-top:1px}
+.btn-logout{background:none;color:rgba(255,255,255,.35);padding:4px;border-radius:5px;font-size:1rem;transition:color .18s;flex-shrink:0}
+.btn-logout:hover{color:#f87171}
+
+/* ── TOPBAR ──────────────────────────────────────────── */
+.main{margin-left:var(--sidebar);flex:1;display:flex;flex-direction:column;min-width:0}
+.topbar{background:#fff;border-bottom:1px solid var(--border);padding:0 24px;height:58px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:var(--shadow)}
+.topbar-l{display:flex;align-items:center;gap:10px}
+.topbar-l h1{font-family:'Sora',sans-serif;font-size:.98rem;font-weight:600}
+.topbar-r{display:flex;align-items:center;gap:8px}
+.demo-pill{background:#FEF3C7;border:1px solid #FDE68A;color:#92400E;font-size:.65rem;font-weight:700;padding:3px 9px;border-radius:20px;letter-spacing:.05em}
+.ppill{padding:4px 13px;border-radius:20px;font-size:.78rem;font-weight:600;background:var(--accent-l);color:var(--accent-d)}
+.icon-btn{background:rgba(11,31,58,.05);border:1px solid var(--border);color:var(--text);width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.05rem;position:relative;transition:all .18s}
+.icon-btn:hover{background:var(--accent-l);border-color:var(--accent);color:var(--accent-d)}
+.notif-count{position:absolute;top:-4px;right:-4px;width:16px;height:16px;background:var(--accent);color:#fff;font-size:.6rem;font-weight:700;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid #fff}
+.menu-btn{display:none;background:none;border:none;font-size:1.3rem;color:var(--text);padding:4px;border-radius:6px}
+
+/* ── NOTIFICATION PANEL ──────────────────────────────── */
+.notif-overlay{display:none;position:fixed;inset:0;z-index:300;background:rgba(11,31,58,.3)}
+.notif-overlay.open{display:block}
+.notif-panel{position:fixed;top:0;right:-380px;width:360px;height:100vh;background:#fff;box-shadow:-4px 0 32px rgba(11,31,58,.15);z-index:301;display:flex;flex-direction:column;transition:right .3s cubic-bezier(.4,0,.2,1)}
+.notif-panel.open{right:0}
+.np-head{display:flex;align-items:center;justify-content:space-between;padding:20px 20px 16px;border-bottom:1px solid var(--border)}
+.np-title{font-family:'Sora',sans-serif;font-size:1rem;font-weight:700}
+.np-close{background:none;color:var(--muted);font-size:1.1rem;padding:4px;border-radius:6px;transition:color .18s}
+.np-close:hover{color:var(--text)}
+.np-list{flex:1;overflow-y:auto;padding:12px 16px;display:flex;flex-direction:column;gap:8px}
+.np-item{display:flex;gap:12px;padding:12px;border-radius:10px;border:1px solid var(--border);background:#F8FAFD;transition:background .18s;cursor:pointer}
+.np-item:hover{background:var(--accent-l)}
+.np-item.unread{background:var(--accent-l);border-color:var(--accent)}
+.np-item.unread::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:4px}
+.np-icon{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+.np-txt{font-size:.82rem;line-height:1.4}
+.np-time{font-size:.7rem;color:var(--muted);margin-top:3px}
+
+/* ── PAGE ────────────────────────────────────────────── */
+.page{padding:22px 24px 48px;flex:1}
+
+/* ── GREETING ────────────────────────────────────────── */
+.greeting{background:var(--grad);border-radius:var(--r);padding:22px 26px;color:#fff;margin-bottom:18px;position:relative;overflow:hidden;display:flex;align-items:center;gap:16px}
+.greeting::after{content:'';position:absolute;right:-30px;top:-40px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.07)}
+.greeting::before{content:'';position:absolute;right:80px;bottom:-50px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.05)}
+.greeting-ico{font-size:2rem;opacity:.9;flex-shrink:0}
+.greeting h2{font-family:'Sora',sans-serif;font-size:1.3rem;font-weight:700;margin-bottom:3px}
+.greeting p{font-size:.88rem;opacity:.9}
+
+/* ── CARDS ───────────────────────────────────────────── */
+.card{background:var(--card);border-radius:var(--r);border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden}
+.card-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border)}
+.card-title{font-size:.9rem;font-weight:600;display:flex;align-items:center;gap:7px}
+.card-title i{color:var(--accent)}
+.card-act{font-size:.78rem;color:var(--accent);cursor:pointer;font-weight:600}
+.card-body{padding:14px 18px}
+
+/* ── GRIDS ───────────────────────────────────────────── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.g-main{display:grid;grid-template-columns:1fr 340px;gap:18px}
+.stack{display:flex;flex-direction:column;gap:14px}
+
+/* ── STAT MINI ───────────────────────────────────────── */
+.stat-mini{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.stat-mini::after{content:'';position:absolute;top:0;right:0;width:60px;height:60px;border-radius:0 0 0 60px;background:var(--accent-t)}
+.s-ico{width:36px;height:36px;border-radius:9px;background:var(--accent-l);color:var(--accent-d);display:flex;align-items:center;justify-content:center;font-size:1rem;margin-bottom:10px}
+.s-val{font-family:'Sora',sans-serif;font-size:1.65rem;font-weight:700;line-height:1}
+.s-lbl{font-size:.79rem;color:var(--muted);margin-top:5px}
+.s-sub{font-size:.72rem;color:var(--green);margin-top:3px;display:flex;align-items:center;gap:3px}
+.s-sub.warn{color:var(--amber)}
+
+/* ── BADGES ──────────────────────────────────────────── */
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:600}
+.b-green{background:var(--green-l);color:var(--green)}
+.b-amber{background:var(--amber-l);color:var(--amber)}
+.b-red{background:var(--red-l);color:var(--red)}
+.b-blue{background:#EBF3FF;color:#0057B8}
+.b-teal{background:#E6F9F8;color:#008F84}
+.b-purple{background:#F5F3FF;color:#5B21B6}
+.b-gray{background:#F1F5F9;color:#64748B}
+.b-accent{background:var(--accent-l);color:var(--accent-d)}
+.b-orange{background:#FFF7ED;color:#C2410C}
+
+/* ── BUTTONS ─────────────────────────────────────────── */
+.btn-p{background:var(--accent);color:#fff;border-radius:8px;padding:9px 18px;font-size:.86rem;font-weight:600;transition:background .18s}
+.btn-p:hover{background:var(--accent-d)}
+.btn-s{background:var(--accent-l);color:var(--accent-d);border-radius:8px;padding:9px 18px;font-size:.86rem;font-weight:600;transition:background .18s}
+.btn-s:hover{background:var(--accent)}  .btn-s:hover{color:#fff}
+.cta-sm{background:var(--accent-l);border:1px solid rgba(0,0,0,.06);color:var(--accent-d);border-radius:7px;padding:5px 12px;font-size:.76rem;font-weight:600;transition:all .18s}
+.cta-sm:hover{background:var(--accent);color:#fff}
+
+/* ── LIST ITEMS ──────────────────────────────────────── */
+.list-item{display:flex;align-items:flex-start;gap:12px;padding:13px 0;border-bottom:1px solid var(--border)}
+.list-item:last-child{border-bottom:none;padding-bottom:0}
+.list-item:first-child{padding-top:0}
+.li-ico{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.05rem;flex-shrink:0}
+.li-d{flex:1}
+.li-t{font-size:.9rem;font-weight:600;margin-bottom:2px}
+.li-s{font-size:.78rem;color:var(--muted)}
+.li-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:5px}
+.mc{display:inline-flex;align-items:center;gap:3px;font-size:.74rem;color:var(--muted)}
+
+/* ── COUNTDOWN ───────────────────────────────────────── */
+.countdown-card{background:var(--accent-l);border:1px solid var(--accent);border-radius:var(--r);padding:20px;text-align:center;margin-bottom:18px}
+.cd-lbl{font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--accent-d);margin-bottom:12px}
+.cd-display{display:flex;align-items:center;justify-content:center;gap:8px}
+.cd-unit{display:flex;flex-direction:column;align-items:center;background:#fff;border-radius:9px;padding:10px 14px;box-shadow:var(--shadow);min-width:60px}
+.cd-n{font-family:'Sora',sans-serif;font-size:1.6rem;font-weight:800;color:var(--accent-d);line-height:1}
+.cd-l{font-size:.65rem;color:var(--muted);margin-top:3px}
+.cd-sep{font-size:1.4rem;font-weight:700;color:var(--accent-d);margin-bottom:10px}
+
+/* ── ROUTE TRACKER ───────────────────────────────────── */
+.route-track{display:flex;align-items:center;gap:10px;margin:14px 0}
+.rt-pt{display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0}
+.rt-dot{width:14px;height:14px;border-radius:50%;background:var(--accent);border:3px solid var(--accent-l);box-shadow:0 0 0 3px var(--accent-t)}
+.rt-dot.end{background:var(--green);border-color:var(--green-l);box-shadow:0 0 0 3px rgba(22,163,74,.15)}
+.rt-lbl{font-size:.7rem;color:var(--muted);text-align:center;max-width:70px}
+.rt-line{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;position:relative}
+.rt-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 1s ease}
+
+/* ── CHECKLIST ───────────────────────────────────────── */
+.checklist{display:flex;flex-direction:column;gap:8px}
+.cl-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:9px;border:1px solid var(--border);cursor:pointer;transition:all .18s;background:#F8FAFD}
+.cl-item:hover{border-color:var(--accent);background:var(--accent-l)}
+.cl-item.done{background:var(--green-l);border-color:rgba(22,163,74,.3)}
+.cl-check{width:20px;height:20px;border-radius:5px;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .18s;background:#fff;color:transparent;font-size:.75rem}
+.cl-item.done .cl-check{background:var(--green);border-color:var(--green);color:#fff}
+.cl-txt{font-size:.84rem;font-weight:500;flex:1}
+.cl-item.done .cl-txt{color:var(--muted);text-decoration:line-through}
+
+/* ── DOC CARD ────────────────────────────────────────── */
+.doc-card{display:flex;align-items:center;gap:11px;padding:11px 14px;background:#F8FAFD;border:1px solid var(--border);border-radius:9px;cursor:pointer;transition:all .18s}
+.doc-card:hover{background:var(--accent-l);border-color:var(--accent)}
+.doc-ico{width:36px;height:36px;border-radius:8px;background:var(--accent-l);color:var(--accent-d);display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0}
+.doc-name{font-size:.83rem;font-weight:600}
+.doc-date{font-size:.71rem;color:var(--muted);margin-top:1px}
+
+/* ── PAT CARD ────────────────────────────────────────── */
+.pat-card{display:flex;align-items:center;gap:11px;padding:12px 14px;border:1px solid var(--border);border-radius:9px;background:#fff;transition:box-shadow .18s}
+.pat-card:hover{box-shadow:var(--shad-m)}
+.pat-av{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.84rem;font-weight:700;flex-shrink:0}
+.pat-name{font-size:.88rem;font-weight:600}
+.pat-info{font-size:.75rem;color:var(--muted);margin-top:1px}
+.health-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.hd-ok{background:var(--green)}
+.hd-warn{background:var(--amber)}
+.hd-alert{background:var(--red)}
+
+/* ── MISSION CARD ────────────────────────────────────── */
+.m-card{display:flex;gap:12px;align-items:stretch;padding:12px 14px;border:1px solid var(--border);border-radius:9px;background:#fff;transition:box-shadow .18s}
+.m-card:hover{box-shadow:var(--shad-m)}
+.m-card.active{border-color:var(--accent);background:var(--accent-t)}
+.m-time-col{text-align:center;flex-shrink:0;width:46px;padding-top:2px}
+.m-hr{font-family:'Sora',sans-serif;font-size:1rem;font-weight:700;color:var(--accent-d)}
+.m-mn{font-size:.68rem;color:var(--muted)}
+.m-sep{width:1px;background:var(--border);flex-shrink:0}
+.m-body{flex:1}
+.m-route{font-size:.88rem;font-weight:600;margin-bottom:2px}
+.m-pat{font-size:.77rem;color:var(--muted);margin-bottom:5px}
+.m-type{display:inline-block;padding:2px 8px;border-radius:20px;font-size:.69rem;font-weight:600}
+.t-vsl{background:#EEF2FF;color:#4338CA}
+.t-tap{background:#F5F3FF;color:#7C3AED}
+.t-ambu{background:#FFF7ED;color:#C2410C}
+
+/* ── LIVE MISSION ────────────────────────────────────── */
+.live-mission{border:2px solid var(--accent);background:var(--accent-t);border-radius:var(--r);padding:18px;margin-bottom:16px}
+.live-header{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.live-dot{width:10px;height:10px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;flex-shrink:0}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(22,163,74,.5)}70%{box-shadow:0 0 0 8px rgba(22,163,74,0)}100%{box-shadow:0 0 0 0 rgba(22,163,74,0)}}
+.live-badge{font-size:.7rem;font-weight:700;color:var(--green);letter-spacing:.06em;text-transform:uppercase}
+.live-route{font-family:'Sora',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:4px}
+.live-pat{font-size:.82rem;color:var(--muted);margin-bottom:14px}
+.route-prog{position:relative}
+.rp-bar{height:5px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:6px}
+.rp-fill{height:100%;background:linear-gradient(90deg,var(--accent-d),var(--accent));border-radius:3px;transition:width 2s ease}
+.rp-labels{display:flex;justify-content:space-between;font-size:.7rem;color:var(--muted)}
+.live-eta{display:flex;align-items:center;gap:6px;font-size:.82rem;font-weight:600;color:var(--accent-d);margin-top:10px}
+
+/* ── DONUT ───────────────────────────────────────────── */
+.donut-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.donut-wrap{text-align:center}
+.donut-ring{width:80px;height:80px;border-radius:50%;position:relative;display:flex;align-items:center;justify-content:center;margin:0 auto 8px}
+.donut-ring svg{position:absolute;top:0;left:0;transform:rotate(-90deg)}
+.donut-val{font-family:'Sora',sans-serif;font-size:1rem;font-weight:800;color:var(--text)}
+.donut-lbl{font-size:.74rem;color:var(--muted);font-weight:500}
+
+/* ── PROGRESS ────────────────────────────────────────── */
+.prog-wrap{margin:8px 0}
+.prog-lbl{display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:5px}
+.prog-bar{height:6px;background:#E2E8F0;border-radius:3px;overflow:hidden}
+.prog-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--accent-d),var(--accent))}
+
+/* ── MSG ─────────────────────────────────────────────── */
+.msg-bub{padding:13px 15px;border-radius:10px;border:1px solid var(--border);background:#F8FAFD}
+.msg-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.msg-txt{font-size:.84rem;line-height:1.55;color:var(--text)}
+.msg-input{width:100%;border:1px solid var(--border);border-radius:9px;padding:10px 14px;font-size:.84rem;color:var(--text);font-family:'Inter',sans-serif;resize:none;height:72px;margin-top:12px}
+.msg-input:focus{outline:none;border-color:var(--accent)}
+
+/* ── TABS ────────────────────────────────────────────── */
+.tabs{display:flex;gap:4px;background:#F1F5F9;border-radius:9px;padding:4px;margin-bottom:14px}
+.tab{flex:1;text-align:center;padding:7px;border-radius:7px;font-size:.8rem;font-weight:500;color:var(--muted);cursor:pointer;transition:all .18s}
+.tab.active{background:#fff;color:var(--accent-d);font-weight:600;box-shadow:var(--shadow)}
+
+/* ── ALERT BAR ───────────────────────────────────────── */
+.alert-bar{display:flex;align-items:flex-start;gap:10px;border-radius:9px;padding:12px 16px;font-size:.84rem;margin-bottom:16px}
+.alert-warn{background:var(--amber-l);border:1px solid rgba(180,83,9,.2);color:#78350F}
+.alert-info{background:var(--accent-l);border:1px solid var(--accent);color:var(--accent-d)}
+.alert-ok{background:var(--green-l);border:1px solid rgba(22,163,74,.25);color:#14532D}
+.alert-bar i{flex-shrink:0;margin-top:2px}
+
+/* ── TIMELINE ────────────────────────────────────────── */
+.tl{display:flex;flex-direction:column;gap:0}
+.tl-item{display:flex;gap:12px;position:relative}
+.tl-left{display:flex;flex-direction:column;align-items:center;width:24px;flex-shrink:0}
+.tl-dot{width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid var(--accent-l);flex-shrink:0;z-index:1}
+.tl-dot.done{background:var(--green);border-color:var(--green-l)}
+.tl-dot.off{background:#E2E8F0;border-color:#F1F5F9}
+.tl-line{width:2px;flex:1;background:var(--border);margin:-2px 0}
+.tl-content{flex:1;padding-bottom:16px}
+.tl-txt{font-size:.85rem;font-weight:600}
+.tl-sub{font-size:.76rem;color:var(--muted);margin-top:2px}
+
+/* ── PRESCRIPTION ROW ────────────────────────────────── */
+.rx-row{display:flex;align-items:center;gap:10px;padding:11px 13px;background:#F8FAFD;border:1px solid var(--border);border-radius:9px}
+.rx-icon{width:34px;height:34px;border-radius:8px;background:var(--accent-l);color:var(--accent-d);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+.rx-name{font-size:.84rem;font-weight:600}
+.rx-date{font-size:.71rem;color:var(--muted);margin-top:1px}
+.exp-bar{height:3px;border-radius:2px;margin-top:5px;overflow:hidden;background:#E2E8F0}
+.exp-fill{height:100%;border-radius:2px}
+
+/* ── MODAL-LIKE PANEL ────────────────────────────────── */
+.panel-form{background:var(--accent-l);border:1px solid var(--accent);border-radius:var(--r);padding:16px 18px;margin-top:12px}
+.form-row{display:flex;gap:10px;margin-bottom:10px}
+.form-field{flex:1;display:flex;flex-direction:column;gap:4px}
+.form-label{font-size:.74rem;font-weight:600;color:var(--accent-d)}
+.form-input{border:1px solid var(--border);border-radius:7px;padding:8px 10px;font-size:.83rem;color:var(--text);font-family:'Inter',sans-serif;background:#fff}
+.form-input:focus{outline:none;border-color:var(--accent)}
+
+/* ── COMING SOON ─────────────────────────────────────── */
+.coming-soon{background:#fff;border-radius:var(--r);border:1px solid var(--border);padding:56px;text-align:center}
+.coming-soon i{font-size:3rem;color:var(--accent);margin-bottom:14px;display:block}
+.coming-soon h3{font-family:'Sora',sans-serif;font-size:1.05rem;margin-bottom:7px}
+.coming-soon p{font-size:.85rem;color:var(--muted)}
+
+/* ── EMPTY ───────────────────────────────────────────── */
+.empty-s{text-align:center;padding:24px;color:var(--muted)}
+.empty-s i{font-size:2rem;display:block;margin-bottom:8px;color:var(--border)}
+
+/* ── QR CODE ─────────────────────────────────────────── */
+.qr-card{background:var(--accent-l);border:1px solid var(--accent);border-radius:var(--r);padding:20px;text-align:center;margin-bottom:16px}
+.qr-lbl{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent-d);margin-bottom:14px}
+.qr-wrap{display:inline-block;background:#fff;padding:12px;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,.1);cursor:pointer;transition:transform .2s,box-shadow .2s}
+.qr-wrap:hover{transform:scale(1.03);box-shadow:0 8px 28px rgba(0,0,0,.15)}
+.qr-sub{font-size:.75rem;color:var(--accent-d);margin-top:10px;font-weight:600}
+.qr-hint{font-size:.71rem;color:var(--muted);margin-top:4px}
+
+/* QR Scanner simulated */
+.qr-scanner-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:14px;background:var(--accent);color:#fff;border-radius:10px;font-size:.9rem;font-weight:700;cursor:pointer;border:none;font-family:'Inter',sans-serif;transition:background .18s,transform .15s;box-shadow:0 4px 16px rgba(0,0,0,.18)}
+.qr-scanner-btn:hover{background:var(--accent-d);transform:translateY(-1px)}
+.qr-scanner-btn i{font-size:1.1rem}
+
+/* QR Modal */
+.qr-modal-overlay{display:none;position:fixed;inset:0;background:rgba(11,31,58,.65);z-index:500;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.qr-modal-overlay.open{display:flex}
+.qr-modal{background:#fff;border-radius:20px;padding:32px 28px;max-width:360px;width:90%;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,.25);position:relative;animation:qrIn .3s cubic-bezier(.22,1,.36,1)}
+@keyframes qrIn{from{opacity:0;transform:scale(.88) translateY(20px)}to{opacity:1;transform:none}}
+.qr-modal h3{font-family:'Sora',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:6px;color:#0B1F3A}
+.qr-modal p{font-size:.84rem;color:#6B7A90;margin-bottom:20px}
+.qr-modal-close{position:absolute;top:14px;right:16px;background:none;border:none;font-size:1.2rem;color:#94A3B8;cursor:pointer}
+.qr-modal-close:hover{color:#0B1F3A}
+.scan-anim{position:relative;display:inline-block;margin-bottom:16px}
+.scan-line{position:absolute;left:12px;right:12px;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);animation:scanMove 1.8s ease-in-out infinite}
+@keyframes scanMove{0%{top:12px;opacity:1}50%{opacity:1}100%{top:calc(100% - 14px);opacity:.5}}
+
+/* ── RESPONSIVE ──────────────────────────────────────── */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:150}
+.overlay.open{display:block}
+@media(max-width:1200px){.g4{grid-template-columns:repeat(2,1fr)}.g-main{grid-template-columns:1fr}.donut-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:900px){.g3{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}
+  .main{margin-left:0}.page{padding:14px 14px 40px}
+  .g2,.g3,.g4{grid-template-columns:1fr}.menu-btn{display:flex}
+  .cd-display{gap:4px}.cd-unit{min-width:50px;padding:8px 10px}.cd-n{font-size:1.3rem}
+  .donut-grid{grid-template-columns:repeat(3,1fr)}
+  .notif-panel{width:100%;right:-100%}
+}
+</style>
+</head>
+<body>
+
+<div class="overlay" id="overlay"></div>
+
+<!-- QR CODE MODAL -->
+<div class="qr-modal-overlay" id="qr-modal-overlay" onclick="closeQR(event)">
+  <div class="qr-modal" id="qr-modal">
+    <button class="qr-modal-close" onclick="closeQRBtn()"><i class="bi bi-x-lg"></i></button>
+    <div id="qr-modal-content"></div>
+  </div>
+</div>
+
+<!-- NOTIFICATION OVERLAY & PANEL -->
+<div class="notif-overlay" id="notif-overlay">
+  <div class="notif-panel" id="notif-panel">
+    <div class="np-head">
+      <span class="np-title">Notifications</span>
+      <button class="np-close" onclick="closeNotif()"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <div class="np-list" id="np-list"></div>
+  </div>
+</div>
+
+<div class="layout" id="layout">
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-logo">
+      <img src="./photos/logo_CW_officiel.png" alt="" onerror="this.style.display='none'"/>
+      <span class="sb-logo-txt">Care<b>Way</b></span>
+    </div>
+    <nav class="sb-nav" id="sb-nav"></nav>
+    <div class="sb-user">
+      <div class="user-card">
+        <div class="user-av" id="av"></div>
+        <div class="user-info">
+          <div class="user-name" id="uname"></div>
+          <div class="user-role" id="urole"></div>
+        </div>
+        <button class="btn-logout" id="btn-logout" title="Déconnexion"><i class="bi bi-box-arrow-right"></i></button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+    <header class="topbar">
+      <div class="topbar-l">
+        <button class="menu-btn" onclick="openSb()"><i class="bi bi-list"></i></button>
+        <h1 id="page-title">Mon espace</h1>
+      </div>
+      <div class="topbar-r">
+        <span class="demo-pill">DEMO</span>
+        <button class="icon-btn" onclick="openNotif()" title="Notifications">
+          <i class="bi bi-bell"></i>
+          <span class="notif-count" id="notif-count" style="display:none"></span>
+        </button>
+        <span class="ppill" id="ppill"></span>
+      </div>
+    </header>
+    <div class="page" id="page"></div>
+  </div>
+</div>
+
+<script>
+/* ── AUTH ──────────────────────────────────────────────── */
+const raw = localStorage.getItem('cw_user');
+if (!raw) { window.location.href = '/login'; }
+const user = JSON.parse(raw);
+const { nom, profil } = user;
+
+function g(id) { return document.getElementById(id); }
+function initials(n) { return n.split(' ').filter(Boolean).map(w=>w[0]).join('').substring(0,2).toUpperCase(); }
+
+/* ── QR CODE (SVG généré en pur JS, pas de lib externe) ── */
+function qrSVG(data, size=160) {
+  /* QR simplifié visuel — motif aléatoire stable basé sur le hash de `data` */
+  let h = 0; for (let c of data) h = (Math.imul(31, h) + c.charCodeAt(0)) | 0;
+  function bit(i) { return ((h ^ (h >>> (i%8)) ^ (i*1234567)) & 1) === 0; }
+  const M = 21, cell = Math.floor(size / M), total = cell * M;
+  let svg = `<svg width="${total}" height="${total}" viewBox="0 0 ${total} ${total}" xmlns="http://www.w3.org/2000/svg" style="display:block">`;
+  svg += `<rect width="${total}" height="${total}" fill="#fff"/>`;
+  for (let r = 0; r < M; r++) {
+    for (let c2 = 0; c2 < M; c2++) {
+      const x = c2*cell, y = r*cell;
+      /* position patterns (3 coins) */
+      const inFP = (r<7&&c2<7) || (r<7&&c2>M-8) || (r>M-8&&c2<7);
+      if (inFP) {
+        const er=(r<7)?r:(r-(M-7)), ec=(c2<7)?c2:(c2-(M-7));
+        const onBorder=er===0||er===6||ec===0||ec===6, inner=er>=2&&er<=4&&ec>=2&&ec<=4;
+        if(onBorder||inner) svg+=`<rect x="${x}" y="${y}" width="${cell}" height="${cell}" fill="#000"/>`;
+      } else if (r===7||c2===7||r===M-8||c2===M-8) {
+        /* timing */
+        if((r+c2)%2===0) svg+=`<rect x="${x}" y="${y}" width="${cell}" height="${cell}" fill="#000"/>`;
+      } else {
+        if (bit(r*M+c2)) svg+=`<rect x="${x}" y="${y}" width="${cell}" height="${cell}" fill="#000"/>`;
+      }
+    }
+  }
+  svg += '</svg>';
+  return svg;
+}
+
+function openQR(title, subtitle, data, extra='') {
+  const modal = g('qr-modal-content');
+  modal.innerHTML = `
+    <h3>${title}</h3>
+    <p>${subtitle}</p>
+    <div class="scan-anim">
+      <div class="qr-wrap" style="cursor:default">${qrSVG(data,180)}</div>
+      <div class="scan-line"></div>
+    </div>
+    ${extra}
+    <div style="font-size:.74rem;color:#94A3B8;margin-top:8px"><i class="bi bi-shield-lock"></i> Accès sécurisé · Usage unique</div>`;
+  g('qr-modal-overlay').classList.add('open');
+}
+function closeQR(e) { if(e.target===g('qr-modal-overlay')) closeQRBtn(); }
+function closeQRBtn() { g('qr-modal-overlay').classList.remove('open'); }
+
+/* Scan simulé pour le transporteur */
+let scanTimeout = null;
+function simulateScan(missionId, patName) {
+  const modal = g('qr-modal-content');
+  modal.innerHTML = `
+    <h3>Scanner le QR patient</h3>
+    <p>Approchez l'appareil du QR code affiché sur le téléphone du patient</p>
+    <div style="width:180px;height:180px;margin:0 auto 16px;border:3px solid var(--accent,#059669);border-radius:16px;background:#F0F4FA;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;position:relative;overflow:hidden">
+      <div class="scan-line" style="background:linear-gradient(90deg,transparent,#059669,transparent)"></div>
+      <i class="bi bi-qr-code-scan" style="font-size:3rem;color:#059669;opacity:.6"></i>
+      <div style="font-size:.72rem;color:#6B7A90">En attente du QR…</div>
+    </div>
+    <button onclick="confirmScan('${missionId}','${patName}')" style="width:100%;padding:11px;background:#059669;color:#fff;border:none;border-radius:9px;font-size:.9rem;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif"><i class="bi bi-check-circle"></i> Simuler la lecture</button>
+    <div style="font-size:.74rem;color:#94A3B8;margin-top:8px"><i class="bi bi-shield-lock"></i> Accès sécurisé · Usage unique</div>`;
+  g('qr-modal-overlay').classList.add('open');
+}
+function confirmScan(missionId, patName) {
+  const modal = g('qr-modal-content');
+  modal.innerHTML = `
+    <div style="width:72px;height:72px;background:#DCFCE7;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
+      <i class="bi bi-check-circle-fill" style="font-size:2.2rem;color:#16A34A"></i>
+    </div>
+    <h3 style="color:#16A34A">Prise en charge confirmée</h3>
+    <p>QR code de <strong>${patName}</strong> validé avec succès.<br>Mission <strong>${missionId}</strong> — statut : En cours</p>
+    <div style="background:#DCFCE7;border:1px solid rgba(22,163,74,.25);border-radius:9px;padding:12px 14px;font-size:.81rem;color:#166534;margin:12px 0 4px">
+      <i class="bi bi-clock"></i> ${new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})} — Confirmé automatiquement dans CareWay
+    </div>
+    <div style="font-size:.74rem;color:#94A3B8;margin-top:8px"><i class="bi bi-shield-lock"></i> Traçabilité enregistrée · Conforme HDS</div>`;
+}
+const firstName = nom.split(' ')[0];
+function shortDate(d=new Date()) { return d.toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'}); }
+function cap(s) { return s?s[0].toUpperCase()+s.slice(1):s; }
+
+/* ── SIDEBAR ────────────────────────────────────────────── */
+function openSb() { g('sidebar').classList.add('open'); g('overlay').classList.add('open'); }
+function closeSb() { g('sidebar').classList.remove('open'); g('overlay').classList.remove('open'); }
+g('overlay').addEventListener('click', closeSb);
+
+/* ── PROFILE ────────────────────────────────────────────── */
+const PC = {
+  patient:      { label:'Patient',        icon:'bi-heart-pulse' },
+  aidant:       { label:'Aidant',          icon:'bi-people-fill' },
+  prescripteur: { label:'Prescripteur',   icon:'bi-file-earmark-medical-fill' },
+  transporteur: { label:'Transporteur',   icon:'bi-truck' },
+  coordinateur: { label:'Coordinateur',   icon:'bi-diagram-3-fill' },
+};
+const pc = PC[profil] || PC.patient;
+
+g('layout').classList.add('p-'+profil);
+g('av').textContent = initials(nom);
+g('uname').textContent = nom;
+g('urole').textContent = pc.label;
+g('ppill').textContent = pc.label;
+g('btn-logout').addEventListener('click', () => { localStorage.removeItem('cw_user'); window.location.href='/login'; });
+
+/* ── NOTIFICATIONS ──────────────────────────────────────── */
+const NOTIFS = {
+  patient: [
+    { icon:'bi-check-circle-fill', txt:'Transport du 20 mai confirmé par Marc Dubois', time:'Il y a 2h', read:false, color:'var(--green)' },
+    { icon:'bi-file-earmark-fill', txt:'Nouveau bon de transport disponible (BT-2026-042)', time:'Hier 14h30', read:false, color:'var(--accent)' },
+    { icon:'bi-chat-dots-fill', txt:'Message de Dr. Claire Lefèvre', time:'Hier 10h15', read:true, color:'var(--accent)' },
+  ],
+  aidant: [
+    { icon:'bi-truck', txt:'Transport de Sophie confirmé pour le 20 mai à 09h30', time:'Il y a 2h', read:false, color:'var(--accent)' },
+    { icon:'bi-chat-dots-fill', txt:'Message de Dr. Lefèvre concernant Sophie', time:'Il y a 2h', read:false, color:'var(--accent)' },
+    { icon:'bi-truck', txt:'Marc Dubois a confirmé la prise en charge', time:'Hier 17h40', read:true, color:'var(--green)' },
+  ],
+  prescripteur: [
+    { icon:'bi-exclamation-triangle-fill', txt:'BT-2026-039 expire dans 4 jours (Marie Leblanc)', time:'Il y a 1h', read:false, color:'var(--amber)' },
+    { icon:'bi-exclamation-triangle-fill', txt:'BT-2026-038 expire dans 6 jours (Jacques Renault)', time:'Il y a 1h', read:false, color:'var(--amber)' },
+    { icon:'bi-truck', txt:'Transport de Sophie Moreau en cours — CHU Bordeaux', time:'09h30', read:true, color:'var(--accent)' },
+  ],
+  transporteur: [
+    { icon:'bi-geo-alt-fill', txt:'Mission 09h30 — Mme Moreau vous attend au 12 rue des Acacias', time:'08h30', read:false, color:'var(--accent)' },
+    { icon:'bi-person-fill', txt:'Nouvelle mission ajoutée : Ven. 23 mai — Sophie Moreau', time:'Hier', read:false, color:'var(--accent)' },
+    { icon:'bi-star-fill', txt:'Avis 5/5 reçu de Pierre Durand', time:'Il y a 2j', read:true, color:'#D97706' },
+  ],
+  coordinateur: [
+    { icon:'bi-exclamation-triangle-fill', txt:'Mission MIS-2026-087 sans transporteur assigné (départ 14h00)', time:'Il y a 30 min', read:false, color:'var(--amber)' },
+    { icon:'bi-check-circle-fill', txt:'Marc Dubois a accepté la mission MIS-2026-085', time:'Il y a 1h', read:false, color:'var(--green)' },
+    { icon:'bi-exclamation-circle-fill', txt:'Incident signalé : retard mission MIS-2026-084 — 20 min', time:'Il y a 2h', read:false, color:'var(--red)' },
+    { icon:'bi-file-earmark-fill', txt:'3 nouvelles demandes de transport à traiter', time:'Ce matin 08h00', read:true, color:'var(--accent)' },
+  ],
+};
+
+let notifData = (NOTIFS[profil]||[]).map((n,i)=>({...n,id:i}));
+
+function renderNotifCount() {
+  const cnt = notifData.filter(n=>!n.read).length;
+  const el = g('notif-count');
+  if (cnt>0) { el.textContent=cnt; el.style.display='flex'; }
+  else el.style.display='none';
+}
+function openNotif() {
+  const list = g('np-list');
+  list.innerHTML = '';
+  notifData.forEach(n => {
+    const d = document.createElement('div');
+    d.className = 'np-item'+(n.read?'':' unread');
+    d.innerHTML = `${!n.read?'<div></div>':''}<div class="np-icon" style="background:${n.color}22;color:${n.color}"><i class="bi ${n.icon}"></i></div><div><div class="np-txt">${n.txt}</div><div class="np-time">${n.time}</div></div>`;
+    d.addEventListener('click', () => { n.read=true; d.classList.remove('unread'); renderNotifCount(); });
+    list.appendChild(d);
+  });
+  g('notif-overlay').classList.add('open');
+  g('notif-panel').classList.add('open');
+}
+function closeNotif() {
+  notifData.forEach(n=>n.read=true);
+  renderNotifCount();
+  g('notif-overlay').classList.remove('open');
+  g('notif-panel').classList.remove('open');
+}
+g('notif-overlay').addEventListener('click', e => { if(e.target===g('notif-overlay')) closeNotif(); });
+renderNotifCount();
+
+/* ── NAV ────────────────────────────────────────────────── */
+const NAV = {
+  patient:      [{id:'dashboard',i:'bi-grid-1x2',l:'Accueil'},{id:'transports',i:'bi-truck',l:'Mes transports',b:2},{id:'documents',i:'bi-file-earmark-medical',l:'Mes documents'},{id:'messages',i:'bi-chat-dots',l:'Messages',b:1}],
+  aidant:       [{id:'dashboard',i:'bi-grid-1x2',l:'Accueil'},{id:'proches',i:'bi-people',l:'Mes proches'},{id:'transports',i:'bi-truck',l:'Transports Sophie',b:2},{id:'messages',i:'bi-chat-dots',l:'Messages',b:2}],
+  prescripteur: [{id:'dashboard',i:'bi-grid-1x2',l:'Tableau de bord'},{id:'patients',i:'bi-people',l:'Mes patients'},{id:'prescriptions',i:'bi-file-medical',l:'Prescriptions',b:2},{id:'planification',i:'bi-calendar2-check',l:'Planification'},{id:'messages',i:'bi-chat-dots',l:'Messages'}],
+  transporteur: [{id:'dashboard',i:'bi-grid-1x2',l:'Tableau de bord'},{id:'missions',i:'bi-truck',l:'Mes missions',b:4},{id:'planning',i:'bi-calendar2-week',l:'Planning'},{id:'performance',i:'bi-graph-up',l:'Performance'},{id:'messages',i:'bi-chat-dots',l:'Messages'}],
+  coordinateur: [{id:'dashboard',i:'bi-grid-1x2',l:'Tableau de bord'},{id:'demandes',i:'bi-inbox',l:'Demandes',b:3},{id:'missions',i:'bi-truck',l:'Missions du jour',b:7},{id:'transporteurs',i:'bi-people',l:'Transporteurs'},{id:'messages',i:'bi-chat-dots',l:'Messages',b:2}],
+};
+const PAGE_TITLES = { dashboard:'Tableau de bord', transports:'Mes transports', documents:'Mes documents', messages:'Messages', proches:'Mes proches', patients:'Mes patients', prescriptions:'Prescriptions', planification:'Planification', missions:'Mes missions', planning:'Planning', performance:'Performance', demandes:'Demandes de transport', transporteurs:'Gestion des transporteurs' };
+
+let currentPage = 'dashboard';
+let timers = [];
+
+function clearTimers() { timers.forEach(clearInterval); timers=[]; }
+
+function buildNav() {
+  const el = g('sb-nav'); el.innerHTML='';
+  (NAV[profil]||[]).forEach(item => {
+    const d = document.createElement('div');
+    d.className='nav-item'+(item.id===currentPage?' active':'');
+    d.innerHTML=`<i class="bi ${item.i}"></i><span>${item.l}</span>${item.b?`<span class="nav-badge">${item.b}</span>`:''}`;
+    d.addEventListener('click',()=>{ navigate(item.id); closeSb(); });
+    el.appendChild(d);
+  });
+}
+function navigate(id) { clearTimers(); currentPage=id; g('page-title').textContent=PAGE_TITLES[id]||''; buildNav(); renderPage(); window.scrollTo(0,0); }
+
+/* ── ROUTER ────────────────────────────────────────────── */
+function renderPage() {
+  const PAGES = {
+    patient:      { dashboard:pDash, transports:pTransports, documents:pDocs, messages:pMsgs },
+    aidant:       { dashboard:aDash, proches:aProches, transports:aTransports, messages:aMsgs },
+    prescripteur: { dashboard:rxDash, patients:rxPatients, prescriptions:rxPrescriptions, planification:soon('Planification','La vue planning intégrée arrive bientôt. Elle permettra de planifier des transports directement depuis le dossier patient.'), messages:rxMsgs },
+    transporteur: { dashboard:trDash, missions:trMissions, planning:soon('Planning','Le planning hebdomadaire interactif est en cours de développement. Il permettra de visualiser et gérer votre semaine en un coup d\'oeil.'), performance:trPerf, messages:trMsgs },
+    coordinateur: { dashboard:crDash, demandes:crDemandes, missions:crMissions, transporteurs:crTransporteurs, messages:crMsgs },
+  };
+  const fn=(PAGES[profil]||{})[currentPage];
+  g('page').innerHTML=fn?(typeof fn==='function'?fn():fn):'';
+  animateCounters();
+}
+function soon(title,msg) { return ()=>`<div class="coming-soon"><i class="bi bi-tools"></i><h3>${title}</h3><p>${msg}</p></div>`; }
+
+/* ── ANIMATED COUNTERS ──────────────────────────────────── */
+function animateCounters() {
+  document.querySelectorAll('[data-count]').forEach(el => {
+    const target=+el.dataset.count, suffix=el.dataset.suffix||'';
+    let cur=0; const step=target/(800/16);
+    const t=setInterval(()=>{ cur=Math.min(cur+step,target); el.textContent=Math.round(cur)+suffix; if(cur>=target)clearInterval(t); },16);
+    timers.push(t);
+  });
+}
+
+/* ── COUNTDOWN ──────────────────────────────────────────── */
+function startCountdown(target) {
+  function upd() {
+    const diff=new Date(target)-new Date();
+    if(diff<=0){['cd-d','cd-h','cd-m','cd-s'].forEach(i=>{const e=g(i);if(e)e.textContent='0';});return;}
+    const d=Math.floor(diff/86400000),h=Math.floor((diff%86400000)/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
+    if(g('cd-d'))g('cd-d').textContent=d;
+    if(g('cd-h'))g('cd-h').textContent=String(h).padStart(2,'0');
+    if(g('cd-m'))g('cd-m').textContent=String(m).padStart(2,'0');
+    if(g('cd-s'))g('cd-s').textContent=String(s).padStart(2,'0');
+  }
+  upd(); const t=setInterval(upd,1000); timers.push(t);
+}
+
+/* ── LIVE MISSION PROGRESS ──────────────────────────────── */
+function startLiveProgress() {
+  let pct=52;
+  const el=g('live-fill'), etaEl=g('live-eta-txt');
+  if(!el)return;
+  el.style.width=pct+'%';
+  const t=setInterval(()=>{
+    pct=Math.min(pct+0.05,100);
+    if(el)el.style.width=pct+'%';
+    const rem=Math.round((100-pct)/100*25);
+    if(etaEl)etaEl.textContent=rem>0?`Arrivée estimée dans ${rem} min`:'Arrivé à destination';
+    if(pct>=100)clearInterval(t);
+  },2000);
+  timers.push(t);
+}
+
+/* ── CHECKLIST ──────────────────────────────────────────── */
+const CL_ITEMS=[
+  {id:'docs',l:'Mon dossier médical'},
+  {id:'ordo',l:'Mon ordonnance / bon de transport'},
+  {id:'cb',l:'Ma carte vitale'},
+  {id:'tel',l:'Mon téléphone chargé'},
+  {id:'conf',l:'Vêtements confortables'},
+];
+function getChecklist(){return JSON.parse(localStorage.getItem('cw_cl')||'{}');}
+function toggleCL(id){const cl=getChecklist();cl[id]=!cl[id];localStorage.setItem('cw_cl',JSON.stringify(cl));renderCL();}
+function renderCL(){
+  const cl=getChecklist();
+  CL_ITEMS.forEach(item=>{
+    const el=g('cl-'+item.id); if(!el)return;
+    if(cl[item.id]){el.classList.add('done');}else{el.classList.remove('done');}
+  });
+  const done=CL_ITEMS.filter(i=>cl[i.id]).length;
+  const lbl=g('cl-count'); if(lbl)lbl.textContent=`${done}/${CL_ITEMS.length} éléments préparés`;
+}
+function clHTML(){
+  const cl=getChecklist();
+  return CL_ITEMS.map(item=>`
+    <div class="cl-item${cl[item.id]?' done':''}" id="cl-${item.id}" onclick="toggleCL('${item.id}')">
+      <div class="cl-check"><i class="bi bi-check"></i></div>
+      <span class="cl-txt">${item.l}</span>
+    </div>`).join('');
+}
+
+/* ── TABS ───────────────────────────────────────────────── */
+function switchTab(group, tab) {
+  document.querySelectorAll(`[data-tabgroup="${group}"]`).forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll(`[data-tab="${group}-${tab}"]`).forEach(el=>el.style.display='');
+  const tabBtn=document.querySelector(`[data-tabgroup="${group}"][data-val="${tab}"]`);
+  if(tabBtn)tabBtn.classList.add('active');
+  document.querySelectorAll(`[data-tab]`).forEach(el=>{
+    if(el.dataset.tab.startsWith(group+'-')&&el.dataset.tab!==group+'-'+tab) el.style.display='none';
+  });
+}
+
+/* ══════════════════════════════════════════════════
+   PATIENT
+══════════════════════════════════════════════════ */
+function pDash(){
+  setTimeout(()=>{startCountdown('2026-05-20T09:30:00');renderCL();},50);
+  return `
+    <div class="greeting"><span class="greeting-ico"><i class="bi bi-heart-pulse"></i></span><div>
+      <h2>Bonjour, ${firstName}</h2>
+      <p>Votre prochain transport est dans <strong>2 jours</strong>. Tout est organisé pour vous.</p>
+    </div></div>
+
+    <div class="countdown-card">
+      <div class="cd-lbl"><i class="bi bi-hourglass-split"></i> Votre prochain transport dans</div>
+      <div class="cd-display">
+        <div class="cd-unit"><span class="cd-n" id="cd-d">2</span><span class="cd-l">jours</span></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-unit"><span class="cd-n" id="cd-h">19</span><span class="cd-l">heures</span></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-unit"><span class="cd-n" id="cd-m">30</span><span class="cd-l">min</span></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-unit"><span class="cd-n" id="cd-s">00</span><span class="cd-l">sec</span></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-head"><span class="card-title"><i class="bi bi-truck"></i>Mardi 20 mai 2026 — 09h30</span><span class="badge b-green"><i class="bi bi-check-circle-fill"></i> Confirmé</span></div>
+      <div class="card-body">
+        <div style="font-size:.9rem;font-weight:600;margin-bottom:4px">CHU de Bordeaux — Service Oncologie</div>
+        <div style="font-size:.81rem;color:var(--muted);margin-bottom:14px">15 rue Pelleport, Bordeaux · VSL · Chimiothérapie</div>
+        <div class="route-track">
+          <div class="rt-pt"><div class="rt-dot"></div><div class="rt-lbl">Votre domicile</div></div>
+          <div class="rt-line"><div class="rt-fill" style="width:0%"></div></div>
+          <div class="rt-pt"><div class="rt-dot end"></div><div class="rt-lbl">CHU Bordeaux</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;font-size:.83rem;color:var(--muted);margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
+          <div style="width:32px;height:32px;border-radius:50%;background:var(--accent-l);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="bi bi-person-fill" style="color:var(--accent-d)"></i></div>
+          <div><div style="font-weight:600;color:var(--text)">Marc Dubois</div><div style="font-size:.75rem">Votre conducteur · Véhicule Citroën Berlingo blanc</div></div>
+          <button class="cta-sm" style="margin-left:auto"><i class="bi bi-telephone"></i> Contacter</button>
+        </div>
+        <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">
+          <button class="qr-scanner-btn" onclick="openQR('Mon bon de transport','Présentez ce QR à votre conducteur à l\'arrivée','BT-2026-042-MOREAU-20MAI','<div style=\'font-size:.78rem;background:#EBF3FF;border-radius:8px;padding:10px 12px;color:#0057B8;margin-top:10px;text-align:left\'><i class=\'bi bi-info-circle\'></i> Votre conducteur Marc Dubois scannera ce QR pour confirmer votre prise en charge. La CPAM sera notifiée automatiquement.</div>')" style="background:var(--accent)">
+            <i class="bi bi-qr-code"></i> Afficher mon QR de transport
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div class="card">
+        <div class="card-head"><span class="card-title"><i class="bi bi-check2-square"></i>Checklist de préparation</span><span id="cl-count" style="font-size:.75rem;color:var(--muted)">0/5</span></div>
+        <div class="card-body"><div class="checklist">${clHTML()}</div></div>
+      </div>
+      <div class="stack">
+        <div class="card" style="cursor:pointer" onclick="navigate('documents')">
+          <div class="card-body" style="display:flex;align-items:center;gap:12px;padding:16px 18px">
+            <div class="li-ico" style="background:var(--accent-l);color:var(--accent-d)"><i class="bi bi-file-earmark-medical" style="font-size:1.1rem"></i></div>
+            <div><div style="font-family:'Sora',sans-serif;font-size:1.2rem;font-weight:700" data-count="3">3</div><div style="font-size:.82rem;color:var(--muted)">Documents disponibles</div></div>
+            <i class="bi bi-chevron-right" style="margin-left:auto;color:var(--muted)"></i>
+          </div>
+        </div>
+        <div class="card" style="cursor:pointer;border-left:3px solid var(--accent)" onclick="navigate('messages')">
+          <div class="card-body" style="display:flex;align-items:center;gap:12px;padding:16px 18px">
+            <div class="li-ico" style="background:var(--accent-l);color:var(--accent-d)"><i class="bi bi-chat-dots" style="font-size:1.1rem"></i></div>
+            <div><div style="font-family:'Sora',sans-serif;font-size:1.2rem;font-weight:700">1</div><div style="font-size:.82rem;color:var(--muted)">Message de Dr. Lefèvre</div></div>
+            <span class="badge b-accent" style="margin-left:auto">Nouveau</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body" style="padding:14px 18px">
+            <div style="font-size:.76rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Besoin d'aide ?</div>
+            <div style="font-size:.84rem;margin-bottom:8px">L'équipe CareWay est disponible du <strong>lundi au vendredi</strong>, 8h–18h.</div>
+            <div style="font-size:.92rem;font-weight:700;color:var(--accent-d)"><i class="bi bi-telephone-fill"></i> 05 56 XX XX XX</div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function pTransports(){
+  const tabsHtml=`<div class="tabs">
+    <div class="tab active" data-tabgroup="tr" data-val="upcoming" onclick="switchTab('tr','upcoming')">À venir (3)</div>
+    <div class="tab" data-tabgroup="tr" data-val="past" onclick="switchTab('tr','past')">Passés (18)</div>
+  </div>`;
+  const up=[
+    {date:'Mardi 20 mai 2026',h:'09h30',lieu:'CHU de Bordeaux — Oncologie',type:'VSL',desc:'Chimiothérapie · Marc Dubois',st:'Confirmé',sc:'b-green',ico:'bi-truck',ibg:'var(--accent-l)',ic:'var(--accent-d)'},
+    {date:'Vendredi 23 mai 2026',h:'13h45',lieu:'Cabinet Dr. Martin — Cardiologie',type:'TAP',desc:'Consultation suivi',st:'Confirmé',sc:'b-green',ico:'bi-hospital',ibg:'var(--green-l)',ic:'var(--green)'},
+    {date:'Mercredi 28 mai 2026',h:'08h00',lieu:'Clinique Saint-Augustin — Bilan sanguin',type:'VSL',desc:'Bilan mensuel',st:'En attente',sc:'b-amber',ico:'bi-truck',ibg:'var(--amber-l)',ic:'var(--amber)'},
+  ];
+  const past=[
+    {date:'13 mai 2026',h:'09h15',lieu:'CHU de Bordeaux — Oncologie',type:'VSL',st:'Réalisé',sc:'b-gray'},
+    {date:'6 mai 2026',h:'14h00',lieu:'Cabinet Dr. Martin',type:'TAP',st:'Réalisé',sc:'b-gray'},
+    {date:'29 avril 2026',h:'09h30',lieu:'CHU de Bordeaux — Oncologie',type:'VSL',st:'Réalisé',sc:'b-gray'},
+    {date:'22 avril 2026',h:'10h00',lieu:'Clinique Saint-Augustin',type:'VSL',st:'Réalisé',sc:'b-gray'},
+  ];
+  return `${tabsHtml}
+    <div data-tab="tr-upcoming">
+      ${up.map(t=>`<div class="card" style="margin-bottom:10px"><div class="card-body" style="display:flex;gap:12px;align-items:flex-start;padding:16px 18px">
+        <div class="li-ico" style="background:${t.ibg||'var(--accent-l)'};color:${t.ic||'var(--accent-d)'}"><i class="bi ${t.ico||'bi-truck'}"></i></div>
+        <div style="flex:1"><div class="li-t">${t.lieu}</div>
+        <div class="li-meta"><span class="mc"><i class="bi bi-calendar3"></i>${t.date}</span><span class="mc"><i class="bi bi-clock"></i>${t.h}</span><span class="mc">${t.type}</span></div>
+        <div style="font-size:.76rem;color:var(--muted);margin-top:4px">${t.desc||''}</div></div>
+        <span class="badge ${t.sc}">${t.st}</span>
+      </div></div>`).join('')}
+    </div>
+    <div data-tab="tr-past" style="display:none">
+      ${past.map(t=>`<div class="list-item" style="background:#fff;padding:13px 16px;border-radius:9px;border:1px solid var(--border);margin-bottom:8px">
+        <div class="li-ico" style="background:#F1F5F9;color:#94A3B8"><i class="bi bi-truck"></i></div>
+        <div class="li-d"><div class="li-t" style="color:var(--muted)">${t.lieu}</div>
+        <div class="li-meta"><span class="mc"><i class="bi bi-calendar3"></i>${t.date}</span><span class="mc">${t.type}</span></div></div>
+        <span class="badge ${t.sc}">${t.st}</span>
+      </div>`).join('')}
+    </div>`;
+}
+
+function pDocs(){
+  const docs=[
+    {name:'Bon de transport #BT-2026-042',date:'15 mai 2026',src:'Dr. Claire Lefèvre',type:'Bon de transport',color:'var(--accent)'},
+    {name:'Bon de transport #BT-2026-038',date:'8 mai 2026',src:'Dr. Claire Lefèvre',type:'Bon de transport',color:'var(--accent)'},
+    {name:'Ordonnance longue durée',date:'2 avril 2026',src:'Dr. Claire Lefèvre',type:'Ordonnance',color:'var(--green)'},
+  ];
+  return `
+    <div class="alert-bar alert-info" style="margin-bottom:16px"><i class="bi bi-info-circle-fill"></i><span>Vos documents sont générés par votre médecin et transmis automatiquement. Téléchargez-les avant votre transport.</span></div>
+    <div class="card">
+      <div class="card-head"><span class="card-title"><i class="bi bi-file-earmark-medical"></i>Mes documents</span></div>
+      <div class="card-body" style="display:flex;flex-direction:column;gap:10px">
+        ${docs.map(d=>`<div class="doc-card">
+          <div class="doc-ico" style="background:${d.color}18;color:${d.color}"><i class="bi bi-file-earmark-text"></i></div>
+          <div style="flex:1"><div class="doc-name">${d.name}</div><div class="doc-date">${d.date} · ${d.src}</div></div>
+          <span class="badge b-gray" style="font-size:.65rem">${d.type}</span>
+          <i class="bi bi-download" style="margin-left:8px;color:var(--muted);font-size:1rem"></i>
+        </div>`).join('')}
+      </div>
+    </div>
+    <div class="card" style="margin-top:12px">
+      <div class="card-body" style="padding:20px;text-align:center">
+        <i class="bi bi-question-circle" style="font-size:2rem;color:var(--accent);margin-bottom:10px;display:block"></i>
+        <p style="font-size:.85rem;color:var(--muted);margin-bottom:12px">Un document est manquant ou vous avez une question ? Contactez votre médecin ou l'équipe CareWay.</p>
+        <button class="btn-s" onclick="navigate('messages')"><i class="bi bi-chat-dots"></i> Envoyer un message</button>
+      </div>
+    </div>`;
+}
+
+function pMsgs(){
+  return `
+    <div class="card" style="margin-bottom:12px">
+      <div class="card-head"><span class="card-title"><i class="bi bi-chat-dots"></i>Votre équipe soignante</span></div>
+      <div class="card-body" style="display:flex;flex-direction:column;gap:10px">
+        <div class="msg-bub" style="border-left:3px solid var(--accent)">
+          <div class="msg-head">
+            <div class="li-ico" style="background:var(--accent-l);color:var(--accent-d);width:34px;height:34px;flex-shrink:0"><i class="bi bi-person-badge"></i></div>
+            <div><div style="font-size:.84rem;font-weight:600">Dr. Claire Lefèvre</div><div style="font-size:.71rem;color:var(--muted)">Aujourd'hui, 10h15</div></div>
+            <span class="badge b-accent" style="margin-left:auto">Nouveau</span>
+          </div>
+          <div class="msg-txt">"Bonjour Sophie, votre bon de transport pour le 20 mai est prêt. Pensez à prendre votre dossier médical. La séance de chimiothérapie est prévue de 10h à 13h environ."</div>
+        </div>
+        <div class="msg-bub">
+          <div class="msg-head">
+            <div class="li-ico" style="background:#F1F5F9;color:var(--muted);width:34px;height:34px;flex-shrink:0"><i class="bi bi-truck"></i></div>
+            <div><div style="font-size:.84rem;font-weight:600">Marc Dubois — Transporteur</div><div style="font-size:.71rem;color:var(--muted)">Hier, 17h40</div></div>
+          </div>
+          <div class="msg-txt">"Bonjour Madame Moreau, je serai devant votre domicile le 20 mai à 09h15. Je conduis un Citroën Berlingo blanc, plaque AA-123-BB. N'hésitez pas à m'appeler si besoin."</div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div style="font-size:.82rem;font-weight:600;margin-bottom:6px">Écrire un message</div>
+        <textarea class="msg-input" placeholder="Votre message à l'équipe CareWay..."></textarea>
+        <button class="btn-p" style="margin-top:10px;width:100%"><i class="bi bi-send"></i> Envoyer</button>
+      </div>
+    </div>
+    <div class="card" style="margin-top:12px">
+      <div class="card-body" style="padding:14px 18px">
+        <div style="font-size:.78rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Urgence</div>
+        <div style="font-size:.83rem;margin-bottom:4px">Pour toute urgence médicale, appelez le <strong>15</strong> (SAMU).</div>
+        <div style="font-size:.83rem;color:var(--muted)">Pour un problème de transport : <strong>05 56 XX XX XX</strong></div>
+      </div>
+    </div>`;
+}
+
+/* ══════════════════════════════════════════════════
+   AIDANT
+══════════════════════════════════════════════════ */
+function aDash(){
+  return `
+    <div class="greeting"><span class="greeting-ico"><i class="bi bi-people-fill"></i></span><div>
+      <h2>Bonjour, ${firstName}</h2>
+      <p>Sophie Moreau a <strong>2 transports confirmés</strong> cette semaine. Aucune alerte en cours.</p>
+    </div></div>
+
+    <div class="g-main">
+      <div class="stack">
+        <div class="card" style="border-left:4px solid var(--accent)">
+          <div class="card-head"><span class="card-title"><i class="bi bi-person-heart"></i>Sophie Moreau</span><span class="badge b-green"><i class="bi bi-shield-check"></i> Tout va bien</span></div>
+          <div class="card-body">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+              <div style="width:52px;height:52px;border-radius:50%;background:var(--accent-l);display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:700;color:var(--accent-d);flex-shrink:0">SM</div>
+              <div><div style="font-size:.94rem;font-weight:700">Sophie Moreau</div><div style="font-size:.8rem;color:var(--muted)">Patiente · 76 ans · Oncologie — CHU Bordeaux</div><div style="font-size:.78rem;color:var(--muted);margin-top:2px">Médecin référent : Dr. Claire Lefèvre</div></div>
+            </div>
+            <div class="tl">
+              <div class="tl-item"><div class="tl-left"><div class="tl-dot done"></div><div class="tl-line"></div></div><div class="tl-content" style="padding-bottom:14px"><div class="tl-txt">Transport réalisé — CHU Bordeaux</div><div class="tl-sub">13 mai 2026 · Chimiothérapie</div></div></div>
+              <div class="tl-item"><div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-content" style="padding-bottom:14px"><div class="tl-txt">Prochain transport — CHU Bordeaux</div><div class="tl-sub">Mardi 20 mai 2026 · 09h30 · <strong>Confirmé</strong></div></div></div>
+              <div class="tl-item"><div class="tl-left"><div class="tl-dot off"></div></div><div class="tl-content"><div class="tl-txt" style="color:var(--muted)">Transport — Cabinet Dr. Martin</div><div class="tl-sub">Vendredi 23 mai 2026 · 13h45</div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><span class="card-title"><i class="bi bi-truck"></i>Prochain transport de Sophie</span><span class="card-act" onclick="navigate('transports')">Voir tout</span></div>
+          <div class="card-body">
+            <div style="display:flex;align-items:center;gap:12px">
+              <div class="li-ico" style="background:var(--accent-l);color:var(--accent-d)"><i class="bi bi-truck"></i></div>
+              <div style="flex:1">
+                <div class="li-t">CHU de Bordeaux — Oncologie</div>
+                <div class="li-meta"><span class="mc"><i class="bi bi-calendar3"></i>Mardi 20 mai 2026</span><span class="mc"><i class="bi bi-clock"></i>09h30</span><span class="mc">VSL</span></div>
+                <div style="font-size:.76rem;color:var(--muted);margin-top:4px">Conducteur : Marc Dubois</div>
+              </div>
+              <span class="badge b-green">Confirmé</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stack">
+        <div class="card">
+          <div class="card-head"><span class="card-title"><i class="bi bi-bell"></i>Alertes & rappels</span></div>
+          <div class="card-body" style="padding:14px 18px">
+            <div class="alert-bar alert-ok" style="margin-bottom:10px"><i class="bi bi-check-circle-fill"></i><span>Aucune alerte médicale pour Sophie</span></div>
+            <div style="font-size:.8rem;font-weight:600;margin-bottom:8px;color:var(--muted)">Rappels automatiques</div>
+            <div style="font-size:.82rem;display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;align-items:center;gap:8px"><i class="bi bi-bell" style="color:var(--accent-d)"></i>Rappel 24h avant chaque transport</div>
+              <div style="display:flex;align-items:center;gap:8px"><i class="bi bi-bell" style="color:var(--accent-d)"></i>Notification lorsque le conducteur est en route</div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head"><span class="card-title"><i class="bi bi-chat-dots"></i>Messages récents</span><span class="card-act" onclick="navigate('messages')">Tout voir</span></div>
+          <div class="card-body" style="padding:0 18px">
+            <div class="list-item" style="padding-top:12px">
+              <div class="li-ico" style="background:var(--accent-l);color:var(--accent-d);width:34px;height:34px"><i class="bi bi-person-badge" style="font-size:.9rem"></i></div>
+              <div class="li-d"><div class="li-t" style="font-size:.84rem">Dr. Lefèvre</div><div class="li-s">"Le transport du 20 mai est confirmé..."</div></div>
+              <span class="badge b-accent">Nouveau</span>
+            </div>
+            <div class="list-item">
+              <div class="li-ico" style="background:#F1F5F9;color:var(--muted);width:34px;height:34px"><i class="bi bi-truck" style="font-size:.9rem"></i></div>
+              <div class="li-d"><div class="li-t" style="font-size:.84rem">Marc Dubois</div><div class="li-s">"Bonjour, je serai là le 20 mai à 09h15..."</div></div>
+              <span class="badge b-accent">Nouveau</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function aProches(){
+  return `
+    <div class="greeting"><span class="greeting-ico"><i class="bi bi-people-fill"></i></span><div>
+      <h2>Mes proches</h2><p>Gérez les personnes que vous accompagnez dans leur parcours de soins.</p>
+    </div></div>
+    <div class="card" style="margin-bottom:14px">
+      <div class="card-head"><span class="card-title"><i class="bi bi-person-heart"></i>Proche suivi</span></div>
+      <div class="card-body">
+        <div class="pat-card" style="margin-bottom:10px">
+          <div class="pat-av" style="background:var(--accent-l);color:var(--accent-d)">SM</div>
+          <div style="flex:1"><div class="pat-name">Sophie Moreau</div><div class="pat-info">76 ans · Oncologie · CHU Bordeaux · Dr. Lefèvre</div></div>
+          <div class="health-dot hd-ok" title="Aucune alerte"></div>
+          <button class="cta-sm" onclick="navigate('transports')">Voir les transports</button>
+        </div>
+        <div style="background:var(--accent-l);border-radius:9px;padding:12px 14px;font-size:.82rem;color:var(--accent-d)">
+          <i class="bi bi-info-circle"></i> <strong>Statut :</strong> Suivi actif depuis le 3 mars 2026 · Prochain transport dans 2 jours
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body" style="text-align:center;padding:24px">
+        <div class="li-ico" style="background:var(--accent-l);color:var(--accent-d);margin:0 auto 12px;width:48px;height:48px;border-radius:50%"><i class="bi bi-person-plus" style="font-size:1.2rem"></i></div>
+        <p style="font-size:.85rem;color:var(--muted);margin-bottom:12px">Vous pouvez suivre plusieurs proches et recevoir toutes leurs notifications en un seul endroit.</p>
+        <button class="btn-s">Ajouter un proche</button>
+      </div>
+    </div>`;
+}
+
+function aTransports(){
+  const list=[
+    {date:'Mardi 20 mai 2026',h:'09h30',lieu:'CHU de Bordeaux — Oncologie',type:'VSL',cond:'Marc Dubois',st:'Confirmé',sc:'b-green'},
+    {date:'Vendredi 23 mai 2026',h:'13h45',lieu:'Cabinet Dr. Martin — Cardiologie',type:'TAP',cond:'À attribuer',st:'Confirmé',sc:'b-green'},
+    {date:'Mercredi 28 mai 2026',h:'08h00',lieu:'Clinique Saint-Augustin',type:'VSL',cond:'À attribuer',st:'En attente',sc:'b-amber'},
+  ];
+  return `
+    <div class="greeting" style="margin-bottom:16px"><span class="greeting-ico"><i class="bi bi-truck"></i></span><div>
+      <h2>Transports de Sophie</h2><p>3 transports planifiés pour les 2 prochaines semaines.</p>
+    </div></div>
+    <div class="stack">
+      ${list.map(t=>`<div class="card"><div class="card-body" style="display:flex;gap:12px;align-items:flex-start;padding:16px 18px">
+        <div class="li-ico" style="background:var(--accent-l);color:var(--accent-d)"><i class="bi bi-truck"></i></div>
+        <div style="flex:1"><div class="li-t">${t.lieu}</div>
+        <div class="li-meta"><span class="mc"><i class="bi bi-calendar3"></i>${t.date}</span><span class="mc"><i class="bi bi-clock"></i>${t.h}</span><span class="mc">${t.type}</span></div>
+        <div style="font-size:.76rem;color:var(--muted);margin-top:4px"><i class="bi bi-person"></i> ${t.cond}</div></div>
+        <span class="badge ${t.sc}">${t.st}</span>
+      </div></div>`).join('')}
+    </div>`;
+}
+
+function aMsgs(){
+  return `
+    <div class="card" style="margin-bottom:12px">
+      <div class="card-head"><span class="card-title"><i class="bi bi-chat-dots"></i>Équipe de soins de Sophie</span></div>
+      <div class="card-body" style="display:flex;flex-direction:column;gap:10px">
+        <div class="msg-bub" style="border-left:3px solid var(--accent)">
+          <div class="msg-head">
+            <div class="li-ico" style="background:var(--accent-l);color:var(--accent-d);width:34px;height:34px;flex-shrink:0"><i class="bi bi-person-badge"></i></div>
+            <div><div style="font-size:.84rem;font-weight:600">Dr. Claire Lefèvre</div><div style="font-size:.71rem;color:var(--muted)">Aujourd'hui, 10h15</div></div>
+            <span class="badge b-accent" style="margin-left:auto">Nouveau</span>
+          </div>
+          <div class="msg-txt">"Bonjour, je confirme que le transport de Sophie pour le 20 mai est organisé. La séance dure environ 3h. Pensez à lui rappeler son dossier médical."</div>
+        </div>
+        <div class="msg-bub" style="border-left:3px solid var(--accent)">
+          <div class="msg-head">
+            <div class="li-ico" style="background:#F1F5F9;color:var(--muted);width:34px;height:34px;flex-shrink:0"><i class="bi bi-truck"></i></div>
+            <div><div style="font-size:.84rem;font-weight:600">Marc Dubois — Transporteur</div><div style="font-size:.71rem;color:var(--muted)">Hier, 17h40</div></div>
+            <span class="badge b-accent" style="margin-left:auto">Nouveau</span>
+          </div>
+          <div class="msg-txt">"Bonjour, je serai au domicile de Mme Moreau le 20 mai à 09h15 pour la conduire au CHU. Je la déposerai à l'entrée principale."</div>
+        </div>
+      </div>
+    </div>
+    <div class="card"><div class="card-body">
+      <div style="font-size:.82rem;font-weight:600;margin-bottom:6px">Écrire à l'équipe soignante</div>
+      <textarea class="msg-input" placeholder="Votre question pour Dr. Lefèvre ou l'équipe CareWay..."></textarea>
+      <button class="btn-p" style="margin-top:10px;width:100%"><i class="bi bi-send"></i> Envoyer</button>
+    </div></div>`;
+}
+
+/* ══════════════════════════════════════════════════
+   PRESCRIPTEUR
+══════════════════════════════════════════════════ */
+function rxAlert(){return`<div class="alert-bar alert-warn"><i class="bi bi-exclamation-triangle-fill"></i><span>2 bons de transport expirent dans moins de 7 jours. <strong style="cursor:pointer;text-decoration:underline" onclick="navigate('prescriptions')">Renouveler maintenant</strong></span></div>`;}
+
+function rxDash(){
+  const stats=[
+    {i:'bi-people',v:8,l:'Patients actifs',s:'+1 ce mois'},
+    {i:'bi-file-medical',v:14,l:'Prescriptions émises',s:'Ce mois'},
+    {i:'bi-truck',v:3,l:'Transports en cours',s:"Aujourd'hui"},
+    {i:'bi-exclamation-circle',v:2,l:'En attente',s:'À traiter',w:true},
+  ];
+  const pats=[
+    {ini:'SM',n:'Sophie Moreau',info:'Oncologie · CHU Bordeaux',c:'var(--accent-d)',cb:'var(--accent-l)',h:'hd-ok',ht:'Suivi normal'},
+    {ini:'PD',n:'Pierre Durand',info:'Cardiologie · Clinique du Lac',c:'#5B21B6',cb:'#F5F3FF',h:'hd-ok',ht:'Suivi normal'},
+    {ini:'ML',n:'Marie Leblanc',info:'Diabétologie · CHU Bordeaux',c:'var(--amber)',cb:'var(--amber-l)',h:'hd-warn',ht:'BT expire bientôt'},
+    {ini:'JR',n:'Jacques Renault',info:'Neurologie · Clinique Mérignac',c:'var(--green)',cb:'var(--green-l)',h:'hd-warn',ht:'BT expire bientôt'},
+  ];
+  return `
+    ${rxAlert()}
+    <div class="g4" style="margin-bottom:18px">
+      ${stats.map(s=>`<div class="stat-mini"><div class="s-ico"><i class="bi ${s.i}"></i></div><div class="s-val" data-count="${s.v}">${s.v}</div><div class="s-lbl">${s.l}</div><div class="s-sub ${s.w?'warn':''}">${s.w?'<i class="bi bi-exclamation-circle"></i>':''} ${s.s}</div></div>`).join('')}
+    </div>
+    <div class="g-main">
+      <div class="card">
+        <div class="card-head"><span class="card-title"><i class="bi bi-people"></i>Patients</span><span class="card-act" onclick="navigate('patients')">Voir tout (8)</span></div>
+        <div class="card-body" style="display:flex;flex-direction:column;gap:9px">
+          ${pats.map(p=>`<div class="pat-card">
+            <div class="pat-av" style="background:${p.cb};color:${p.c}">${p.ini}</div>
+            <div style="flex:1"><div class="pat-name">${p.n}</div><div class="pat-info">${p.info}</div></div>
+            <div title="${p.ht}" class="health-dot ${p.h}" style="margin-right:6px"></div>
+            <button class="cta-sm">Prescrire</button>
+          </div>`).join('')}
+        </div>
+      </div>
+      <div class="stack">
+        <div class="card">
+          <div class="card-head"><span class="card-title"><i class="bi bi-truck"></i>Transports du jour</span></div>
+          <div class="card-body" style="padding:0 18px">
+            ${[
+              {p:'Sophie Moreau',h:'09h30',d:'CHU Bordeaux',t:'VSL',s:'En cours',sc:'b-teal'},
+              {p:'Pierre Durand',h:'14h00',d:'Clinique du Lac',t:'TAP',s:'Confirmé',sc:'b-green'},
+              {p:'Marie Leblanc',h:'16h30',d:'CHU Bordeaux',t:'VSL',s:'Confirmé',sc:'b-green'},
+            ].map(m=>`<div class="list-item ${m===undefined?'':''}"style="padding:10px 0">
+              <div style="text-align:center;width:44px;flex-shrink:0"><div style="font-size:.9rem;font-weight:700;color:var(--accent-d)">${m.h}</div></div>
+              <div style="width:1px;background:var(--border);flex-shrink:0;margin:0 4px"></div>
+              <div class="li-d"><div class="li-t" style="font-size:.83rem">${m.p}</div><div class="li-s">${m.d} · ${m.t}</div></div>
+              <span class="badge ${m.sc}">${m.s}</span>
+            </div>`).join('')}
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head"><span class="card-title"><i class="bi bi-file-medical"></i>BT urgents</span></div>
+          <div class="card-body" style="display:flex;flex-direction:column;gap:8px">
+            ${[{n:'BT-2026-039 — Marie Leblanc',e:'22 mai',p:30},{n:'BT-2026-038 — Jacques Renault',e:'24 mai',p:45}].map(b=>`
+              <div class="rx-row">
+                <div class="rx-icon"><i class="bi bi-file-earmark-text"></i></div>
+                <div style="flex:1"><div class="rx-name">${b.n}</div><div class="rx-date">Expire le ${b.e}</div>
+                <div class="exp-bar"><div class="exp-fill" style="width:${b.p}%;background:var(--amber)"></div></div></div>
+                <button class="cta-sm">Renouveler</button>
+              </div>`).join('')}
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function rxPatients(){
+  const list=[
+    {ini:'SM',n:'Sophie Moreau',age:'76 ans',info:'Oncologie · CHU Bordeaux',nbt:2,h:'hd-ok',c:'var(--accent-d)',cb:'var(--accent-l)'},
+    {ini:'PD',n:'Pierre Durand',age:'82 ans',info:'Cardiologie · Clinique du Lac',nbt:1,h:'hd-ok',c:'#5B21B6',cb:'#F5F3FF'},
+    {ini:'ML',n:'Marie Leblanc',age:'68 ans',info:'Diabétologie · CHU Bordeaux',nbt:1,h:'hd-warn',c:'var(--amber)',cb:'var(--amber-l)'},
+    {ini:'JR',n:'Jacques Renault',age:'71 ans',info:'Neurologie · Clinique Mérignac',nbt:1,h:'hd-warn',c:'var(--green)',cb:'var(--green-l)'},
+    {ini:'CB',n:'Christine Bernard',age:'79 ans',info:'Rhumatologie · CHU Bordeaux',nbt:1,h:'hd-ok',c:'#0EA5E9',cb:'#E0F7FF'},
+  ];
+  return `
+    <div class="greeting" style="margin-bottom:16px"><span class="greeting-ico"><i class="bi bi-people-fill"></i></span><div>
+      <h2>Mes patients</h2><p>8 patients suivis. 2 nécessitent un renouvellement de bon de transport.</p>
+    </div></div>
+    <div class="card">
+      <div class="card-body" style="display:flex;flex-direction:column;gap:9px">
+        ${list.map(p=>`<div class="pat-card">
+          <div class="pat-av" style="background:${p.cb};color:${p.c}">${p.ini}</div>
+          <div style="flex:1"><div class="pat-name">${p.n}</div><div class="pat-info">${p.age} · ${p.info}</div></div>
+          <span class="badge b-gray" style="font-size:.66rem">${p.nbt} BT actif${p.nbt>1?'s':''}</span>
+          <div class="health-dot ${p.h}" title="${p.h==='hd-ok'?'Suivi normal':'Action requise'}" style="margin-left:8px"></div>
+          <button class="cta-sm" style="margin-left:8px">Dossier</button>
+        </div>`).join('')}
+      </div>
+    </div>`;
+}
+
+function rxPrescriptions(){
+  const list=[
+    {ref:'BT-2026-042',pat:'Sophie Moreau',date:'15 mai 2026',exp:'15 juin 2026',pct:90,st:'Actif',sc:'b-green'},
+    {ref:'BT-2026-041',pat:'Pierre Durand',date:'14 mai 2026',exp:'14 juin 2026',pct:90,st:'Actif',sc:'b-green'},
+    {ref:'BT-2026-039',pat:'Marie Leblanc',date:'10 mai 2026',exp:'22 mai 2026',pct:25,st:'Expire bientôt',sc:'b-amber'},
+    {ref:'BT-2026-038',pat:'Jacques Renault',date:'8 mai 2026',exp:'24 mai 2026',pct:35,st:'Expire bientôt',sc:'b-amber'},
+    {ref:'BT-2026-035',pat:'Christine Bernard',date:'2 mai 2026',exp:'2 juin 2026',pct:75,st:'Actif',sc:'b-green'},
+  ];
+  return `
+    ${rxAlert()}
+    <div class="card" style="margin-bottom:12px">
+      <div class="card-head"><span class="card-title"><i class="bi bi-file-medical"></i>Prescriptions en cours</span>
+        <button class="btn-p" style="padding:5px 12px;font-size:.78rem"><i class="bi bi-plus-lg"></i> Nouvelle</button>
+      </div>
+      <div class="card-body" style="display:flex;flex-direction:column;gap:9px">
+        ${list.map(p=>`<div class="rx-row">
+          <div class="rx-icon"><i class="bi bi-file-earmark-text"></i></div>
+          <div style="flex:1">
+            <div class="rx-name">${p.ref} — ${p.pat}</div>
+            <div class="rx-date">Émis le ${p.date} · Expire le ${p.exp}</div>
+            <div class="exp-bar"><div class="exp-fill" style="width:${p.pct}%;background:${p.pct>60?'var(--green)':p.pct>40?'var(--amber)':'var(--red)'}"></div></div>
+          </div>
+          <span class="badge ${p.sc}" style="flex-shrink:0">${p.st}</span>
+          <button class="cta-sm" style="margin-left:8px">Renouveler</button>
+        </div>`).join('')}
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head"><span class="card-title"><i class="bi bi-plus-circle"></i>Nouvelle prescription de transport</span></div>
+      <div class="card-body panel-form" style="background:var(--accent-l);border:none;padding:16px 18px">
+        <div class="form-row">
+          <div class="form-field"><div class="form-label">Patient</div><select class="form-input"><option>Sophie Moreau</option><option>Pierre Durand</option><option>Marie Leblanc</option></select></div>
+          <div class="form-field"><div class="form-label">Type de transport</div><select class="form-input"><option>VSL</option><option>TAP</option><option>Ambulance</option></select></div>
+        </div>
+        <div class="form-row">
+          <div class="form-field"><div class="form-label">Date de début</div><input type="date" class="form-input" value="2026-05-18"/></div>
+          <div class="form-field"><div class="form-label">Motif</div><input type="text" class="form-input" placeholder="Chimiothérapie, consultation..."/></div>
+        </div>
+        <button class="btn-p"><i class="bi bi-file-earmark-plus"></i> Générer le bon</button>
+      </div>
+    </div>`;
+}
+
+function rxMsgs(){
+  return `
+    <div class="card"><div class="card-head"><span class="card-title"><i class="bi bi-chat-dots"></i>Messages</span></div>
+      <div class="card-body" style="display:flex;flex-direction:column;gap:10px">
+        <div class="msg-bub" style="border-left:3px solid var(--accent)">
+          <div class="msg-head"><div class="li-ico" style="background:var(--accent-l);color:var(--accent-d);width:34px;height:34px;flex-shrink:0"><i class="bi bi-building"></i></div>
+          <div><div style="font-size:.84rem;font-weight:600">Coordination CareWay</div><div style="font-size:.71rem;color:var(--muted)">Aujourd'hui, 09h00</div></div></div>
+          <div class="msg-txt">"Le transport de Mme Sophie Moreau vers le CHU de Bordeaux est en cours d'exécution (départ 09h30, conducteur Marc Dubois)."</div>
+        </div>
+        <div class="empty-s"><i class="bi bi-chat-dots"></i><p>Pas d'autres messages</p></div>
+      </div>
+    </div>`;
+}
+
+/* ══════════════════════════════════════════════════
+   TRANSPORTEUR
+══════════════════════════════════════════════════ */
+const TR_MISSIONS=[
+  {h:'09',m:'30',from:'12 rue des Acacias',to:'CHU Bordeaux',pat:'Sophie Moreau',age:'76 ans',type:'VSL',tc:'t-vsl',st:'En cours',active:true},
+  {h:'11',m:'45',from:'CHU Bordeaux',to:'12 rue des Acacias',pat:'Sophie Moreau (retour)',age:'76 ans',type:'VSL',tc:'t-vsl',st:'Confirmé',active:false},
+  {h:'14',m:'00',from:'15 av. Thiers',to:'Clinique Saint-Aug.',pat:'Pierre Durand',age:'82 ans',type:'TAP',tc:'t-tap',st:'Confirmé',active:false},
+  {h:'16',m:'30',from:'Clinique Saint-Aug.',to:'15 av. Thiers',pat:'Pierre Durand (retour)',age:'82 ans',type:'TAP',tc:'t-tap',st:'Confirmé',active:false},
+];
+
+function trDash(){
+  setTimeout(()=>startLiveProgress(),100);
+  const mission=TR_MISSIONS[0];
+  return `
+    <div class="greeting"><span class="greeting-ico"><i class="bi bi-truck"></i></span><div>
+      <h2>Bonjour, ${firstName}</h2>
+      <p><strong>4 missions</strong> aujourd'hui · ${shortDate()} · Mission en cours</p>
+    </div></div>
+
+    <div class="live-mission">
+      <div class="live-header"><div class="live-dot"></div><span class="live-badge">Mission en cours</span></div>
+      <div class="live-route">${mission.from} → ${mission.to}</div>
+      <div class="live-pat"><i class="bi bi-person-fill"></i> ${mission.pat} · ${mission.age} · ${mission.type}</div>
+      <div class="route-prog">
+        <div class="rp-bar"><div class="rp-fill" id="live-fill" style="width:52%"></div></div>
+        <div class="rp-labels"><span>Départ 09h30</span><span>CHU Bordeaux</span></div>
+      </div>
+      <div class="live-eta"><i class="bi bi-clock"></i><span id="live-eta-txt">Arrivée estimée dans 12 min</span></div>
+    </div>
+
+    <div class="g-main">
+      <div class="card">
+        <div class="card-head"><span class="card-title"><i class="bi bi-calendar2-check"></i>Planning du jour</span><span class="card-act" onclick="navigate('missions')">Détails</span></div>
+        <div class="card-body" style="display:flex;flex-direction:column;gap:8px">
+          ${TR_MISSIONS.map(m=>`<div class="m-card${m.active?' active':''}">
+            <div class="m-time-col"><div class="m-hr">${m.h}h</div><div class="m-mn">${m.m}</div></div>
+            <div class="m-sep"></div>
+            <div class="m-body"><div class="m-route">${m.from} → ${m.to}</div><div class="m-pat"><i class="bi bi-person"></i> ${m.pat}</div><span class="m-type ${m.tc}">${m.type}</span></div>
+            <span class="badge ${m.active?'b-teal':'b-green'}">${m.st}</span>
+          </div>`).join('')}
+        </div>
+      </div>
+      <div class="stack">
+        <div class="g2" style="gap:10px">
+          <div class="stat-mini"><div class="s-ico"><i class="bi bi-currency-euro"></i></div><div class="s-val" data-count="87" data-suffix="€">87€</div><div class="s-lbl">Revenus du jour</div></div>
+          <div class="stat-mini"><div class="s-ico"><i class="bi bi-geo-alt"></i></div><div class="s-val" data-count="34" data-suffix="km">34km</div><div class="s-lbl">Km aujourd'hui</div></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><span class="card-title"><i class="bi bi-person-lines-fill"></i>Prochain patient</span></div>
+          <div class="card-body" style="padding:14px 18px">
+            <div style="font-weight:600;margin-bottom:4px">Sophie Moreau — 76 ans</div>
+            <div style="font-size:.79rem;color:var(--muted);margin-bottom:8px">Retour vers 11h45 · Rue des Acacias</div>
+            <div style="font-size:.79rem;background:var(--amber-l);border-radius:7px;padding:8px 10px;color:var(--amber)"><i class="bi bi-info-circle"></i> Patiente mobilité réduite · Prévoir aide à la montée</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head"><span class="card-title"><i class="bi bi-graph-up"></i>Ce mois</span><span class="card-act" onclick="navigate('performance')">Voir tout</span></div>
+          <div class="card-body" style="padding:0 18px">
+            ${[{l:'Ponctualité',v:'97 %',p:97},{l:'Missions',v:'23',p:92}].map(m=>`<div class="list-item" style="padding:10px 0"><div class="li-d"><div class="li-t" style="font-size:.83rem">${m.l}</div><div class="prog-bar" style="margin-top:5px"><div class="prog-fill" style="width:${m.p}%"></div></div></div><strong style="font-size:.9rem;margin-left:10px">${m.v}</strong></div>`).join('')}
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function trMissions(){
+  const next=[
+    {date:'Mer. 21 mai',from:'Bordeaux',to:'CHU Pellegrin',pat:'Marie Leblanc',type:'VSL',tc:'t-vsl'},
+    {date:'Jeu. 22 mai',from:'Mérignac',to:'Clinique Mérignac',pat:'Jacques Renault',type:'AMBU',tc:'t-ambu'},
+    {date:'Ven. 23 mai',from:'Bordeaux',to:'Cabinet Dr. Martin',pat:'Sophie Moreau',type:'TAP',tc:'t-tap'},
+  ];
+  return `
+    <div class="greeting" style="margin-bottom:16px"><span class="greeting-ico"><i class="bi bi-truck"></i></span><div>
+      <h2>Mes missions</h2><p>4 missions aujourd'hui · 23 ce mois</p>
+    </div></div>
+    <div class="card" style="margin-bottom:14px">
+      <div class="card-head"><span class="card-title"><i class="bi bi-truck"></i>Aujourd'hui — ${shortDate()}</span></div>
+      <div class="card-body" style="display:flex;flex-direction:column;gap:8px">
+        ${TR_MISSIONS.map(m=>`<div class="m-card${m.active?' active':''}">
+          <div class="m-time-col"><div class="m-hr">${m.h}h</div><div class="m-mn">${m.m}</div></div>
+          <div class="m-sep"></div>
+          <div class="m-body">
+            <div class="m-route">${m.from} → ${m.to}</div>
+            <div class="m-pat"><i class="bi bi-person"></i> ${m.pat} · ${m.age}</div>
+            <span class="m-type ${m.tc}">${m.type}</span>
+          </div>
+          <span class="badge ${m.active?'b-teal':'b-green'}">${m.st}</span>
+        </div>`).join('')}
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head"><span class="card-title"><i class="bi bi-calendar2"></i>Prochaines missions</span></div>
+      <div class="card-body" style="display:flex;flex-direction:column;gap:8px">
+        ${next.map(m=>`<div class="m-card">
+          <div class="m-time-col" style="font-size:.75rem;color:var(--muted);text-align:center;line-height:1.3;padding-top:4px">${m.date}</div>
+          <div class="m-sep"></div>
+          <div class="m-body"><div class="m-route">${m.from} → ${m.to}</div><div class="m-pat"><i class="bi bi-person"></i> ${m.pat}</div><span class="m-type ${m.tc}">${m.type}</span></div>
+          <span class="badge b-green">Confirmé</span>
+        </div>`).join('')}
+      </div>
+    </div>`;
+}
+
+function svgDonut(pct,color,size=80){
+  const r=30,c=50,circ=2*Math.PI*r;
+  const dash=pct/100*circ;
+  return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" style="transform:rotate(-90deg)">
+    <circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="#E2E8F0" stroke-width="10"/>
+    <circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="${color}" stroke-width="10" stroke-dasharray="${dash} ${circ}" stroke-linecap="round"/>
+  </svg>`;
+}
+
+function trPerf(){
+  const donuts=[
+    {l:'Ponctualité',v:'97%',pct:97,color:'var(--accent)'},
+    {l:'Satisfaction',v:'4.8/5',pct:96,color:'var(--green)'},
+    {l:'Missions',v:'23/25',pct:92,color:'#7C3AED'},
+  ];
+  const months=[
+    {m:'Janv.',v:18},{m:'Févr.',v:21},{m:'Mars',v:20},{m:'Avr.',v:24},{m:'Mai',v:23,cur:true},
+  ];
+  const maxV=Math.max(...months.map(x=>x.v));
+  return `
+    <div class="greeting" style="margin-bottom:16px"><span class="greeting-ico"><i class="bi bi-graph-up"></i></span><div>
+      <h2>Performance</h2><p>Mai 2026 · Vos indicateurs du mois</p>
+    </div></div>
+    <div class="card" style="margin-bottom:14px">
+      <div class="card-head"><span class="card-title"><i class="bi bi-graph-up"></i>Indicateurs clés</span></div>
+      <div class="card-body"><div class="donut-grid">
+        ${donuts.map(d=>`<div class="donut-wrap">
+          <div class="donut-ring">${svgDonut(d.pct,d.color)}<div class="donut-val" style="color:${d.color}">${d.v}</div></div>
+          <div class="donut-lbl">${d.l}</div>
+        </div>`).join('')}
+      </div></div>
+    </div>
+    <div class="g2" style="gap:14px">
+      <div class="card">
+        <div class="card-head"><span class="card-title"><i class="bi bi-bar-chart"></i>Missions par mois</span></div>
+        <div class="card-body">
+          <div style="display:flex;align-items:flex-end;gap:8px;height:80px">
+            ${months.map(m=>`<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
+              <div style="width:100%;background:${m.cur?'var(--accent)':'#E2E8F0'};border-radius:4px 4px 0 0;height:${Math.round(m.v/maxV*70)}px;transition:height .5s;min-height:4px"></div>
+              <div style="font-size:.65rem;color:${m.cur?'var(--accent-d)':'var(--muted)'};font-weight:${m.cur?700:400}">${m.m}</div>
+            </div>`).join('')}
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head"><span class="card-title"><i class="bi bi-star-fill" style="color:#F59E0B"></i>Avis patients</span></div>
+        <div class="card-body" style="display:flex;flex-direction:column;gap:8px">
+          ${[{n:'Sophie Moreau',v:5,c:'Très professionnel et ponctuel.'},{n:'Pierre Durand',v:5,c:'Conduite douce, merci.'},{n:'Marie Leblanc',v:4,c:'RAS, très bien.'}].map(a=>`
+            <div style="font-size:.8rem;padding:8px 10px;background:#FFFBEB;border-radius:8px;border:1px solid #FEF3C7">
+              <div style="display:flex;justify-content:space-between;margin-bottom:3px"><strong>${a.n}</strong><span style="color:#F59E0B">${'★'.repeat(a.v)}</span></div>
+              <div style="color:var(--muted)">${a.c}</div>
+            </div>`).join('')}
+        </div>
+      </div>
+    </div>`;
+}
+
+function trMsgs(){
+  return `
+    <div class="card"><div class="card-head"><span class="card-title"><i class="bi bi-chat-dots"></i>Messages</span></div>
+      <div class="card-body" style="display:flex;flex-direction:column;gap:10px">
+        <div class="msg-bub" style="border-left:3px solid var(--accent)">
+          <div class="msg-head"><div class="li-ico" style="background:var(--accent-l);color:var(--accent-d);width:34px;height:34px;flex-shrink:0"><i class="bi bi-building"></i></div>
+          <div><div style="font-size:.84rem;font-weight:600">Coordination CareWay</div><div style="font-size:.71rem;color:var(--muted)">Aujourd'hui, 08h30</div></div>
+          <span class="badge b-accent" style="margin-left:auto">Nouveau</span></div>
+          <div class="msg-txt">"Bonjour Marc, rappel de votre 1ère mission : Mme Moreau au 12 rue des Acacias à 09h30, direction CHU Bordeaux (Service Oncologie). Patiente mobilité réduite, prévoir aide."</div>
+        </div>
+        <div class="empty-s"><i class="bi bi-chat-dots"></i><p>Pas d'autres messages</p></div>
+      </div>
+    </div>`;
+}
+
+/* ══════════════════════════════════════════════════
+   COORDINATEUR
+══════════════════════════════════════════════════ */
+const CR_DEMANDES=[
+  {id:'MIS-2026-090',pat:'Hélène Garnier',age:'73 ans',rx:'Dr. Leroy',date:'20 mai 2026',h:'10h00',from:'45 rue Victor Hugo, Bordeaux',to:'CHU Pellegrin — Neurologie',type:'VSL',tc:'t-vsl',st:'À affecter',sc:'b-amber'},
+  {id:'MIS-2026-089',pat:'Robert Fouquet',age:'80 ans',rx:'Dr. Benali',date:'20 mai 2026',h:'11h30',from:'7 all. des Pins, Mérignac',to:'Clinique Mérignac — Cardiologie',type:'TAP',tc:'t-tap',st:'À affecter',sc:'b-amber'},
+  {id:'MIS-2026-088',pat:'Monique Tardieu',age:'68 ans',rx:'Dr. Lefèvre',date:'21 mai 2026',h:'08h30',from:'23 rue Pasteur, Pessac',to:'CHU Bordeaux — Oncologie',type:'AMBU',tc:'t-ambu',st:'À affecter',sc:'b-amber'},
+];
+const CR_MISSIONS_TODAY=[
+  {id:'MIS-2026-085',pat:'Sophie Moreau',age:'76 ans',from:'12 rue des Acacias',to:'CHU Bordeaux — Oncologie',h:'09h30',type:'VSL',tc:'t-vsl',cond:'Marc Dubois',st:'En cours',sc:'b-teal',active:true},
+  {id:'MIS-2026-086',pat:'Pierre Durand',age:'82 ans',from:'15 av. Thiers',to:'Clinique du Lac — Cardio',h:'14h00',type:'TAP',tc:'t-tap',cond:'Isabelle Roy',st:'Confirmé',sc:'b-green',active:false},
+  {id:'MIS-2026-087',pat:'Marie Leblanc',age:'68 ans',from:'8 rue du Moulin',to:'CHU Bordeaux — Diabéto',h:'14h00',type:'VSL',tc:'t-vsl',cond:null,st:'Sans transporteur',sc:'b-red',active:false},
+  {id:'MIS-2026-084',pat:'Jacques Renault',age:'71 ans',from:'Clinique Mérignac',to:'32 bd des Capucins',h:'09h00',type:'AMBU',tc:'t-ambu',cond:'Équipe Ambulances 33',st:'Retard 20 min',sc:'b-amber',active:false},
+  {id:'MIS-2026-083',pat:'Christine Bernard',age:'79 ans',from:'18 rue Condorcet',to:'Clinique Saint-Augustin',h:'08h00',type:'VSL',tc:'t-vsl',cond:'Paul Giraud',st:'Réalisé',sc:'b-gray',active:false},
+];
+const CR_TRANSPORTEURS=[
+  {ini:'MD',n:'Marc Dubois',veh:'VSL — Citroën Berlingo',missions:4,st:'En mission',sc:'b-teal',c:'var(--accent-d)',cb:'var(--accent-l)',note:'Mission 09h30 en cours'},
+  {ini:'IR',n:'Isabelle Roy',veh:'TAP — Renault Trafic',missions:3,st:'Disponible',sc:'b-green',c:'#047857',cb:'#ECFDF5',note:'Libre jusqu\'à 14h00'},
+  {ini:'PG',n:'Paul Giraud',veh:'VSL — Peugeot Partner',missions:2,st:'Disponible',sc:'b-green',c:'var(--amber)',cb:'var(--amber-l)',note:'1 mission terminée'},
+  {ini:'A3',n:'Ambulances Aquitaine 33',veh:'AMBU — Mercedes Sprinter',missions:1,st:'Retard',sc:'b-amber',c:'var(--red)',cb:'var(--red-l)',note:'Retard 20 min signalé'},
+  {ini:'JL',n:'Jean-Claude Lamy',veh:'VSL — Citroën Berlingo',missions:0,st:'Indisponible',sc:'b-gray',c:'#64748B',cb:'#F1F5F9',note:'Congé aujourd\'hui'},
+];
+
+function crDash(){
+  setTimeout(()=>startLiveProgress(),100);
+  const stats=[
+    {i:'bi-truck',v:7,l:'Missions du jour',s:'3 terminées'},
+    {i:'bi-hourglass-split',v:3,l:'En cours / confirmées',s:'Suivi actif'},
+    {i:'bi-exclamation-circle',v:3,l:'Demandes à traiter',s:'Urgence',w:true},
+    {i:'bi-people',v:4,l:'Transporteurs actifs',s:'1 retard',w:true},
+  ];
+  return `
+    <div class="greeting"><span class="greeting-ico"><i class="bi bi-diagram-3-fill"></i></span><div>
+      <h2>Bonjour, ${firstName}</h2>
+      <p><strong>7 missions</strong> aujourd'hui · 3 demandes à affecter · 1 incident en cours</p>
+    </div></div>
+
+    <div class="alert-bar alert-warn" style="margin-bottom:18px">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+      <span><strong>MIS-2026-087</strong> — Marie Leblanc (14h00, VSL) : aucun transporteur assigné. <strong style="cursor:pointer;text-decoration:underline" onclick="navigate('demandes')">Affecter maintenant</strong></span>
+    </div>
+
+    <div class="g4" style="margin-bottom:18px">
+      ${stats.map(s=>`<div class="stat-mini"><div class="s-ico"><i class="bi ${s.i}"></i></div><div class="s-val" data-count="${s.v}">${s.v}</div><div class="s-lbl">${s.l}</div><div class="s-sub ${s.w?'warn':''}">${s.w?'<i class="bi bi-exclamation-circle"></i>':''} ${s.s}</div></div>`).join('')}
+    </div>
+
+    <div class="g-main">
+      <div class="stack">
+        <div class="live-mission">
+          <div class="live-header"><div class="live-dot"></div><span class="live-badge">Mission en cours</span><span class="badge b-blue" style="margin-left:auto;font-size:.65rem">MIS-2026-085</span></div>
+          <div class="live-route">12 rue des Acacias → CHU Bordeaux — Oncologie</div>
+          <div class="live-pat"><i class="bi bi-person-fill"></i> Sophie Moreau · 76 ans · VSL · Conducteur : Marc Dubois</div>
+          <div class="route-prog">
+            <div class="rp-bar"><div class="rp-fill" id="live-fill" style="width:52%"></div></div>
+            <div class="rp-labels"><span>Départ 09h30</span><span>CHU Bordeaux</span></div>
+          </div>
+          <div class="live-eta"><i class="bi bi-clock"></i><span id="live-eta-txt">Arrivée estimée dans 12 min</span></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><span class="card-title"><i class="bi bi-truck"></i>Missions du jour</span><span class="card-act" onclick="navigate('missions')">Voir tout (7)</span></div>
+          <div class="card-body" style="display:flex;flex-direction:column;gap:8px">
+            ${CR_MISSIONS_TODAY.slice(0,4).map(m=>`<div class="m-card${m.active?' active':''}">
+              <div class="m-time-col"><div class="m-hr">${m.h.split('h')[0]}h</div><div class="m-mn">${m.h.split('h')[1]||'00'}</div></div>
+              <div class="m-sep"></div>
+              <div class="m-body"><div class="m-route">${m.pat}</div><div class="m-pat" style="font-size:.72rem">${m.to.split('—')[0].trim()}</div><span class="m-type ${m.tc}">${m.type}</span></div>
+              <span class="badge ${m.sc}">${m.st}</span>
+            </div>`).join('')}
+          </div>
+        </div>
+      </div>
+      <div class="stack">
+        <div class="card">
+          <div class="card-head"><span class="card-title"><i class="bi bi-inbox"></i>Demandes à affecter</span><span class="nav-badge" style="background:var(--amber);border-radius:20px;padding:2px 8px;font-size:.65rem">3</span></div>
+          <div class="card-body" style="display:flex;flex-direction:column;gap:9px">
+            ${CR_DEMANDES.map(d=>`<div style="padding:10px 12px;background:#F8FAFD;border:1px solid var(--border);border-radius:9px;border-left:3px solid var(--amber)">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px">
+                <div style="font-size:.83rem;font-weight:600">${d.pat}</div>
+                <span class="badge b-amber" style="font-size:.65rem">${d.h}</span>
+              </div>
+              <div style="font-size:.74rem;color:var(--muted)">${d.to.split('—')[0].trim()} · ${d.type}</div>
+              <button class="cta-sm" style="margin-top:7px" onclick="navigate('demandes')">Affecter</button>
+            </div>`).join('')}
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head"><span class="card-title"><i class="bi bi-people"></i>Transporteurs</span><span class="card-act" onclick="navigate('transporteurs')">Voir tout</span></div>
+          <div class="card-body" style="display:flex;flex-direction:column;gap:8px">
+            ${CR_TRANSPORTEURS.slice(0,4).map(t=>`<div style="display:flex;align-items:center;gap:9px">
+              <div class="pat-av" style="background:${t.cb};color:${t.c};width:32px;height:32px;font-size:.72rem">${t.ini}</div>
+              <div style="flex:1;min-width:0"><div style="font-size:.82rem;font-weight:600">${t.n}</div><div style="font-size:.7rem;color:var(--muted)">${t.note}</div></div>
+              <span class="badge ${t.sc}" style="font-size:.65rem;flex-shrink:0">${t.st}</span>
+            </div>`).join('')}
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function crDemandes(){
+  return `
+    <div class="greeting" style="margin-bottom:16px"><span class="greeting-ico"><i class="bi bi-inbox-fill"></i></span><div>
+      <h2>Demandes de transport</h2><p>3 demandes en attente d'affectation pour les 2 prochains jours.</p>
+    </div></div>
+
+    <div class="alert-bar alert-warn" style="margin-bottom:16px">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+      <span><strong>MIS-2026-087</strong> doit partir à 14h00 aujourd'hui et n'a pas encore de transporteur.</span>
+    </div>
+
+    <div class="stack">
+      ${CR_DEMANDES.map(d=>`<div class="card">
+        <div class="card-head">
+          <span class="card-title"><i class="bi bi-file-earmark-medical"></i>${d.id} — ${d.pat}</span>
+          <span class="badge ${d.sc}">${d.st}</span>
+        </div>
+        <div class="card-body">
+          <div class="g2" style="margin-bottom:12px">
+            <div><div style="font-size:.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">Patient</div><div style="font-size:.85rem;font-weight:600">${d.pat}</div><div style="font-size:.75rem;color:var(--muted)">${d.age} · Rx : ${d.rx}</div></div>
+            <div><div style="font-size:.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">Date & heure</div><div style="font-size:.85rem;font-weight:600">${d.date} · ${d.h}</div><div style="font-size:.75rem;color:var(--muted)"><span class="m-type ${d.tc}" style="font-size:.7rem">${d.type}</span></div></div>
+          </div>
+          <div style="font-size:.8rem;margin-bottom:4px"><i class="bi bi-geo-alt-fill" style="color:var(--accent-d)"></i> <strong>Départ :</strong> ${d.from}</div>
+          <div style="font-size:.8rem;margin-bottom:12px"><i class="bi bi-hospital" style="color:var(--green)"></i> <strong>Destination :</strong> ${d.to}</div>
+          <div style="display:flex;gap:8px">
+            <div style="flex:1">
+              <div class="form-label" style="font-size:.72rem;font-weight:600;color:var(--accent-d);margin-bottom:4px">Affecter un transporteur</div>
+              <select class="form-input" style="width:100%;border-radius:7px;padding:7px 10px;font-size:.83rem;border:1px solid var(--border)">
+                <option value="">— Sélectionner —</option>
+                <option>Marc Dubois (VSL)</option>
+                <option>Isabelle Roy (TAP)</option>
+                <option>Paul Giraud (VSL)</option>
+                <option>Ambulances Aquitaine 33 (AMBU)</option>
+              </select>
+            </div>
+            <button class="btn-p" style="margin-top:20px;white-space:nowrap"><i class="bi bi-check2"></i> Confirmer</button>
+          </div>
+        </div>
+      </div>`).join('')}
+    </div>`;
+}
+
+function crMissions(){
+  return `
+    <div class="greeting" style="margin-bottom:16px"><span class="greeting-ico"><i class="bi bi-truck"></i></span><div>
+      <h2>Missions du jour</h2><p>7 missions planifiées · 1 en cours · 1 incident</p>
+    </div></div>
+
+    <div class="tabs">
+      <div class="tab active" data-tabgroup="cm" data-val="all" onclick="switchTab('cm','all')">Toutes (7)</div>
+      <div class="tab" data-tabgroup="cm" data-val="active" onclick="switchTab('cm','active')">En cours / Confirmées (3)</div>
+      <div class="tab" data-tabgroup="cm" data-val="alert" onclick="switchTab('cm','alert')">Alertes (2)</div>
+    </div>
+
+    <div data-tab="cm-all">
+      <div class="stack">
+        ${CR_MISSIONS_TODAY.map(m=>`<div class="card${m.active?' style=\"border-left:3px solid var(--accent)\"':''}">
+          <div class="card-body" style="display:flex;gap:12px;align-items:flex-start;padding:14px 18px">
+            <div class="m-time-col" style="padding-top:4px"><div class="m-hr">${m.h.split('h')[0]}h</div><div class="m-mn">${m.h.split('h')[1]||'00'}</div></div>
+            <div class="m-sep"></div>
+            <div style="flex:1">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px">
+                <div style="font-size:.88rem;font-weight:600">${m.pat}</div>
+                <span class="badge b-gray" style="font-size:.62rem">${m.id}</span>
+              </div>
+              <div style="font-size:.79rem;color:var(--muted);margin-bottom:5px">${m.from} → ${m.to}</div>
+              <div style="display:flex;align-items:center;gap:10px">
+                <span class="m-type ${m.tc}">${m.type}</span>
+                ${m.cond?`<span style="font-size:.73rem;color:var(--muted)"><i class="bi bi-person"></i> ${m.cond}</span>`:`<span style="font-size:.73rem;color:var(--red);font-weight:600"><i class="bi bi-exclamation-circle"></i> Sans transporteur</span>`}
+              </div>
+            </div>
+            <span class="badge ${m.sc}">${m.st}</span>
+          </div>
+        </div>`).join('')}
+      </div>
+    </div>
+    <div data-tab="cm-active" style="display:none">
+      <div class="stack">
+        ${CR_MISSIONS_TODAY.filter(m=>['En cours','Confirmé'].includes(m.st)).map(m=>`<div class="card">
+          <div class="card-body" style="display:flex;gap:12px;padding:14px 18px">
+            <div class="m-time-col" style="padding-top:4px"><div class="m-hr">${m.h.split('h')[0]}h</div><div class="m-mn">${m.h.split('h')[1]||'00'}</div></div>
+            <div class="m-sep"></div>
+            <div style="flex:1"><div style="font-size:.88rem;font-weight:600;margin-bottom:2px">${m.pat}</div><div style="font-size:.79rem;color:var(--muted)">${m.to}</div></div>
+            <span class="badge ${m.sc}">${m.st}</span>
+          </div>
+        </div>`).join('')}
+      </div>
+    </div>
+    <div data-tab="cm-alert" style="display:none">
+      <div class="stack">
+        ${CR_MISSIONS_TODAY.filter(m=>['Sans transporteur','Retard 20 min'].includes(m.st)).map(m=>`<div class="card" style="border-left:3px solid var(--${m.st.startsWith('Sans')?'red':'amber'})">
+          <div class="card-body" style="display:flex;gap:12px;padding:14px 18px">
+            <div class="li-ico" style="background:var(--${m.st.startsWith('Sans')?'red-l':'amber-l'});color:var(--${m.st.startsWith('Sans')?'red':'amber'})"><i class="bi bi-exclamation-triangle-fill"></i></div>
+            <div style="flex:1"><div style="font-size:.88rem;font-weight:600;margin-bottom:2px">${m.pat} — ${m.id}</div><div style="font-size:.79rem;color:var(--muted)">${m.to} · ${m.type}</div></div>
+            <span class="badge ${m.sc}">${m.st}</span>
+          </div>
+        </div>`).join('')}
+      </div>
+    </div>`;
+}
+
+function crTransporteurs(){
+  const stats=[
+    {v:4,l:'Actifs aujourd\'hui',i:'bi-truck'},
+    {v:7,l:'Missions assignées',i:'bi-calendar2-check'},
+    {v:1,l:'En retard',i:'bi-exclamation-circle',w:true},
+    {v:1,l:'Indisponible',i:'bi-x-circle'},
+  ];
+  return `
+    <div class="greeting" style="margin-bottom:16px"><span class="greeting-ico"><i class="bi bi-people-fill"></i></span><div>
+      <h2>Gestion des transporteurs</h2><p>5 transporteurs enregistrés · 4 actifs aujourd'hui</p>
+    </div></div>
+
+    <div class="g4" style="margin-bottom:18px">
+      ${stats.map(s=>`<div class="stat-mini"><div class="s-ico"><i class="bi ${s.i}"></i></div><div class="s-val" data-count="${s.v}">${s.v}</div><div class="s-lbl">${s.l}</div></div>`).join('')}
+    </div>
+
+    <div class="card">
+      <div class="card-head"><span class="card-title"><i class="bi bi-people"></i>Tableau des transporteurs</span></div>
+      <div class="card-body" style="display:flex;flex-direction:column;gap:10px">
+        ${CR_TRANSPORTEURS.map(t=>`<div class="pat-card">
+          <div class="pat-av" style="background:${t.cb};color:${t.c}">${t.ini}</div>
+          <div style="flex:1;min-width:0">
+            <div class="pat-name">${t.n}</div>
+            <div class="pat-info">${t.veh}</div>
+            <div style="font-size:.74rem;color:var(--muted);margin-top:2px">${t.note}</div>
+          </div>
+          <div style="text-align:right;flex-shrink:0">
+            <span class="badge ${t.sc}" style="margin-bottom:4px;display:inline-flex">${t.st}</span>
+            <div style="font-size:.71rem;color:var(--muted)">${t.missions} mission${t.missions>1?'s':''} auj.</div>
+          </div>
+        </div>`).join('')}
+      </div>
+    </div>`;
+}
+
+function crMsgs(){
+  return `
+    <div class="card" style="margin-bottom:12px">
+      <div class="card-head"><span class="card-title"><i class="bi bi-chat-dots"></i>Communications</span></div>
+      <div class="card-body" style="display:flex;flex-direction:column;gap:10px">
+        <div class="msg-bub" style="border-left:3px solid var(--amber)">
+          <div class="msg-head">
+            <div class="li-ico" style="background:var(--amber-l);color:var(--amber);width:34px;height:34px;flex-shrink:0"><i class="bi bi-truck"></i></div>
+            <div><div style="font-size:.84rem;font-weight:600">Ambulances Aquitaine 33</div><div style="font-size:.71rem;color:var(--muted)">Aujourd'hui, 09h12</div></div>
+            <span class="badge b-amber" style="margin-left:auto">Incident</span>
+          </div>
+          <div class="msg-txt">"Bonjour, retard de 20 minutes sur la mission MIS-2026-084 (Jacques Renault). Embouteillage sur la rocade. Arrivée à la clinique estimée à 09h45. Le patient est prévenu."</div>
+        </div>
+        <div class="msg-bub" style="border-left:3px solid var(--accent)">
+          <div class="msg-head">
+            <div class="li-ico" style="background:var(--accent-l);color:var(--accent-d);width:34px;height:34px;flex-shrink:0"><i class="bi bi-person-badge"></i></div>
+            <div><div style="font-size:.84rem;font-weight:600">Dr. Claire Lefèvre</div><div style="font-size:.71rem;color:var(--muted)">Ce matin, 08h30</div></div>
+            <span class="badge b-accent" style="margin-left:auto">Nouveau</span>
+          </div>
+          <div class="msg-txt">"Bonjour, pouvez-vous confirmer l'affectation pour Monique Tardieu (MIS-2026-088) le 21 mai à 08h30 ? Elle nécessite une ambulance car mobilité très réduite. Merci."</div>
+        </div>
+        <div class="msg-bub">
+          <div class="msg-head">
+            <div class="li-ico" style="background:#F1F5F9;color:var(--muted);width:34px;height:34px;flex-shrink:0"><i class="bi bi-truck"></i></div>
+            <div><div style="font-size:.84rem;font-weight:600">Marc Dubois</div><div style="font-size:.71rem;color:var(--muted)">Aujourd'hui, 09h28</div></div>
+          </div>
+          <div class="msg-txt">"Parti au domicile de Mme Moreau. Mission MIS-2026-085 en cours, arrivée CHU estimée 10h05."</div>
+        </div>
+      </div>
+    </div>
+    <div class="card"><div class="card-body">
+      <div style="font-size:.82rem;font-weight:600;margin-bottom:6px">Envoyer un message à un transporteur ou prescripteur</div>
+      <select class="form-input" style="width:100%;margin-bottom:10px;border-radius:7px;padding:8px 10px;border:1px solid var(--border);font-size:.83rem">
+        <option>Marc Dubois</option><option>Isabelle Roy</option><option>Paul Giraud</option><option>Dr. Lefèvre</option><option>Dr. Benali</option>
+      </select>
+      <textarea class="msg-input" placeholder="Votre message..."></textarea>
+      <button class="btn-p" style="margin-top:10px;width:100%"><i class="bi bi-send"></i> Envoyer</button>
+    </div></div>`;
+}
+
+/* ── INIT ────────────────────────────────────────────────── */
+buildNav();
+renderPage();
+</script>
+</body>
+</html>
