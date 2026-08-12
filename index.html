@@ -440,6 +440,11 @@
     .footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 48px; margin-bottom: 48px; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.1); }
     .footer-brand img { height: 34px; margin-bottom: 16px; }
     .footer-brand p { font-size: 0.85rem; line-height: 1.68; max-width: 280px; }
+    .footer-social { margin-top: 22px; }
+    .footer-social-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 10px; }
+    .footer-social-links { display: flex; flex-wrap: wrap; gap: 8px; }
+    .footer-social-link { display: inline-flex; align-items: center; gap: 7px; padding: 8px 14px; border-radius: var(--r-md); background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); font-size: 0.8rem; font-weight: 600; color: rgba(255,255,255,0.8); transition: background 0.2s, color 0.2s; }
+    .footer-social-link:hover { background: #0A66C2; border-color: #0A66C2; color: var(--white); }
     .footer-col h4 { color: var(--white); font-size: 0.85rem; font-weight: 700; margin-bottom: 14px; letter-spacing: 0.05em; text-transform: uppercase; }
     .footer-col ul { display: flex; flex-direction: column; gap: 10px; }
     .footer-col a { font-size: 0.84rem; transition: color 0.2s; }
@@ -1207,6 +1212,19 @@
       <div class="footer-brand">
         <img src="./photos/logo_CW_officiel.png" alt="CareWay" />
         <p>CareWay connecte l'ensemble des acteurs du transport sanitaire dans une plateforme numérique unifiée, basée sur le standard FHIR R4 et respectueuse du RGPD.</p>
+        <div class="footer-social">
+          <p class="footer-social-label">Suivez-nous</p>
+          <div class="footer-social-links">
+            <a href="https://www.linkedin.com/company/carewaytransport/" target="_blank" rel="noopener" class="footer-social-link" aria-label="CareWay sur LinkedIn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 110-4.12 2.06 2.06 0 010 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+              CareWay
+            </a>
+            <a href="https://www.linkedin.com/in/romanecano/" target="_blank" rel="noopener" class="footer-social-link" aria-label="Romane Cano sur LinkedIn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 110-4.12 2.06 2.06 0 010 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+              Romane Cano
+            </a>
+          </div>
+        </div>
       </div>
       <div class="footer-col">
         <h4>Solution</h4>
