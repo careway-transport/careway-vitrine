@@ -474,6 +474,23 @@
     .partenaires-intro .section-sub { margin: 0 auto; }
 
     /* ===========================================================
+       ACTUALITÉS — "Ils en parlent mieux que nous"
+    =========================================================== */
+    #actualites { padding: 90px 0; background: var(--off-white); border-top: 1px solid var(--border); }
+    .actu-intro { text-align: center; margin-bottom: 52px; }
+    .actu-intro .section-sub { margin: 0 auto; }
+    .actu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+    .actu-card { display: flex; flex-direction: column; background: var(--white); border: 1.5px solid var(--border); border-radius: var(--r-lg); padding: 28px; transition: box-shadow 0.2s, transform 0.2s; }
+    .actu-card:hover { box-shadow: var(--sh-md); transform: translateY(-4px); }
+    .actu-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal-dark); background: var(--teal-light); padding: 5px 12px; border-radius: 100px; width: fit-content; margin-bottom: 14px; }
+    .actu-title { font-family: 'Sora', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--dark); line-height: 1.35; margin-bottom: 10px; }
+    .actu-desc { font-size: 0.87rem; color: var(--text-mid); line-height: 1.65; margin-bottom: 8px; }
+    .actu-quote { font-size: 0.87rem; color: var(--text-mid); line-height: 1.65; font-style: italic; border-left: 2px solid var(--teal); padding-left: 12px; margin-bottom: 16px; }
+    .actu-links { display: flex; flex-direction: column; gap: 6px; margin-top: auto; padding-top: 12px; }
+    .actu-link { display: inline-flex; align-items: center; gap: 5px; font-size: 0.82rem; font-weight: 600; color: var(--blue-mid); }
+    .actu-link:hover { text-decoration: underline; }
+
+    /* ===========================================================
        APP MODAL
     =========================================================== */
     .actor-cta-group { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
@@ -609,6 +626,7 @@
   <a href="#pour-qui"      onclick="closeMenu()">La solution</a>
   <a href="#fonctionnement" onclick="closeMenu()">La plateforme</a>
   <a href="#fondatrice"    onclick="closeMenu()">L'équipe</a>
+  <a href="#actualites"    onclick="closeMenu()">Actualités</a>
   <a href="#vision"        onclick="closeMenu()">Notre mission</a>
   <div class="drawer-cta">
     <a href="#contact" class="btn btn-primary" onclick="closeMenu()">Demander une démo →</a>
@@ -1036,6 +1054,45 @@
   </div>
 </section>
 
+<!-- ACTUALITÉS -->
+<section id="actualites">
+  <div class="container">
+    <div class="actu-intro reveal">
+      <p class="section-label">Actualités</p>
+      <h2 class="section-title">Ils en parlent <em>mieux que nous</em></h2>
+      <p class="section-sub">Les distinctions et publications qui parlent de CareWay et de sa fondatrice.</p>
+    </div>
+    <div class="actu-grid">
+      <div class="actu-card reveal" style="transition-delay:0.05s">
+        <span class="actu-badge">Distinction · 2026</span>
+        <h3 class="actu-title">CareWay, lauréate du CRECE 2026</h3>
+        <p class="actu-desc">1ʳᵉ place au 25ᵉ Concours Régional des Étudiants Créateurs d'Entreprises (CRECE), organisé par la CCI Toulouse Haute-Garonne — 4 500 € de prix. Deuxième année consécutive qu'un·e étudiant·e ISIS remporte le premier prix du concours.</p>
+        <div class="actu-links">
+          <a href="https://isis.univ-jfc.fr/actu/romane-cano-laureate-du-concours-crece-2026" target="_blank" rel="noopener" class="actu-link">ISIS — Romane, lauréate du concours CRECE 2026 →</a>
+          <a href="https://www.univ-jfc.fr/actualites/romane-cano-sa-plateforme-careway-laureate-du-concours-crece-2026" target="_blank" rel="noopener" class="actu-link">INU Champollion — l'article →</a>
+          <a href="https://www.facebook.com/universite.champollion/posts/-concours-r%C3%A9gional-des-%C3%A9tudiants-cr%C3%A9ateurs-dentreprises-crece-jeudi-28-mai-organ/1727584878198272/" target="_blank" rel="noopener" class="actu-link">Voir la publication Facebook →</a>
+          <a href="https://www.instagram.com/p/DZxEXQnD1Yb/" target="_blank" rel="noopener" class="actu-link">Voir sur Instagram →</a>
+          <a href="https://www.instagram.com/reel/DY7POl4M9b4/" target="_blank" rel="noopener" class="actu-link">Voir le reel Instagram →</a>
+          <a href="https://franceuniversites.fr/wp-content/uploads/2026/06/FU218.pdf" target="_blank" rel="noopener" class="actu-link">France Universités — newsletter →</a>
+        </div>
+      </div>
+      <div class="actu-card reveal" style="transition-delay:0.15s">
+        <span class="actu-badge">Distinction · 2025</span>
+        <h3 class="actu-title">Prix Coup de Cœur du Jury</h3>
+        <p class="actu-desc">Trophées de la e-Santé 2025, Castres-Mazamet — CareWay récompensée pour son approche de la coordination du transport sanitaire.</p>
+      </div>
+      <div class="actu-card reveal" style="transition-delay:0.25s">
+        <span class="actu-badge">Portrait</span>
+        <h3 class="actu-title">L'innovation au cœur d'ISIS</h3>
+        <p class="actu-quote">« J'adore ma casquette de consultante métier [...] et l'entrepreneuriat me permet d'explorer une autre facette de l'innovation en santé. »</p>
+        <div class="actu-links">
+          <a href="https://isis.univ-jfc.fr/actu/linnovation-au-coeur-disis" target="_blank" rel="noopener" class="actu-link">Lire le portrait sur ISIS →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- VISION -->
 <section id="vision">
   <div class="vision-bg"></div>
@@ -1144,6 +1201,7 @@
           <li><a href="#fonctionnement">La plateforme</a></li>
           <li><a href="#vision">Notre mission</a></li>
           <li><a href="#fondatrice">L'équipe</a></li>
+          <li><a href="#actualites">Actualités</a></li>
         </ul>
       </div>
       <div class="footer-col">
