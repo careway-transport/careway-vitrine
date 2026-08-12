@@ -563,7 +563,8 @@
        DIVERS — SCROLL PROGRESS · HERO AWARD · UTILS
     =========================================================== */
     .scroll-progress { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--teal) 0%, var(--blue-mid) 100%); z-index: 400; width: 0%; pointer-events: none; }
-    .hero-award { display: inline-flex; align-items: center; gap: 8px; padding: 7px 16px; background: rgba(255,215,0,0.13); border: 1px solid rgba(255,215,0,0.38); border-radius: 100px; color: #FFD700; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.02em; margin-bottom: 18px; opacity: 0; animation: fadein 0.6s 0.1s ease-out forwards; }
+    .hero-awards { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; opacity: 0; animation: fadein 0.6s 0.1s ease-out forwards; }
+    .hero-award { display: inline-flex; align-items: center; gap: 8px; padding: 7px 16px; background: rgba(255,215,0,0.13); border: 1px solid rgba(255,215,0,0.38); border-radius: 100px; color: #FFD700; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.02em; }
     .prob-icon-blue { background: var(--blue-light) !important; color: var(--blue) !important; }
 
     /* ===========================================================
@@ -642,7 +643,10 @@
   <div class="hero-overlay"></div>
   <div class="container">
     <div class="hero-content">
-      <div class="hero-award">🏆 Prix Coup de Cœur du Jury · Trophées e-Santé 2025</div>
+      <div class="hero-awards">
+        <div class="hero-award">🏆 Prix Coup de Cœur · Trophées e-Santé 2025</div>
+        <div class="hero-award">🥇 Lauréate CRECE 2026</div>
+      </div>
       <div class="hero-overline">La plateforme de coordination du transport sanitaire</div>
       <div class="hero-brand">CareWay</div>
       <h1 class="hero-headline">
@@ -701,6 +705,12 @@
       <div class="award-text">
         <strong>Prix "Coup de Cœur du Jury"</strong>
         <span>Trophées de la e-Santé 2025 · Castres-Mazamet</span>
+      </div>
+      <div class="award-divider"></div>
+      <div class="award-trophy-icon">🥇</div>
+      <div class="award-text">
+        <strong>Lauréate du CRECE 2026</strong>
+        <span>Concours Régional des Étudiants Créateurs d'Entreprises</span>
       </div>
     </div>
   </div>
