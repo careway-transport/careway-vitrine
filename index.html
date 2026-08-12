@@ -449,17 +449,6 @@
     .footer-legal a:hover { color: var(--white); }
 
     /* ===========================================================
-       AWARD BANNER
-    =========================================================== */
-    .award-banner { background: linear-gradient(90deg, #FFF8E1 0%, #FFFDE7 50%, #FFF8E1 100%); border-top: 1px solid #FFE082; border-bottom: 1px solid #FFE082; padding: 20px 0; }
-    .award-inner { display: flex; justify-content: center; align-items: center; gap: 18px; flex-wrap: wrap; }
-    .award-trophy-icon { font-size: 2rem; line-height: 1; }
-    .award-text strong { font-family: 'Sora', sans-serif; font-size: 1rem; font-weight: 700; color: #7B5800; display: block; }
-    .award-text span { font-size: 0.82rem; color: #9E7700; }
-    .award-divider { width: 1px; height: 36px; background: #FFE082; }
-    .award-from { font-size: 0.8rem; font-weight: 600; color: #9E7700; letter-spacing: 0.04em; text-transform: uppercase; }
-
-    /* ===========================================================
        PARTENAIRES
     =========================================================== */
     #partenaires { padding: 80px 0; background: var(--white); border-top: 1px solid var(--border); }
@@ -526,36 +515,70 @@
     .modal-contact-link a { color: var(--blue-mid); font-weight: 600; }
 
     /* ===========================================================
-       ENTRY CTA — bandeau questionnaire, apparait a la visite
+       ENTRY CTA — grande fenetre a la 1ere visite, puis bandeau
     =========================================================== */
+    /* Grande fenetre, 1ere visite uniquement : a fermer pour acceder au site */
+    #entryCtaModalOverlay { position: fixed; inset: 0; background: rgba(11,31,58,0.7); backdrop-filter: blur(6px); z-index: 950; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+    #entryCtaModalOverlay.open { opacity: 1; pointer-events: all; }
+    #entryCtaModalBox {
+      position: fixed; top: 50%; left: 50%; transform: translate(-50%,-56%); z-index: 951;
+      background: linear-gradient(135deg, var(--teal) 0%, var(--blue-mid) 100%);
+      border-radius: var(--r-xl); padding: 48px 44px; max-width: 560px; width: calc(100% - 32px);
+      text-align: center; box-shadow: 0 32px 80px rgba(0,87,184,0.45);
+      opacity: 0; pointer-events: none;
+      transition: transform 0.32s cubic-bezier(0.34,1.56,0.64,1), opacity 0.25s;
+    }
+    #entryCtaModalBox.open { transform: translate(-50%,-50%); opacity: 1; pointer-events: all; }
+    .entry-cta-modal-close {
+      position: absolute; top: 16px; right: 16px; background: rgba(255,255,255,0.15); border: none; cursor: pointer;
+      color: var(--white); width: 34px; height: 34px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; transition: background 0.2s;
+    }
+    .entry-cta-modal-close:hover { background: rgba(255,255,255,0.28); }
+    .entry-cta-modal-icon { font-size: 2.6rem; margin-bottom: 14px; line-height: 1; }
+    #entryCtaModalBox h3 { font-family: 'Sora', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--white); margin-bottom: 10px; }
+    #entryCtaModalBox p { color: rgba(255,255,255,0.9); line-height: 1.65; margin-bottom: 26px; font-size: 0.98rem; }
+    .entry-cta-modal-links { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 20px; }
+    .entry-cta-modal-link {
+      display: inline-flex; align-items: center; padding: 12px 22px; border-radius: var(--r-md);
+      font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 700;
+      background: var(--white); color: var(--blue); box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .entry-cta-modal-link:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.24); }
+    .entry-cta-modal-skip { background: none; border: none; cursor: pointer; color: rgba(255,255,255,0.75); font-size: 0.85rem; text-decoration: underline; }
+    .entry-cta-modal-skip:hover { color: var(--white); }
+
+    /* Petit bandeau, visites suivantes */
     #entryCta {
       position: fixed; left: 0; right: 0; bottom: 0; z-index: 850;
-      background: var(--dark);
-      box-shadow: 0 -8px 32px rgba(0,0,0,0.25);
+      background: linear-gradient(90deg, var(--teal) 0%, var(--blue-mid) 100%);
+      box-shadow: 0 -8px 32px rgba(0,87,184,0.3);
       transform: translateY(100%); transition: transform 0.45s cubic-bezier(0.34,1.56,0.64,1);
     }
     #entryCta.open { transform: translateY(0); }
-    .entry-cta-inner { display: flex; align-items: center; gap: 24px; padding: 20px 24px; flex-wrap: wrap; }
+    .entry-cta-inner { display: flex; align-items: center; gap: 24px; padding: 18px 24px; flex-wrap: wrap; }
     .entry-cta-text { flex: 1; min-width: 240px; }
     .entry-cta-text strong { display: block; font-family: 'Sora', sans-serif; font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 3px; }
-    .entry-cta-text span { display: block; font-size: 0.83rem; color: rgba(255,255,255,0.6); }
+    .entry-cta-text span { display: block; font-size: 0.83rem; color: rgba(255,255,255,0.85); }
     .entry-cta-links { display: flex; flex-wrap: wrap; gap: 8px; }
     .entry-cta-link {
       display: inline-flex; align-items: center; padding: 9px 16px; border-radius: var(--r-md);
-      font-family: 'Inter', sans-serif; font-size: 0.82rem; font-weight: 600;
-      background: rgba(255,255,255,0.1); color: var(--white); border: 1px solid rgba(255,255,255,0.18);
+      font-family: 'Inter', sans-serif; font-size: 0.82rem; font-weight: 700;
+      background: var(--white); color: var(--blue); border: 1px solid rgba(255,255,255,0.5);
       transition: background 0.2s, transform 0.2s; white-space: nowrap;
     }
-    .entry-cta-link:hover { background: var(--teal); border-color: var(--teal); transform: translateY(-2px); }
+    .entry-cta-link:hover { background: var(--dark); color: var(--white); transform: translateY(-2px); }
     .entry-cta-close {
-      background: none; border: none; cursor: pointer; color: rgba(255,255,255,0.45);
+      background: rgba(255,255,255,0.18); border: none; cursor: pointer; color: var(--white);
       width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
       display: flex; align-items: center; justify-content: center; transition: background 0.2s, color 0.2s;
     }
-    .entry-cta-close:hover { background: rgba(255,255,255,0.1); color: var(--white); }
+    .entry-cta-close:hover { background: rgba(255,255,255,0.32); }
     @media (max-width: 700px) {
       .entry-cta-inner { padding: 16px; }
       .entry-cta-links { width: 100%; }
+      .entry-cta-modal-link { flex: 1; justify-content: center; }
       .entry-cta-link { flex: 1; justify-content: center; }
     }
 
@@ -696,25 +719,6 @@
     </div>
   </div>
 </section>
-
-<!-- AWARD BANNER -->
-<div class="award-banner">
-  <div class="container">
-    <div class="award-inner">
-      <div class="award-trophy-icon">🏆</div>
-      <div class="award-text">
-        <strong>Prix "Coup de Cœur du Jury"</strong>
-        <span>Trophées de la e-Santé 2025 · Castres-Mazamet</span>
-      </div>
-      <div class="award-divider"></div>
-      <div class="award-trophy-icon">🥇</div>
-      <div class="award-text">
-        <strong>Lauréate du CRECE 2026</strong>
-        <span>Concours Régional des Étudiants Créateurs d'Entreprises</span>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- PROBLÈME -->
 <section id="probleme">
@@ -1244,7 +1248,27 @@
   </div>
 </div>
 
-<!-- ENTRY CTA — questionnaires, apparait a la visite -->
+<!-- ENTRY CTA MODAL — grande fenetre, 1ere visite uniquement -->
+<div id="entryCtaModalOverlay">
+  <div id="entryCtaModalBox">
+    <button class="entry-cta-modal-close" id="entryCtaModalClose" aria-label="Fermer">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+    <div class="entry-cta-modal-icon">💬</div>
+    <h3>Vous avez 2 minutes ?</h3>
+    <p>Aidez-nous à construire CareWay en répondant à un court questionnaire, adapté à votre profil.</p>
+    <div class="entry-cta-modal-links">
+      <a href="https://tally.so/r/vGEL84" target="_blank" rel="noopener" class="entry-cta-modal-link">Médecin</a>
+      <a href="https://tally.so/r/LZvY4J" target="_blank" rel="noopener" class="entry-cta-modal-link">Secrétaire médicale</a>
+      <a href="https://tally.so/r/kdKW8Z" target="_blank" rel="noopener" class="entry-cta-modal-link">Transporteur</a>
+      <a href="https://tally.so/r/BzADJ1" target="_blank" rel="noopener" class="entry-cta-modal-link">Patient</a>
+      <a href="https://tally.so/r/KYvDrD" target="_blank" rel="noopener" class="entry-cta-modal-link">Aidant</a>
+    </div>
+    <button class="entry-cta-modal-skip" id="entryCtaModalSkip">Accéder directement au site</button>
+  </div>
+</div>
+
+<!-- ENTRY CTA BANNER — petit bandeau, visites suivantes -->
 <div id="entryCta" role="complementary" aria-label="Donnez votre avis">
   <div class="entry-cta-inner">
     <div class="entry-cta-text">
@@ -1280,26 +1304,43 @@
   function closeAppModal() { document.getElementById('appModalOverlay').classList.remove('open'); document.getElementById('appModalBox').classList.remove('open'); }
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAppModal(); });
 
-  // Entry CTA — questionnaires (retour Romane : "un call to action des la
-  // visite du site avec les liens vers mes guides d'entretien... qu'on peut
-  // facilement fermer si besoin"). Un seul rappel par visiteur : une fois
-  // ferme ou un lien suivi, ne se rouvre plus sur cet appareil.
+  // Entry CTA — questionnaires (retour Romane : "je prefere que le call to
+  // action soit en grande fenetre au debut qu'on doit fermer pour acceder
+  // au site plutot qu'en petit en bas. C'est a la premiere visite du site,
+  // apres c'est en petit"). 1ere visite (jamais vu la grande fenetre sur
+  // cet appareil) : grande fenetre bloquante a fermer. Visites suivantes :
+  // petit bandeau en bas, plus discret.
   (function() {
-    const KEY = 'cw_entry_cta_dismissed';
-    const cta = document.getElementById('entryCta');
-    if (!cta) return;
-    let dismissed = false;
-    try { dismissed = localStorage.getItem(KEY) === 'true'; } catch {}
-    if (dismissed) return;
+    const SEEN_KEY = 'cw_entry_cta_seen';
+    let seen = false;
+    try { seen = localStorage.getItem(SEEN_KEY) === 'true'; } catch {}
 
-    function dismiss() {
-      cta.classList.remove('open');
-      try { localStorage.setItem(KEY, 'true'); } catch {}
+    if (!seen) {
+      const overlay = document.getElementById('entryCtaModalOverlay');
+      const box = document.getElementById('entryCtaModalBox');
+      if (!overlay || !box) return;
+
+      function markSeen() { try { localStorage.setItem(SEEN_KEY, 'true'); } catch {} }
+      function closeModal() {
+        overlay.classList.remove('open');
+        box.classList.remove('open');
+        markSeen();
+      }
+
+      setTimeout(() => { overlay.classList.add('open'); box.classList.add('open'); }, 900);
+      overlay.addEventListener('click', closeModal);
+      box.addEventListener('click', e => e.stopPropagation());
+      document.getElementById('entryCtaModalClose').addEventListener('click', closeModal);
+      document.getElementById('entryCtaModalSkip').addEventListener('click', closeModal);
+      box.querySelectorAll('.entry-cta-modal-link').forEach(a => a.addEventListener('click', closeModal));
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+      return;
     }
 
+    const cta = document.getElementById('entryCta');
+    if (!cta) return;
     setTimeout(() => cta.classList.add('open'), 1800);
-    document.getElementById('entryCtaClose').addEventListener('click', dismiss);
-    cta.querySelectorAll('.entry-cta-link').forEach(a => a.addEventListener('click', dismiss));
+    document.getElementById('entryCtaClose').addEventListener('click', () => cta.classList.remove('open'));
   })();
 
   // Burger menu
