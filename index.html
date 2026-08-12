@@ -1367,9 +1367,15 @@
     <button class="support-close" id="supportClose" aria-label="Fermer">&times;</button>
   </div>
   <div class="support-body">
-    <!-- Liste -->
-    <div id="supportList">
-      <p class="support-intro">Questions fréquentes :</p>
+    <!-- Choix du profil -->
+    <div id="supportRoles">
+      <p class="support-intro">Vous êtes :</p>
+      <div class="support-faq-list" id="supportRoleList"></div>
+    </div>
+    <!-- Liste de questions du profil choisi -->
+    <div id="supportList" style="display:none">
+      <button class="support-back" id="supportBackToRoles">&larr; Changer de profil</button>
+      <p class="support-intro" id="supportListIntro">Questions fréquentes :</p>
       <div class="support-faq-list" id="supportFaqList"></div>
     </div>
     <!-- Réponse -->
@@ -1385,73 +1391,111 @@
 <script>
   // Support / FAQ — même registre que le widget d'aide de l'application
   // CareWay (retour Romane, 2026-08-11 : "Ajoute une possibilite de
-  // support comme sur l'app careway, avec des questions courantes").
-  const SUPPORT_FAQ = [
-    {
-      q: "Qu'est-ce que CareWay ?",
-      a: "CareWay est une plateforme qui coordonne le transport sanitaire entre prescripteurs, transporteurs, patients et aidants, de la prescription médicale jusqu'à la facturation."
-    },
-    {
-      q: 'Qui peut utiliser CareWay ?',
-      a: 'Les établissements de santé, les médecins de ville comme hospitaliers, les secrétariats médicaux, les entreprises de transport sanitaire, ainsi que les patients et leurs aidants.'
-    },
-    {
-      q: 'Mes données de santé sont-elles protégées ?',
-      a: "Oui. CareWay respecte le RGPD et s'appuie sur le standard d'interopérabilité FHIR R4. La plateforme vise la certification Hébergeur de Données de Santé (HDS)."
-    },
-    {
-      q: 'CareWay est-il compatible avec mon logiciel actuel ?',
-      a: "CareWay s'intègre avec les principaux logiciels de soins du marché. Contactez-nous pour vérifier la compatibilité avec votre outil."
-    },
-    {
-      q: 'Combien coûte CareWay ?',
-      a: 'Le tarif dépend de votre structure et de vos besoins. Contactez-nous pour un devis personnalisé et une démo gratuite de 30 minutes.'
-    },
-    {
-      q: "L'application mobile est-elle disponible ?",
-      a: "L'application patient CareWay arrive prochainement sur l'App Store et Google Play."
-    },
-    {
-      q: 'Comment devenir transporteur partenaire ?',
-      a: 'Contactez-nous via le formulaire ci-dessous, ou répondez à notre questionnaire dédié aux transporteurs — nous revenons vers vous sous 24h ouvrées.'
-    },
-    {
-      q: 'Comment tester CareWay ?',
-      a: 'Demandez une démo gratuite de 30 minutes via notre formulaire de contact, sans engagement.'
-    },
+  // support comme sur l'app careway, avec des questions courantes" puis
+  // "oriente d'abord en demandant si la personne est un patient ou aidant
+  // ou transporteur ou secretaire ou docteur, pour orienter les questions
+  // et qu'elles soient adaptées a chaque utilisateur" — meme principe que
+  // SUPPORT_FAQ[auth.userType.value] cote appli, mais le visiteur du site
+  // vitrine n'est pas connecté : on lui demande son profil au 1er ecran.
+  const SUPPORT_ROLES = [
+    { key: 'patient', label: 'Patient' },
+    { key: 'aidant', label: 'Aidant' },
+    { key: 'medecin', label: 'Médecin' },
+    { key: 'secretaire', label: 'Secrétaire médicale' },
+    { key: 'transporteur', label: 'Transporteur' },
   ];
+
+  const SUPPORT_FAQ = {
+    patient: [
+      { q: 'Comment CareWay m\'aide au quotidien ?', a: "Dès que votre médecin prescrit un transport, CareWay l'organise automatiquement : plus aucun appel à passer pour prendre rendez-vous avec un transporteur." },
+      { q: 'Mes données de santé sont-elles protégées ?', a: "Oui. CareWay respecte le RGPD et s'appuie sur le standard d'interopérabilité FHIR R4. La plateforme vise la certification Hébergeur de Données de Santé (HDS)." },
+      { q: "L'application mobile est-elle disponible ?", a: "L'application patient CareWay arrive prochainement sur l'App Store et Google Play." },
+      { q: 'Comment inviter mon aidant ?', a: "Depuis votre espace CareWay, section Paramètres, vous pouvez inviter un proche par email pour qu'il suive vos transports." },
+      { q: 'Comment tester CareWay ?', a: 'Répondez à notre questionnaire patient, ou demandez plus d\'informations via notre formulaire de contact.' },
+    ],
+    aidant: [
+      { q: 'Quel est mon rôle en tant qu\'aidant sur CareWay ?', a: "Vous suivez en temps réel les transports sanitaires de votre proche, avec son accord, et pouvez échanger avec l'équipe soignante." },
+      { q: 'Comment être ajouté comme aidant ?', a: "Le patient vous invite par email depuis son espace CareWay. Vous pouvez aussi lui demander l'accès directement." },
+      { q: 'Mes données sont-elles protégées ?', a: "Oui, CareWay respecte le RGPD et le standard FHIR R4 pour l'ensemble des données échangées." },
+      { q: 'Comment tester CareWay ?', a: 'Répondez à notre questionnaire aidant, ou demandez plus d\'informations via notre formulaire de contact.' },
+    ],
+    medecin: [
+      { q: 'Comment prescrire un transport avec CareWay ?', a: 'En 30 secondes, depuis votre logiciel de soins habituel, en établissement comme en ville. CareWay gère ensuite toute la coordination.' },
+      { q: 'CareWay est-il compatible avec mon logiciel actuel ?', a: "CareWay s'intègre avec les principaux logiciels de soins du marché. Contactez-nous pour vérifier la compatibilité avec le vôtre." },
+      { q: 'Mes données et celles de mes patients sont-elles protégées ?', a: "Oui. CareWay respecte le RGPD et s'appuie sur le standard FHIR R4, avec une certification HDS visée." },
+      { q: 'Combien coûte CareWay ?', a: 'Le tarif dépend de votre structure. Contactez-nous pour un devis personnalisé et une démo gratuite de 30 minutes.' },
+      { q: 'Comment tester CareWay ?', a: 'Répondez à notre questionnaire médecin, ou demandez une démo gratuite via notre formulaire de contact.' },
+    ],
+    secretaire: [
+      { q: 'Comment CareWay simplifie mon quotidien ?', a: "Moins d'appels et de formulaires papier : la coordination du transport est automatisée dès la prescription, et vous suivez tout depuis un tableau de bord." },
+      { q: 'CareWay est-il compatible avec mon logiciel actuel ?', a: "CareWay s'intègre avec les principaux logiciels de soins du marché. Contactez-nous pour vérifier la compatibilité avec le vôtre." },
+      { q: 'Mes données et celles des patients sont-elles protégées ?', a: 'Oui, CareWay respecte le RGPD et le standard FHIR R4.' },
+      { q: 'Comment tester CareWay ?', a: 'Répondez à notre questionnaire secrétariat médical, ou demandez plus d\'informations via notre formulaire de contact.' },
+    ],
+    transporteur: [
+      { q: 'Comment CareWay m\'aide en tant que transporteur ?', a: 'Planning automatisé, patient au rendez-vous garanti, et dossiers de facturation prêts à transmettre pour votre remboursement CPAM.' },
+      { q: 'Comment devenir transporteur partenaire ?', a: 'Contactez-nous via le formulaire ci-dessous, ou répondez à notre questionnaire dédié — nous revenons vers vous sous 24h ouvrées.' },
+      { q: 'Combien coûte CareWay pour mon entreprise ?', a: 'Le tarif dépend de votre structure et de vos besoins. Contactez-nous pour un devis personnalisé.' },
+      { q: 'CareWay est-il compatible avec mes outils actuels ?', a: "CareWay s'intègre avec les principaux outils du marché. Contactez-nous pour vérifier la compatibilité avec les vôtres." },
+      { q: 'Comment tester CareWay ?', a: 'Répondez à notre questionnaire transporteur, ou demandez plus d\'informations via notre formulaire de contact.' },
+    ],
+  };
 
   (function() {
     const btn = document.getElementById('supportBtn');
     const panel = document.getElementById('supportPanel');
+    const roleListEl = document.getElementById('supportRoleList');
+    const viewRoles = document.getElementById('supportRoles');
     const list = document.getElementById('supportFaqList');
+    const listIntro = document.getElementById('supportListIntro');
     const viewList = document.getElementById('supportList');
     const viewAnswer = document.getElementById('supportAnswer');
     const answerQ = document.getElementById('supportAnswerQ');
     const answerA = document.getElementById('supportAnswerA');
-    if (!btn || !panel || !list) return;
+    if (!btn || !panel || !list || !roleListEl) return;
 
-    SUPPORT_FAQ.forEach(entry => {
+    function showRoles() {
+      viewAnswer.style.display = 'none';
+      viewList.style.display = 'none';
+      viewRoles.style.display = 'block';
+    }
+
+    function showRoleFaq(role) {
+      list.innerHTML = '';
+      listIntro.textContent = 'Questions fréquentes — ' + role.label + ' :';
+      SUPPORT_FAQ[role.key].forEach(entry => {
+        const b = document.createElement('button');
+        b.className = 'support-faq-item';
+        b.textContent = entry.q;
+        b.addEventListener('click', () => {
+          answerQ.textContent = entry.q;
+          answerA.textContent = entry.a;
+          viewList.style.display = 'none';
+          viewAnswer.style.display = 'block';
+        });
+        list.appendChild(b);
+      });
+      viewRoles.style.display = 'none';
+      viewList.style.display = 'block';
+    }
+
+    SUPPORT_ROLES.forEach(role => {
       const b = document.createElement('button');
       b.className = 'support-faq-item';
-      b.textContent = entry.q;
-      b.addEventListener('click', () => {
-        answerQ.textContent = entry.q;
-        answerA.textContent = entry.a;
-        viewList.style.display = 'none';
-        viewAnswer.style.display = 'block';
-      });
-      list.appendChild(b);
+      b.textContent = role.label;
+      b.addEventListener('click', () => showRoleFaq(role));
+      roleListEl.appendChild(b);
     });
 
+    document.getElementById('supportBackToRoles').addEventListener('click', showRoles);
     document.getElementById('supportBack').addEventListener('click', () => {
       viewAnswer.style.display = 'none';
       viewList.style.display = 'block';
     });
 
-    function toggle() { panel.classList.toggle('open'); }
+    function toggle() { panel.classList.toggle('open'); if (panel.classList.contains('open')) showRoles(); }
     btn.addEventListener('click', toggle);
-    document.getElementById('supportClose').addEventListener('click', toggle);
+    document.getElementById('supportClose').addEventListener('click', () => panel.classList.remove('open'));
     document.getElementById('supportContactLink').addEventListener('click', () => panel.classList.remove('open'));
     document.addEventListener('keydown', e => { if (e.key === 'Escape') panel.classList.remove('open'); });
   })();
