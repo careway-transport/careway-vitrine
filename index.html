@@ -509,6 +509,40 @@
     .modal-contact-link a { color: var(--blue-mid); font-weight: 600; }
 
     /* ===========================================================
+       ENTRY CTA — bandeau questionnaire, apparait a la visite
+    =========================================================== */
+    #entryCta {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 850;
+      background: var(--dark);
+      box-shadow: 0 -8px 32px rgba(0,0,0,0.25);
+      transform: translateY(100%); transition: transform 0.45s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    #entryCta.open { transform: translateY(0); }
+    .entry-cta-inner { display: flex; align-items: center; gap: 24px; padding: 20px 24px; flex-wrap: wrap; }
+    .entry-cta-text { flex: 1; min-width: 240px; }
+    .entry-cta-text strong { display: block; font-family: 'Sora', sans-serif; font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 3px; }
+    .entry-cta-text span { display: block; font-size: 0.83rem; color: rgba(255,255,255,0.6); }
+    .entry-cta-links { display: flex; flex-wrap: wrap; gap: 8px; }
+    .entry-cta-link {
+      display: inline-flex; align-items: center; padding: 9px 16px; border-radius: var(--r-md);
+      font-family: 'Inter', sans-serif; font-size: 0.82rem; font-weight: 600;
+      background: rgba(255,255,255,0.1); color: var(--white); border: 1px solid rgba(255,255,255,0.18);
+      transition: background 0.2s, transform 0.2s; white-space: nowrap;
+    }
+    .entry-cta-link:hover { background: var(--teal); border-color: var(--teal); transform: translateY(-2px); }
+    .entry-cta-close {
+      background: none; border: none; cursor: pointer; color: rgba(255,255,255,0.45);
+      width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; transition: background 0.2s, color 0.2s;
+    }
+    .entry-cta-close:hover { background: rgba(255,255,255,0.1); color: var(--white); }
+    @media (max-width: 700px) {
+      .entry-cta-inner { padding: 16px; }
+      .entry-cta-links { width: 100%; }
+      .entry-cta-link { flex: 1; justify-content: center; }
+    }
+
+    /* ===========================================================
        DIVERS — SCROLL PROGRESS · HERO AWARD · UTILS
     =========================================================== */
     .scroll-progress { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--teal) 0%, var(--blue-mid) 100%); z-index: 400; width: 0%; pointer-events: none; }
@@ -1142,6 +1176,26 @@
   </div>
 </div>
 
+<!-- ENTRY CTA — questionnaires, apparait a la visite -->
+<div id="entryCta" role="complementary" aria-label="Donnez votre avis">
+  <div class="entry-cta-inner">
+    <div class="entry-cta-text">
+      <strong>Vous avez 2 minutes ?</strong>
+      <span>Aidez-nous à construire CareWay en répondant à un court questionnaire.</span>
+    </div>
+    <div class="entry-cta-links">
+      <a href="https://tally.so/r/vGEL84" target="_blank" rel="noopener" class="entry-cta-link">Médecin</a>
+      <a href="https://tally.so/r/LZvY4J" target="_blank" rel="noopener" class="entry-cta-link">Secrétaire médicale</a>
+      <a href="https://tally.so/r/kdKW8Z" target="_blank" rel="noopener" class="entry-cta-link">Transporteur</a>
+      <a href="https://tally.so/r/BzADJ1" target="_blank" rel="noopener" class="entry-cta-link">Patient</a>
+      <a href="https://tally.so/r/KYvDrD" target="_blank" rel="noopener" class="entry-cta-link">Aidant</a>
+    </div>
+    <button class="entry-cta-close" id="entryCtaClose" aria-label="Fermer">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</div>
+
 <script>
   // Scroll progress bar
   (function() {
@@ -1157,6 +1211,28 @@
   function openAppModal()  { document.getElementById('appModalOverlay').classList.add('open'); document.getElementById('appModalBox').classList.add('open'); }
   function closeAppModal() { document.getElementById('appModalOverlay').classList.remove('open'); document.getElementById('appModalBox').classList.remove('open'); }
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAppModal(); });
+
+  // Entry CTA — questionnaires (retour Romane : "un call to action des la
+  // visite du site avec les liens vers mes guides d'entretien... qu'on peut
+  // facilement fermer si besoin"). Un seul rappel par visiteur : une fois
+  // ferme ou un lien suivi, ne se rouvre plus sur cet appareil.
+  (function() {
+    const KEY = 'cw_entry_cta_dismissed';
+    const cta = document.getElementById('entryCta');
+    if (!cta) return;
+    let dismissed = false;
+    try { dismissed = localStorage.getItem(KEY) === 'true'; } catch {}
+    if (dismissed) return;
+
+    function dismiss() {
+      cta.classList.remove('open');
+      try { localStorage.setItem(KEY, 'true'); } catch {}
+    }
+
+    setTimeout(() => cta.classList.add('open'), 1800);
+    document.getElementById('entryCtaClose').addEventListener('click', dismiss);
+    cta.querySelectorAll('.entry-cta-link').forEach(a => a.addEventListener('click', dismiss));
+  })();
 
   // Burger menu
   const burger  = document.getElementById('burgerBtn');
