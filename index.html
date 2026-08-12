@@ -476,6 +476,20 @@
     /* ===========================================================
        APP MODAL
     =========================================================== */
+    .actor-cta-group { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+    .actor-cta {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 11px 20px; border-radius: var(--r-md);
+      font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 600;
+      text-decoration: none; transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+    .actor-cta:hover { transform: translateY(-2px); }
+    .actor-cta-blue { background: var(--blue-mid); color: var(--white); box-shadow: 0 4px 16px rgba(0,114,229,0.3); }
+    .actor-cta-blue:hover { background: var(--blue); }
+    .actor-cta-white { background: var(--white); color: var(--dark); box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
+    .actor-cta-white:hover { background: var(--teal-light, #EAFBFA); }
+    .actor-cta-teal { background: var(--teal); color: var(--white); box-shadow: 0 4px 16px rgba(0,180,166,0.3); }
+    .actor-cta-teal:hover { background: var(--teal-dark); }
     .app-badges { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
     .app-badge-official { display: inline-flex; align-items: center; gap: 10px; padding: 10px 20px; background: #111; border: none; border-radius: 12px; cursor: pointer; transition: transform 0.2s, opacity 0.2s; box-shadow: 0 2px 12px rgba(0,0,0,0.3); }
     .app-badge-official:hover { transform: translateY(-2px); opacity: 0.88; }
@@ -727,6 +741,10 @@
           <div class="actor-feature"><span class="feat-dot feat-dot-blue"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="feat-text"><strong>Sorties fluides</strong> : transporteur alerté automatiquement à l'avance</span></div>
           <div class="actor-feature"><span class="feat-dot feat-dot-blue"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="feat-text"><strong>Contrats respectés</strong>, traçabilité complète et audit intégré</span></div>
         </div>
+        <div class="actor-cta-group">
+          <a href="https://tally.so/r/vGEL84" target="_blank" rel="noopener" class="actor-cta actor-cta-blue">Vous êtes médecin ? Donnez votre avis →</a>
+          <a href="https://tally.so/r/LZvY4J" target="_blank" rel="noopener" class="actor-cta actor-cta-blue">Vous êtes secrétaire médicale ? Donnez votre avis →</a>
+        </div>
       </div>
     </div>
 
@@ -745,6 +763,9 @@
           <div class="actor-feature"><span class="feat-dot feat-dot-dark"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="feat-text"><strong>Plus de missions</strong> via la mutualisation et la redirection intelligente des flux</span></div>
           <div class="actor-feature"><span class="feat-dot feat-dot-dark"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="feat-text"><strong>SLAs documentés</strong> et contrats établissements respectés automatiquement</span></div>
           <div class="actor-feature"><span class="feat-dot feat-dot-dark"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="feat-text"><strong>Dossiers de facturation prêts à transmettre</strong>, contrôle de complétude automatique</span></div>
+        </div>
+        <div class="actor-cta-group">
+          <a href="https://tally.so/r/kdKW8Z" target="_blank" rel="noopener" class="actor-cta actor-cta-white">Vous êtes transporteur ? Donnez votre avis →</a>
         </div>
       </div>
       <div class="actor-visual reveal-r">
@@ -770,6 +791,10 @@
           <div class="actor-feature"><span class="feat-dot feat-dot-teal"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="feat-text"><strong>Documents centralisés</strong> en un seul espace sécurisé</span></div>
           <div class="actor-feature"><span class="feat-dot feat-dot-teal"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="feat-text"><strong>Accompagnement humain</strong> : vous n'êtes jamais seul</span></div>
           <div class="actor-feature"><span class="feat-dot feat-dot-teal"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="feat-text"><strong>App ergonomique</strong> conçue avec des experts en vieillissement et en accessibilité</span></div>
+        </div>
+        <div class="actor-cta-group">
+          <a href="https://tally.so/r/BzADJ1" target="_blank" rel="noopener" class="actor-cta actor-cta-teal">Vous êtes patient ? Donnez votre avis →</a>
+          <a href="https://tally.so/r/KYvDrD" target="_blank" rel="noopener" class="actor-cta actor-cta-teal">Vous êtes aidant ? Donnez votre avis →</a>
         </div>
         <div class="app-badges">
           <button class="app-badge-official" onclick="openAppModal()">
