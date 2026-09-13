@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plan du site — CareWay</title>
+  <meta name="robots" content="noindex" />
+  <link rel="icon" type="image/png" href="./photos/logo_CW_officiel.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --blue:#0057B8; --blue-mid:#0072E5; --teal:#00B4A6;
+      --dark:#0B1F3A; --text:#1A2B3C; --text-mid:#3D5166; --text-muted:#6B8299;
+      --white:#FFFFFF; --off-white:#F4F8FC; --border:#D8E6F2;
+    }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:'Inter',sans-serif; color:var(--text); background:var(--off-white); line-height:1.7; }
+    .container { max-width:820px; margin:0 auto; padding:0 24px; }
+    header.site-header { background:var(--dark); padding:20px 0; }
+    header.site-header .container { display:flex; align-items:center; justify-content:space-between; max-width:1160px; }
+    header.site-header img { height:34px; }
+    header.site-header a.back { color:var(--white); font-size:0.9rem; font-weight:600; }
+    main { padding:56px 0 80px; }
+    h1 { font-family:'Sora',sans-serif; font-size:clamp(1.7rem,4vw,2.3rem); font-weight:800; color:var(--dark); margin-bottom:36px; }
+    h2 { font-family:'Sora',sans-serif; font-size:1.05rem; font-weight:700; color:var(--dark); margin:28px 0 10px; text-transform:uppercase; letter-spacing:0.04em; }
+    ul.plan-list { list-style:none; padding:0; }
+    ul.plan-list li { margin-bottom:10px; }
+    ul.plan-list a { color:var(--blue-mid); font-weight:600; font-size:1.02rem; text-decoration:none; }
+    ul.plan-list a:hover { text-decoration:underline; }
+    footer.site-footer { background:var(--dark); color:rgba(255,255,255,0.6); padding:32px 0; font-size:0.85rem; }
+    footer.site-footer .container { max-width:1160px; display:flex; flex-wrap:wrap; gap:8px 20px; justify-content:center; }
+    footer.site-footer a { color:rgba(255,255,255,0.75); text-decoration:none; }
+    footer.site-footer a:hover { color:var(--white); }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="./index.html"><img src="./photos/logo_CW_officiel.png" alt="CareWay" /></a>
+      <a class="back" href="./index.html">← Retour au site</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <h1>Plan du site</h1>
+
+      <h2>Page d'accueil</h2>
+      <ul class="plan-list">
+        <li><a href="./index.html#hero">Accueil</a></li>
+        <li><a href="./index.html#probleme">Le secteur du transport sanitaire</a></li>
+        <li><a href="./index.html#pour-qui">La solution, pour chaque acteur</a></li>
+        <li><a href="./index.html#fonctionnement">Le fonctionnement de la plateforme</a></li>
+        <li><a href="./index.html#fondatrice">L'équipe</a></li>
+        <li><a href="./index.html#partenaires">Partenaires</a></li>
+        <li><a href="./index.html#actualites">Actualités</a></li>
+        <li><a href="./index.html#vision">Notre mission</a></li>
+        <li><a href="./index.html#contact">Nous contacter</a></li>
+      </ul>
+
+      <h2>Informations</h2>
+      <ul class="plan-list">
+        <li><a href="./faq.html">Questions fréquentes (FAQ)</a></li>
+        <li><a href="./mentions-legales.html">Mentions légales</a></li>
+        <li><a href="./confidentialite.html">Politique de confidentialité</a></li>
+        <li><a href="./cookies.html">Gestion des cookies</a></li>
+        <li><a href="./cgu.html">Conditions générales d'utilisation</a></li>
+        <li><a href="./accessibilite.html">Déclaration d'accessibilité</a></li>
+      </ul>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <a href="./mentions-legales.html">Mentions légales</a>
+      <a href="./confidentialite.html">Politique de confidentialité</a>
+      <a href="./cookies.html">Gestion des cookies</a>
+      <a href="./cgu.html">CGU</a>
+      <a href="./accessibilite.html">Accessibilité</a>
+      <a href="./plan-du-site.html">Plan du site</a>
+      <a href="./faq.html">FAQ</a>
+    </div>
+  </footer>
+</body>
+</html>

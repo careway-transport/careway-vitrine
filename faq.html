@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Questions fréquentes — CareWay</title>
+  <link rel="icon" type="image/png" href="./photos/logo_CW_officiel.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --blue:#0057B8; --blue-mid:#0072E5; --teal:#00B4A6; --teal-dark:#008F84;
+      --dark:#0B1F3A; --text:#1A2B3C; --text-mid:#3D5166; --text-muted:#6B8299;
+      --white:#FFFFFF; --off-white:#F4F8FC; --border:#D8E6F2;
+    }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:'Inter',sans-serif; color:var(--text); background:var(--off-white); line-height:1.7; }
+    .container { max-width:820px; margin:0 auto; padding:0 24px; }
+    header.site-header { background:var(--dark); padding:20px 0; }
+    header.site-header .container { display:flex; align-items:center; justify-content:space-between; max-width:1160px; }
+    header.site-header img { height:34px; }
+    header.site-header a.back { color:var(--white); font-size:0.9rem; font-weight:600; }
+    main { padding:56px 0 80px; }
+    h1 { font-family:'Sora',sans-serif; font-size:clamp(1.7rem,4vw,2.3rem); font-weight:800; color:var(--dark); margin-bottom:8px; }
+    .sub { color:var(--text-muted); font-size:1rem; margin-bottom:40px; }
+    h2.role-title { font-family:'Sora',sans-serif; font-size:1.15rem; font-weight:700; color:var(--teal-dark); margin:36px 0 14px; padding-top:8px; border-top:1px solid var(--border); }
+    h2.role-title:first-of-type { border-top:none; padding-top:0; }
+    details { background:var(--white); border:1px solid var(--border); border-radius:12px; margin-bottom:10px; overflow:hidden; }
+    summary { padding:16px 20px; font-weight:600; color:var(--text); cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center; gap:12px; }
+    summary::-webkit-details-marker { display:none; }
+    summary::after { content:'+'; color:var(--blue-mid); font-size:1.3rem; font-weight:400; flex-shrink:0; }
+    details[open] summary::after { content:'−'; }
+    details p { padding:0 20px 18px; color:var(--text-mid); }
+    .contact-cta { margin-top:40px; padding:24px; background:var(--white); border:1px solid var(--border); border-radius:14px; text-align:center; }
+    .contact-cta a { color:var(--blue-mid); font-weight:700; }
+    footer.site-footer { background:var(--dark); color:rgba(255,255,255,0.6); padding:32px 0; font-size:0.85rem; }
+    footer.site-footer .container { max-width:1160px; display:flex; flex-wrap:wrap; gap:8px 20px; justify-content:center; }
+    footer.site-footer a { color:rgba(255,255,255,0.75); text-decoration:none; }
+    footer.site-footer a:hover { color:var(--white); }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="./index.html"><img src="./photos/logo_CW_officiel.png" alt="CareWay" /></a>
+      <a class="back" href="./index.html">← Retour au site</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <h1>Questions fréquentes</h1>
+      <p class="sub">Classées par profil — patient, aidant, médecin, secrétariat, transporteur.</p>
+
+      <h2 class="role-title">Patient</h2>
+      <details>
+        <summary>Comment CareWay m'aide au quotidien ?</summary>
+        <p>Dès que votre médecin prescrit un transport, CareWay l'organise automatiquement : plus aucun appel à passer pour prendre rendez-vous avec un transporteur.</p>
+      </details>
+      <details>
+        <summary>Mes données de santé sont-elles protégées ?</summary>
+        <p>Oui. CareWay respecte le RGPD et s'appuie sur le standard d'interopérabilité FHIR R4. La plateforme vise la certification Hébergeur de Données de Santé (HDS).</p>
+      </details>
+      <details>
+        <summary>L'application mobile est-elle disponible ?</summary>
+        <p>L'application patient CareWay arrive prochainement sur l'App Store et Google Play.</p>
+      </details>
+      <details>
+        <summary>Comment inviter mon aidant ?</summary>
+        <p>Depuis votre espace CareWay, section Paramètres, vous pouvez inviter un proche par email pour qu'il suive vos transports.</p>
+      </details>
+      <details>
+        <summary>Comment tester CareWay ?</summary>
+        <p>Répondez à notre questionnaire patient, ou demandez plus d'informations via notre formulaire de contact.</p>
+      </details>
+
+      <h2 class="role-title">Aidant</h2>
+      <details>
+        <summary>Quel est mon rôle en tant qu'aidant sur CareWay ?</summary>
+        <p>Vous suivez en temps réel les transports sanitaires de votre proche, avec son accord, et pouvez échanger avec l'équipe soignante.</p>
+      </details>
+      <details>
+        <summary>Comment être ajouté comme aidant ?</summary>
+        <p>Le patient vous invite par email depuis son espace CareWay. Vous pouvez aussi lui demander l'accès directement.</p>
+      </details>
+      <details>
+        <summary>Mes données sont-elles protégées ?</summary>
+        <p>Oui, CareWay respecte le RGPD et le standard FHIR R4 pour l'ensemble des données échangées.</p>
+      </details>
+
+      <h2 class="role-title">Médecin</h2>
+      <details>
+        <summary>Comment prescrire un transport avec CareWay ?</summary>
+        <p>En 30 secondes, depuis votre logiciel de soins habituel, en établissement comme en ville. CareWay gère ensuite toute la coordination.</p>
+      </details>
+      <details>
+        <summary>CareWay est-il compatible avec mon logiciel actuel ?</summary>
+        <p>CareWay s'intègre avec les principaux logiciels de soins du marché. Contactez-nous pour vérifier la compatibilité avec le vôtre.</p>
+      </details>
+      <details>
+        <summary>Mes données et celles de mes patients sont-elles protégées ?</summary>
+        <p>Oui. CareWay respecte le RGPD et s'appuie sur le standard FHIR R4, avec une certification HDS visée.</p>
+      </details>
+      <details>
+        <summary>Combien coûte CareWay ?</summary>
+        <p>Le tarif dépend de votre structure. Contactez-nous pour un devis personnalisé et une démo gratuite de 30 minutes.</p>
+      </details>
+
+      <h2 class="role-title">Secrétariat médical</h2>
+      <details>
+        <summary>Comment CareWay simplifie mon quotidien ?</summary>
+        <p>Moins d'appels et de formulaires papier : la coordination du transport est automatisée dès la prescription, et vous suivez tout depuis un tableau de bord.</p>
+      </details>
+      <details>
+        <summary>Mes données et celles des patients sont-elles protégées ?</summary>
+        <p>Oui, CareWay respecte le RGPD et le standard FHIR R4.</p>
+      </details>
+
+      <h2 class="role-title">Transporteur</h2>
+      <details>
+        <summary>Comment CareWay m'aide en tant que transporteur ?</summary>
+        <p>Planning automatisé, patient au rendez-vous garanti, et dossiers de facturation prêts à transmettre pour votre remboursement CPAM.</p>
+      </details>
+      <details>
+        <summary>Comment devenir transporteur partenaire ?</summary>
+        <p>Contactez-nous via le formulaire du site, ou répondez à notre questionnaire dédié — nous revenons vers vous sous 24h ouvrées.</p>
+      </details>
+      <details>
+        <summary>Combien coûte CareWay pour mon entreprise ?</summary>
+        <p>Le tarif dépend de votre structure et de vos besoins. Contactez-nous pour un devis personnalisé.</p>
+      </details>
+
+      <div class="contact-cta">
+        Vous ne trouvez pas de réponse à votre question ?
+        <br /><a href="./index.html#contact">Contactez-nous directement</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <a href="./mentions-legales.html">Mentions légales</a>
+      <a href="./confidentialite.html">Politique de confidentialité</a>
+      <a href="./cookies.html">Gestion des cookies</a>
+      <a href="./cgu.html">CGU</a>
+      <a href="./accessibilite.html">Accessibilité</a>
+      <a href="./plan-du-site.html">Plan du site</a>
+      <a href="./faq.html">FAQ</a>
+    </div>
+  </footer>
+</body>
+</html>
