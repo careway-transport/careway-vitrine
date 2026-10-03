@@ -420,7 +420,7 @@ function initials(n) { return n.split(' ').filter(Boolean).map(w=>w[0]).join('')
 
 /* ── QR CODE (SVG généré en pur JS, pas de lib externe) ── */
 function qrSVG(data, size=160) {
-  /* QR simplifié visuel — motif aléatoire stable basé sur le hash de `data` */
+  /* QR simplifié visuel - motif aléatoire stable basé sur le hash de `data` */
   let h = 0; for (let c of data) h = (Math.imul(31, h) + c.charCodeAt(0)) | 0;
   function bit(i) { return ((h ^ (h >>> (i%8)) ^ (i*1234567)) & 1) === 0; }
   const M = 21, cell = Math.floor(size / M), total = cell * M;
@@ -486,9 +486,9 @@ function confirmScan(missionId, patName) {
       <i class="bi bi-check-circle-fill" style="font-size:2.2rem;color:#16A34A"></i>
     </div>
     <h3 style="color:#16A34A">Prise en charge confirmée</h3>
-    <p>QR code de <strong>${patName}</strong> validé avec succès.<br>Mission <strong>${missionId}</strong> — statut : En cours</p>
+    <p>QR code de <strong>${patName}</strong> validé avec succès.<br>Mission <strong>${missionId}</strong> - statut : En cours</p>
     <div style="background:#DCFCE7;border:1px solid rgba(22,163,74,.25);border-radius:9px;padding:12px 14px;font-size:.81rem;color:#166534;margin:12px 0 4px">
-      <i class="bi bi-clock"></i> ${new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})} — Confirmé automatiquement dans CareWay
+      <i class="bi bi-clock"></i> ${new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})} - Confirmé automatiquement dans CareWay
     </div>
     <div style="font-size:.74rem;color:#94A3B8;margin-top:8px"><i class="bi bi-shield-lock"></i> Traçabilité enregistrée · Conforme HDS</div>`;
 }
@@ -533,17 +533,17 @@ const NOTIFS = {
   prescripteur: [
     { icon:'bi-exclamation-triangle-fill', txt:'BT-2026-039 expire dans 4 jours (Marie Leblanc)', time:'Il y a 1h', read:false, color:'var(--amber)' },
     { icon:'bi-exclamation-triangle-fill', txt:'BT-2026-038 expire dans 6 jours (Jacques Renault)', time:'Il y a 1h', read:false, color:'var(--amber)' },
-    { icon:'bi-truck', txt:'Transport de Sophie Moreau en cours — CHU Bordeaux', time:'09h30', read:true, color:'var(--accent)' },
+    { icon:'bi-truck', txt:'Transport de Sophie Moreau en cours - CHU Bordeaux', time:'09h30', read:true, color:'var(--accent)' },
   ],
   transporteur: [
-    { icon:'bi-geo-alt-fill', txt:'Mission 09h30 — Mme Moreau vous attend au 12 rue des Acacias', time:'08h30', read:false, color:'var(--accent)' },
-    { icon:'bi-person-fill', txt:'Nouvelle mission ajoutée : Ven. 23 mai — Sophie Moreau', time:'Hier', read:false, color:'var(--accent)' },
+    { icon:'bi-geo-alt-fill', txt:'Mission 09h30 - Mme Moreau vous attend au 12 rue des Acacias', time:'08h30', read:false, color:'var(--accent)' },
+    { icon:'bi-person-fill', txt:'Nouvelle mission ajoutée : Ven. 23 mai - Sophie Moreau', time:'Hier', read:false, color:'var(--accent)' },
     { icon:'bi-star-fill', txt:'Avis 5/5 reçu de Pierre Durand', time:'Il y a 2j', read:true, color:'#D97706' },
   ],
   coordinateur: [
     { icon:'bi-exclamation-triangle-fill', txt:'Mission MIS-2026-087 sans transporteur assigné (départ 14h00)', time:'Il y a 30 min', read:false, color:'var(--amber)' },
     { icon:'bi-check-circle-fill', txt:'Marc Dubois a accepté la mission MIS-2026-085', time:'Il y a 1h', read:false, color:'var(--green)' },
-    { icon:'bi-exclamation-circle-fill', txt:'Incident signalé : retard mission MIS-2026-084 — 20 min', time:'Il y a 2h', read:false, color:'var(--red)' },
+    { icon:'bi-exclamation-circle-fill', txt:'Incident signalé : retard mission MIS-2026-084 - 20 min', time:'Il y a 2h', read:false, color:'var(--red)' },
     { icon:'bi-file-earmark-fill', txt:'3 nouvelles demandes de transport à traiter', time:'Ce matin 08h00', read:true, color:'var(--accent)' },
   ],
 };
@@ -724,9 +724,9 @@ function pDash(){
     </div>
 
     <div class="card" style="margin-bottom:16px">
-      <div class="card-head"><span class="card-title"><i class="bi bi-truck"></i>Mardi 20 mai 2026 — 09h30</span><span class="badge b-green"><i class="bi bi-check-circle-fill"></i> Confirmé</span></div>
+      <div class="card-head"><span class="card-title"><i class="bi bi-truck"></i>Mardi 20 mai 2026 - 09h30</span><span class="badge b-green"><i class="bi bi-check-circle-fill"></i> Confirmé</span></div>
       <div class="card-body">
-        <div style="font-size:.9rem;font-weight:600;margin-bottom:4px">CHU de Bordeaux — Service Oncologie</div>
+        <div style="font-size:.9rem;font-weight:600;margin-bottom:4px">CHU de Bordeaux - Service Oncologie</div>
         <div style="font-size:.81rem;color:var(--muted);margin-bottom:14px">15 rue Pelleport, Bordeaux · VSL · Chimiothérapie</div>
         <div class="route-track">
           <div class="rt-pt"><div class="rt-dot"></div><div class="rt-lbl">Votre domicile</div></div>
@@ -783,14 +783,14 @@ function pTransports(){
     <div class="tab" data-tabgroup="tr" data-val="past" onclick="switchTab('tr','past')">Passés (18)</div>
   </div>`;
   const up=[
-    {date:'Mardi 20 mai 2026',h:'09h30',lieu:'CHU de Bordeaux — Oncologie',type:'VSL',desc:'Chimiothérapie · Marc Dubois',st:'Confirmé',sc:'b-green',ico:'bi-truck',ibg:'var(--accent-l)',ic:'var(--accent-d)'},
-    {date:'Vendredi 23 mai 2026',h:'13h45',lieu:'Cabinet Dr. Martin — Cardiologie',type:'TAP',desc:'Consultation suivi',st:'Confirmé',sc:'b-green',ico:'bi-hospital',ibg:'var(--green-l)',ic:'var(--green)'},
-    {date:'Mercredi 28 mai 2026',h:'08h00',lieu:'Clinique Saint-Augustin — Bilan sanguin',type:'VSL',desc:'Bilan mensuel',st:'En attente',sc:'b-amber',ico:'bi-truck',ibg:'var(--amber-l)',ic:'var(--amber)'},
+    {date:'Mardi 20 mai 2026',h:'09h30',lieu:'CHU de Bordeaux - Oncologie',type:'VSL',desc:'Chimiothérapie · Marc Dubois',st:'Confirmé',sc:'b-green',ico:'bi-truck',ibg:'var(--accent-l)',ic:'var(--accent-d)'},
+    {date:'Vendredi 23 mai 2026',h:'13h45',lieu:'Cabinet Dr. Martin - Cardiologie',type:'TAP',desc:'Consultation suivi',st:'Confirmé',sc:'b-green',ico:'bi-hospital',ibg:'var(--green-l)',ic:'var(--green)'},
+    {date:'Mercredi 28 mai 2026',h:'08h00',lieu:'Clinique Saint-Augustin - Bilan sanguin',type:'VSL',desc:'Bilan mensuel',st:'En attente',sc:'b-amber',ico:'bi-truck',ibg:'var(--amber-l)',ic:'var(--amber)'},
   ];
   const past=[
-    {date:'13 mai 2026',h:'09h15',lieu:'CHU de Bordeaux — Oncologie',type:'VSL',st:'Réalisé',sc:'b-gray'},
+    {date:'13 mai 2026',h:'09h15',lieu:'CHU de Bordeaux - Oncologie',type:'VSL',st:'Réalisé',sc:'b-gray'},
     {date:'6 mai 2026',h:'14h00',lieu:'Cabinet Dr. Martin',type:'TAP',st:'Réalisé',sc:'b-gray'},
-    {date:'29 avril 2026',h:'09h30',lieu:'CHU de Bordeaux — Oncologie',type:'VSL',st:'Réalisé',sc:'b-gray'},
+    {date:'29 avril 2026',h:'09h30',lieu:'CHU de Bordeaux - Oncologie',type:'VSL',st:'Réalisé',sc:'b-gray'},
     {date:'22 avril 2026',h:'10h00',lieu:'Clinique Saint-Augustin',type:'VSL',st:'Réalisé',sc:'b-gray'},
   ];
   return `${tabsHtml}
@@ -857,7 +857,7 @@ function pMsgs(){
         <div class="msg-bub">
           <div class="msg-head">
             <div class="li-ico" style="background:#F1F5F9;color:var(--muted);width:34px;height:34px;flex-shrink:0"><i class="bi bi-truck"></i></div>
-            <div><div style="font-size:.84rem;font-weight:600">Marc Dubois — Transporteur</div><div style="font-size:.71rem;color:var(--muted)">Hier, 17h40</div></div>
+            <div><div style="font-size:.84rem;font-weight:600">Marc Dubois - Transporteur</div><div style="font-size:.71rem;color:var(--muted)">Hier, 17h40</div></div>
           </div>
           <div class="msg-txt">"Bonjour Madame Moreau, je serai devant votre domicile le 20 mai à 09h15. Je conduis un Citroën Berlingo blanc, plaque AA-123-BB. N'hésitez pas à m'appeler si besoin."</div>
         </div>
@@ -896,12 +896,12 @@ function aDash(){
           <div class="card-body">
             <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
               <div style="width:52px;height:52px;border-radius:50%;background:var(--accent-l);display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:700;color:var(--accent-d);flex-shrink:0">SM</div>
-              <div><div style="font-size:.94rem;font-weight:700">Sophie Moreau</div><div style="font-size:.8rem;color:var(--muted)">Patiente · 76 ans · Oncologie — CHU Bordeaux</div><div style="font-size:.78rem;color:var(--muted);margin-top:2px">Médecin référent : Dr. Claire Lefèvre</div></div>
+              <div><div style="font-size:.94rem;font-weight:700">Sophie Moreau</div><div style="font-size:.8rem;color:var(--muted)">Patiente · 76 ans · Oncologie - CHU Bordeaux</div><div style="font-size:.78rem;color:var(--muted);margin-top:2px">Médecin référent : Dr. Claire Lefèvre</div></div>
             </div>
             <div class="tl">
-              <div class="tl-item"><div class="tl-left"><div class="tl-dot done"></div><div class="tl-line"></div></div><div class="tl-content" style="padding-bottom:14px"><div class="tl-txt">Transport réalisé — CHU Bordeaux</div><div class="tl-sub">13 mai 2026 · Chimiothérapie</div></div></div>
-              <div class="tl-item"><div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-content" style="padding-bottom:14px"><div class="tl-txt">Prochain transport — CHU Bordeaux</div><div class="tl-sub">Mardi 20 mai 2026 · 09h30 · <strong>Confirmé</strong></div></div></div>
-              <div class="tl-item"><div class="tl-left"><div class="tl-dot off"></div></div><div class="tl-content"><div class="tl-txt" style="color:var(--muted)">Transport — Cabinet Dr. Martin</div><div class="tl-sub">Vendredi 23 mai 2026 · 13h45</div></div></div>
+              <div class="tl-item"><div class="tl-left"><div class="tl-dot done"></div><div class="tl-line"></div></div><div class="tl-content" style="padding-bottom:14px"><div class="tl-txt">Transport réalisé - CHU Bordeaux</div><div class="tl-sub">13 mai 2026 · Chimiothérapie</div></div></div>
+              <div class="tl-item"><div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-content" style="padding-bottom:14px"><div class="tl-txt">Prochain transport - CHU Bordeaux</div><div class="tl-sub">Mardi 20 mai 2026 · 09h30 · <strong>Confirmé</strong></div></div></div>
+              <div class="tl-item"><div class="tl-left"><div class="tl-dot off"></div></div><div class="tl-content"><div class="tl-txt" style="color:var(--muted)">Transport - Cabinet Dr. Martin</div><div class="tl-sub">Vendredi 23 mai 2026 · 13h45</div></div></div>
             </div>
           </div>
         </div>
@@ -912,7 +912,7 @@ function aDash(){
             <div style="display:flex;align-items:center;gap:12px">
               <div class="li-ico" style="background:var(--accent-l);color:var(--accent-d)"><i class="bi bi-truck"></i></div>
               <div style="flex:1">
-                <div class="li-t">CHU de Bordeaux — Oncologie</div>
+                <div class="li-t">CHU de Bordeaux - Oncologie</div>
                 <div class="li-meta"><span class="mc"><i class="bi bi-calendar3"></i>Mardi 20 mai 2026</span><span class="mc"><i class="bi bi-clock"></i>09h30</span><span class="mc">VSL</span></div>
                 <div style="font-size:.76rem;color:var(--muted);margin-top:4px">Conducteur : Marc Dubois</div>
               </div>
@@ -983,8 +983,8 @@ function aProches(){
 
 function aTransports(){
   const list=[
-    {date:'Mardi 20 mai 2026',h:'09h30',lieu:'CHU de Bordeaux — Oncologie',type:'VSL',cond:'Marc Dubois',st:'Confirmé',sc:'b-green'},
-    {date:'Vendredi 23 mai 2026',h:'13h45',lieu:'Cabinet Dr. Martin — Cardiologie',type:'TAP',cond:'À attribuer',st:'Confirmé',sc:'b-green'},
+    {date:'Mardi 20 mai 2026',h:'09h30',lieu:'CHU de Bordeaux - Oncologie',type:'VSL',cond:'Marc Dubois',st:'Confirmé',sc:'b-green'},
+    {date:'Vendredi 23 mai 2026',h:'13h45',lieu:'Cabinet Dr. Martin - Cardiologie',type:'TAP',cond:'À attribuer',st:'Confirmé',sc:'b-green'},
     {date:'Mercredi 28 mai 2026',h:'08h00',lieu:'Clinique Saint-Augustin',type:'VSL',cond:'À attribuer',st:'En attente',sc:'b-amber'},
   ];
   return `
@@ -1018,7 +1018,7 @@ function aMsgs(){
         <div class="msg-bub" style="border-left:3px solid var(--accent)">
           <div class="msg-head">
             <div class="li-ico" style="background:#F1F5F9;color:var(--muted);width:34px;height:34px;flex-shrink:0"><i class="bi bi-truck"></i></div>
-            <div><div style="font-size:.84rem;font-weight:600">Marc Dubois — Transporteur</div><div style="font-size:.71rem;color:var(--muted)">Hier, 17h40</div></div>
+            <div><div style="font-size:.84rem;font-weight:600">Marc Dubois - Transporteur</div><div style="font-size:.71rem;color:var(--muted)">Hier, 17h40</div></div>
             <span class="badge b-accent" style="margin-left:auto">Nouveau</span>
           </div>
           <div class="msg-txt">"Bonjour, je serai au domicile de Mme Moreau le 20 mai à 09h15 pour la conduire au CHU. Je la déposerai à l'entrée principale."</div>
@@ -1086,7 +1086,7 @@ function rxDash(){
         <div class="card">
           <div class="card-head"><span class="card-title"><i class="bi bi-file-medical"></i>BT urgents</span></div>
           <div class="card-body" style="display:flex;flex-direction:column;gap:8px">
-            ${[{n:'BT-2026-039 — Marie Leblanc',e:'22 mai',p:30},{n:'BT-2026-038 — Jacques Renault',e:'24 mai',p:45}].map(b=>`
+            ${[{n:'BT-2026-039 - Marie Leblanc',e:'22 mai',p:30},{n:'BT-2026-038 - Jacques Renault',e:'24 mai',p:45}].map(b=>`
               <div class="rx-row">
                 <div class="rx-icon"><i class="bi bi-file-earmark-text"></i></div>
                 <div style="flex:1"><div class="rx-name">${b.n}</div><div class="rx-date">Expire le ${b.e}</div>
@@ -1142,7 +1142,7 @@ function rxPrescriptions(){
         ${list.map(p=>`<div class="rx-row">
           <div class="rx-icon"><i class="bi bi-file-earmark-text"></i></div>
           <div style="flex:1">
-            <div class="rx-name">${p.ref} — ${p.pat}</div>
+            <div class="rx-name">${p.ref} - ${p.pat}</div>
             <div class="rx-date">Émis le ${p.date} · Expire le ${p.exp}</div>
             <div class="exp-bar"><div class="exp-fill" style="width:${p.pct}%;background:${p.pct>60?'var(--green)':p.pct>40?'var(--amber)':'var(--red)'}"></div></div>
           </div>
@@ -1231,7 +1231,7 @@ function trDash(){
         <div class="card">
           <div class="card-head"><span class="card-title"><i class="bi bi-person-lines-fill"></i>Prochain patient</span></div>
           <div class="card-body" style="padding:14px 18px">
-            <div style="font-weight:600;margin-bottom:4px">Sophie Moreau — 76 ans</div>
+            <div style="font-weight:600;margin-bottom:4px">Sophie Moreau - 76 ans</div>
             <div style="font-size:.79rem;color:var(--muted);margin-bottom:8px">Retour vers 11h45 · Rue des Acacias</div>
             <div style="font-size:.79rem;background:var(--amber-l);border-radius:7px;padding:8px 10px;color:var(--amber)"><i class="bi bi-info-circle"></i> Patiente mobilité réduite · Prévoir aide à la montée</div>
           </div>
@@ -1257,7 +1257,7 @@ function trMissions(){
       <h2>Mes missions</h2><p>4 missions aujourd'hui · 23 ce mois</p>
     </div></div>
     <div class="card" style="margin-bottom:14px">
-      <div class="card-head"><span class="card-title"><i class="bi bi-truck"></i>Aujourd'hui — ${shortDate()}</span></div>
+      <div class="card-head"><span class="card-title"><i class="bi bi-truck"></i>Aujourd'hui - ${shortDate()}</span></div>
       <div class="card-body" style="display:flex;flex-direction:column;gap:8px">
         ${TR_MISSIONS.map(m=>`<div class="m-card${m.active?' active':''}">
           <div class="m-time-col"><div class="m-hr">${m.h}h</div><div class="m-mn">${m.m}</div></div>
@@ -1360,23 +1360,23 @@ function trMsgs(){
    COORDINATEUR
 ══════════════════════════════════════════════════ */
 const CR_DEMANDES=[
-  {id:'MIS-2026-090',pat:'Hélène Garnier',age:'73 ans',rx:'Dr. Leroy',date:'20 mai 2026',h:'10h00',from:'45 rue Victor Hugo, Bordeaux',to:'CHU Pellegrin — Neurologie',type:'VSL',tc:'t-vsl',st:'À affecter',sc:'b-amber'},
-  {id:'MIS-2026-089',pat:'Robert Fouquet',age:'80 ans',rx:'Dr. Benali',date:'20 mai 2026',h:'11h30',from:'7 all. des Pins, Mérignac',to:'Clinique Mérignac — Cardiologie',type:'TAP',tc:'t-tap',st:'À affecter',sc:'b-amber'},
-  {id:'MIS-2026-088',pat:'Monique Tardieu',age:'68 ans',rx:'Dr. Lefèvre',date:'21 mai 2026',h:'08h30',from:'23 rue Pasteur, Pessac',to:'CHU Bordeaux — Oncologie',type:'AMBU',tc:'t-ambu',st:'À affecter',sc:'b-amber'},
+  {id:'MIS-2026-090',pat:'Hélène Garnier',age:'73 ans',rx:'Dr. Leroy',date:'20 mai 2026',h:'10h00',from:'45 rue Victor Hugo, Bordeaux',to:'CHU Pellegrin - Neurologie',type:'VSL',tc:'t-vsl',st:'À affecter',sc:'b-amber'},
+  {id:'MIS-2026-089',pat:'Robert Fouquet',age:'80 ans',rx:'Dr. Benali',date:'20 mai 2026',h:'11h30',from:'7 all. des Pins, Mérignac',to:'Clinique Mérignac - Cardiologie',type:'TAP',tc:'t-tap',st:'À affecter',sc:'b-amber'},
+  {id:'MIS-2026-088',pat:'Monique Tardieu',age:'68 ans',rx:'Dr. Lefèvre',date:'21 mai 2026',h:'08h30',from:'23 rue Pasteur, Pessac',to:'CHU Bordeaux - Oncologie',type:'AMBU',tc:'t-ambu',st:'À affecter',sc:'b-amber'},
 ];
 const CR_MISSIONS_TODAY=[
-  {id:'MIS-2026-085',pat:'Sophie Moreau',age:'76 ans',from:'12 rue des Acacias',to:'CHU Bordeaux — Oncologie',h:'09h30',type:'VSL',tc:'t-vsl',cond:'Marc Dubois',st:'En cours',sc:'b-teal',active:true},
-  {id:'MIS-2026-086',pat:'Pierre Durand',age:'82 ans',from:'15 av. Thiers',to:'Clinique du Lac — Cardio',h:'14h00',type:'TAP',tc:'t-tap',cond:'Isabelle Roy',st:'Confirmé',sc:'b-green',active:false},
-  {id:'MIS-2026-087',pat:'Marie Leblanc',age:'68 ans',from:'8 rue du Moulin',to:'CHU Bordeaux — Diabéto',h:'14h00',type:'VSL',tc:'t-vsl',cond:null,st:'Sans transporteur',sc:'b-red',active:false},
+  {id:'MIS-2026-085',pat:'Sophie Moreau',age:'76 ans',from:'12 rue des Acacias',to:'CHU Bordeaux - Oncologie',h:'09h30',type:'VSL',tc:'t-vsl',cond:'Marc Dubois',st:'En cours',sc:'b-teal',active:true},
+  {id:'MIS-2026-086',pat:'Pierre Durand',age:'82 ans',from:'15 av. Thiers',to:'Clinique du Lac - Cardio',h:'14h00',type:'TAP',tc:'t-tap',cond:'Isabelle Roy',st:'Confirmé',sc:'b-green',active:false},
+  {id:'MIS-2026-087',pat:'Marie Leblanc',age:'68 ans',from:'8 rue du Moulin',to:'CHU Bordeaux - Diabéto',h:'14h00',type:'VSL',tc:'t-vsl',cond:null,st:'Sans transporteur',sc:'b-red',active:false},
   {id:'MIS-2026-084',pat:'Jacques Renault',age:'71 ans',from:'Clinique Mérignac',to:'32 bd des Capucins',h:'09h00',type:'AMBU',tc:'t-ambu',cond:'Équipe Ambulances 33',st:'Retard 20 min',sc:'b-amber',active:false},
   {id:'MIS-2026-083',pat:'Christine Bernard',age:'79 ans',from:'18 rue Condorcet',to:'Clinique Saint-Augustin',h:'08h00',type:'VSL',tc:'t-vsl',cond:'Paul Giraud',st:'Réalisé',sc:'b-gray',active:false},
 ];
 const CR_TRANSPORTEURS=[
-  {ini:'MD',n:'Marc Dubois',veh:'VSL — Citroën Berlingo',missions:4,st:'En mission',sc:'b-teal',c:'var(--accent-d)',cb:'var(--accent-l)',note:'Mission 09h30 en cours'},
-  {ini:'IR',n:'Isabelle Roy',veh:'TAP — Renault Trafic',missions:3,st:'Disponible',sc:'b-green',c:'#047857',cb:'#ECFDF5',note:'Libre jusqu\'à 14h00'},
-  {ini:'PG',n:'Paul Giraud',veh:'VSL — Peugeot Partner',missions:2,st:'Disponible',sc:'b-green',c:'var(--amber)',cb:'var(--amber-l)',note:'1 mission terminée'},
-  {ini:'A3',n:'Ambulances Aquitaine 33',veh:'AMBU — Mercedes Sprinter',missions:1,st:'Retard',sc:'b-amber',c:'var(--red)',cb:'var(--red-l)',note:'Retard 20 min signalé'},
-  {ini:'JL',n:'Jean-Claude Lamy',veh:'VSL — Citroën Berlingo',missions:0,st:'Indisponible',sc:'b-gray',c:'#64748B',cb:'#F1F5F9',note:'Congé aujourd\'hui'},
+  {ini:'MD',n:'Marc Dubois',veh:'VSL - Citroën Berlingo',missions:4,st:'En mission',sc:'b-teal',c:'var(--accent-d)',cb:'var(--accent-l)',note:'Mission 09h30 en cours'},
+  {ini:'IR',n:'Isabelle Roy',veh:'TAP - Renault Trafic',missions:3,st:'Disponible',sc:'b-green',c:'#047857',cb:'#ECFDF5',note:'Libre jusqu\'à 14h00'},
+  {ini:'PG',n:'Paul Giraud',veh:'VSL - Peugeot Partner',missions:2,st:'Disponible',sc:'b-green',c:'var(--amber)',cb:'var(--amber-l)',note:'1 mission terminée'},
+  {ini:'A3',n:'Ambulances Aquitaine 33',veh:'AMBU - Mercedes Sprinter',missions:1,st:'Retard',sc:'b-amber',c:'var(--red)',cb:'var(--red-l)',note:'Retard 20 min signalé'},
+  {ini:'JL',n:'Jean-Claude Lamy',veh:'VSL - Citroën Berlingo',missions:0,st:'Indisponible',sc:'b-gray',c:'#64748B',cb:'#F1F5F9',note:'Congé aujourd\'hui'},
 ];
 
 function crDash(){
@@ -1395,7 +1395,7 @@ function crDash(){
 
     <div class="alert-bar alert-warn" style="margin-bottom:18px">
       <i class="bi bi-exclamation-triangle-fill"></i>
-      <span><strong>MIS-2026-087</strong> — Marie Leblanc (14h00, VSL) : aucun transporteur assigné. <strong style="cursor:pointer;text-decoration:underline" onclick="navigate('demandes')">Affecter maintenant</strong></span>
+      <span><strong>MIS-2026-087</strong> - Marie Leblanc (14h00, VSL) : aucun transporteur assigné. <strong style="cursor:pointer;text-decoration:underline" onclick="navigate('demandes')">Affecter maintenant</strong></span>
     </div>
 
     <div class="g4" style="margin-bottom:18px">
@@ -1406,7 +1406,7 @@ function crDash(){
       <div class="stack">
         <div class="live-mission">
           <div class="live-header"><div class="live-dot"></div><span class="live-badge">Mission en cours</span><span class="badge b-blue" style="margin-left:auto;font-size:.65rem">MIS-2026-085</span></div>
-          <div class="live-route">12 rue des Acacias → CHU Bordeaux — Oncologie</div>
+          <div class="live-route">12 rue des Acacias → CHU Bordeaux - Oncologie</div>
           <div class="live-pat"><i class="bi bi-person-fill"></i> Sophie Moreau · 76 ans · VSL · Conducteur : Marc Dubois</div>
           <div class="route-prog">
             <div class="rp-bar"><div class="rp-fill" id="live-fill" style="width:52%"></div></div>
@@ -1420,7 +1420,7 @@ function crDash(){
             ${CR_MISSIONS_TODAY.slice(0,4).map(m=>`<div class="m-card${m.active?' active':''}">
               <div class="m-time-col"><div class="m-hr">${m.h.split('h')[0]}h</div><div class="m-mn">${m.h.split('h')[1]||'00'}</div></div>
               <div class="m-sep"></div>
-              <div class="m-body"><div class="m-route">${m.pat}</div><div class="m-pat" style="font-size:.72rem">${m.to.split('—')[0].trim()}</div><span class="m-type ${m.tc}">${m.type}</span></div>
+              <div class="m-body"><div class="m-route">${m.pat}</div><div class="m-pat" style="font-size:.72rem">${m.to.split(' - ')[0].trim()}</div><span class="m-type ${m.tc}">${m.type}</span></div>
               <span class="badge ${m.sc}">${m.st}</span>
             </div>`).join('')}
           </div>
@@ -1435,7 +1435,7 @@ function crDash(){
                 <div style="font-size:.83rem;font-weight:600">${d.pat}</div>
                 <span class="badge b-amber" style="font-size:.65rem">${d.h}</span>
               </div>
-              <div style="font-size:.74rem;color:var(--muted)">${d.to.split('—')[0].trim()} · ${d.type}</div>
+              <div style="font-size:.74rem;color:var(--muted)">${d.to.split(' - ')[0].trim()} · ${d.type}</div>
               <button class="cta-sm" style="margin-top:7px" onclick="navigate('demandes')">Affecter</button>
             </div>`).join('')}
           </div>
@@ -1468,7 +1468,7 @@ function crDemandes(){
     <div class="stack">
       ${CR_DEMANDES.map(d=>`<div class="card">
         <div class="card-head">
-          <span class="card-title"><i class="bi bi-file-earmark-medical"></i>${d.id} — ${d.pat}</span>
+          <span class="card-title"><i class="bi bi-file-earmark-medical"></i>${d.id} - ${d.pat}</span>
           <span class="badge ${d.sc}">${d.st}</span>
         </div>
         <div class="card-body">
@@ -1482,7 +1482,7 @@ function crDemandes(){
             <div style="flex:1">
               <label class="form-label" for="assign-transporteur" style="display:block;font-size:.72rem;font-weight:600;color:var(--accent-d);margin-bottom:4px">Affecter un transporteur</label>
               <select id="assign-transporteur" class="form-input" style="width:100%;border-radius:7px;padding:7px 10px;font-size:.83rem;border:1px solid var(--border)">
-                <option value="">— Sélectionner —</option>
+                <option value="">Sélectionner</option>
                 <option>Marc Dubois (VSL)</option>
                 <option>Isabelle Roy (TAP)</option>
                 <option>Paul Giraud (VSL)</option>
@@ -1547,7 +1547,7 @@ function crMissions(){
         ${CR_MISSIONS_TODAY.filter(m=>['Sans transporteur','Retard 20 min'].includes(m.st)).map(m=>`<div class="card" style="border-left:3px solid var(--${m.st.startsWith('Sans')?'red':'amber'})">
           <div class="card-body" style="display:flex;gap:12px;padding:14px 18px">
             <div class="li-ico" style="background:var(--${m.st.startsWith('Sans')?'red-l':'amber-l'});color:var(--${m.st.startsWith('Sans')?'red':'amber'})"><i class="bi bi-exclamation-triangle-fill"></i></div>
-            <div style="flex:1"><div style="font-size:.88rem;font-weight:600;margin-bottom:2px">${m.pat} — ${m.id}</div><div style="font-size:.79rem;color:var(--muted)">${m.to} · ${m.type}</div></div>
+            <div style="flex:1"><div style="font-size:.88rem;font-weight:600;margin-bottom:2px">${m.pat} - ${m.id}</div><div style="font-size:.79rem;color:var(--muted)">${m.to} · ${m.type}</div></div>
             <span class="badge ${m.sc}">${m.st}</span>
           </div>
         </div>`).join('')}
