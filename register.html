@@ -8,11 +8,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root {
       --teal:      #00B4A6;
       --teal-dark: #008F84;
+      --teal-btn:  #007A70;
       --dark:      #0B1F3A;
       --white:     #FFFFFF;
       --r-md: 14px; --r-lg: 20px; --r-xl: 28px;
@@ -158,7 +158,7 @@
       display: flex; align-items: center; justify-content: center; gap: 8px;
       width: 100%; padding: 15px;
       margin-top: 20px;
-      background: linear-gradient(135deg, #00C4B4 0%, var(--teal-dark) 100%);
+      background: var(--teal-btn);
       color: var(--white); border: none; border-radius: var(--r-md);
       font-family: 'Inter', sans-serif; font-size: 0.97rem; font-weight: 700;
       cursor: pointer;
@@ -244,7 +244,7 @@
     .btn-submit {
       display: flex; align-items: center; justify-content: center; gap: 8px;
       width: 100%; padding: 15px; margin-top: 20px;
-      background: linear-gradient(135deg, #00C4B4 0%, var(--teal-dark) 100%);
+      background: var(--teal-btn);
       color: var(--white); border: none; border-radius: var(--r-md);
       font-family: 'Inter', sans-serif; font-size: 0.97rem; font-weight: 700;
       cursor: pointer;
@@ -421,8 +421,8 @@
         <div class="success-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
         </div>
-        <h2 class="success-title">Compte créé !</h2>
-        <p class="success-sub">Votre demande d'accès a bien été reçue. L'équipe CareWay examinera votre dossier et vous contactera par e-mail sous 24h ouvrées pour activer votre compte.</p>
+        <h2 class="success-title">Démonstration</h2>
+        <p class="success-sub">Cet espace est une démonstration du futur parcours d'inscription CareWay. Aucune donnée n'est transmise pour le moment. Pour une inscription réelle, contactez-nous via le formulaire de la page d'accueil.</p>
         <a href="/" class="btn-home">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
           Retour à l'accueil
@@ -433,12 +433,6 @@
   </div>
 
   <script>
-    const { createClient } = supabase;
-    const sb = createClient(
-      'https://vxnazkdbqdaxlxcxvpkh.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4bmF6a2RicWRheGx4Y3h2cGtoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg2MTM2OTUsImV4cCI6MjA3NDE4OTY5NX0.X5vugf8o8kHk_JMYc4J3S9Ciw8_27S9KTH_cLQGjXMk'
-    );
-
     if (localStorage.getItem('cw_user')) window.location.href = '/dashboard';
 
     let selectedProfil = null;

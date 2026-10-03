@@ -9,13 +9,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root {
       --blue:       #0057B8;
-      --blue-mid:   #0072E5;
+      --blue-mid:   #0066CC;
       --teal:       #00B4A6;
       --teal-dark:  #008F84;
+      --teal-btn:   #007A70;
       --dark:       #0B1F3A;
       --dark-mid:   #162E4D;
       --dark-light: #1E3A5F;
@@ -339,7 +339,7 @@
       width: 100%;
       padding: 14px 24px;
       margin-top: 20px;
-      background: linear-gradient(135deg, #00C4B4 0%, var(--teal-dark) 100%);
+      background: var(--teal-btn);
       color: var(--white);
       border: none;
       border-radius: var(--r-md);
@@ -671,7 +671,6 @@
     'prescripteur@demo.careway.fr':  { pwd: 'Demo2026', profil: 'prescripteur',  nom: 'Dr. Claire Lefèvre' },
     'transporteur@demo.careway.fr':  { pwd: 'Demo2026', profil: 'transporteur',  nom: 'Marc Dubois' },
     'coordinateur@demo.careway.fr':  { pwd: 'Demo2026', profil: 'coordinateur',  nom: 'Romane Cano' },
-    'contact@carewaytransport.fr':   { pwd: 'CareWay2026!', profil: 'coordinateur', nom: 'Romane Cano' },
   };
 
   if (localStorage.getItem('cw_user')) window.location.href = '/dashboard';
@@ -707,8 +706,8 @@
     } else if (account && account.pwd !== password) {
       showAlert('login-alert', 'error', 'Mot de passe incorrect.');
     } else {
-      // Compte en attente de validation
-      showAlert('login-alert', 'error', 'Accès non encore activé. L\'équipe CareWay traitera votre demande sous 24h ouvrées.');
+      // Cet espace est une démonstration : seuls les comptes de démo ci-dessus fonctionnent
+      showAlert('login-alert', 'error', 'Identifiants incorrects. Cet espace est une démonstration du futur produit CareWay.');
     }
   });
 
@@ -731,7 +730,7 @@
     setLoading('forgot-btn', true);
     await new Promise(r => setTimeout(r, 700));
     setLoading('forgot-btn', false);
-    showAlert('forgot-alert', 'success', 'Si un compte existe pour cet e-mail, vous recevrez les instructions sous peu.');
+    showAlert('forgot-alert', 'success', 'Cet espace est une démonstration : aucun e-mail n\'est réellement envoyé.');
   });
 </script>
 </body>

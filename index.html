@@ -22,17 +22,19 @@
   <style>
     :root {
       --blue:       #0057B8;
-      --blue-mid:   #0072E5;
+      --blue-mid:   #0066CC;
       --blue-light: #EEF5FF;
       --teal:       #00B4A6;
       --teal-dark:  #008F84;
+      --teal-btn:   #007A70;
+      --teal-btn-hover: #005F57;
       --teal-light: #E0F7F5;
       --dark:       #0B1F3A;
       --dark-mid:   #162E4D;
       --dark-light: #1E3A5F;
       --text:       #1A2B3C;
       --text-mid:   #3D5166;
-      --text-muted: #6B8299;
+      --text-muted: #5A7184;
       --white:      #FFFFFF;
       --off-white:  #F4F8FC;
       --border:     #D8E6F2;
@@ -59,8 +61,8 @@
       transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
     }
     .btn:hover { transform: translateY(-2px); }
-    .btn-primary { background: var(--teal); color: var(--white); box-shadow: 0 4px 20px rgba(0,180,166,0.4); }
-    .btn-primary:hover { background: var(--teal-dark); box-shadow: 0 8px 30px rgba(0,180,166,0.5); }
+    .btn-primary { background: var(--teal-btn); color: var(--white); box-shadow: 0 4px 20px rgba(0,180,166,0.4); }
+    .btn-primary:hover { background: var(--teal-btn-hover); box-shadow: 0 8px 30px rgba(0,180,166,0.5); }
     .btn-ghost { background: transparent; color: var(--white); border: 2px solid rgba(255,255,255,0.3); }
     .btn-ghost:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.6); }
     .btn-outline-white { background: transparent; color: var(--white); border: 2px solid rgba(255,255,255,0.5); border-radius: var(--r-md); padding: 12px 24px; font-weight: 600; font-size: 0.9rem; font-family: 'Inter', sans-serif; cursor: pointer; transition: background 0.2s; }
