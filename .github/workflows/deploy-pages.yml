@@ -1,0 +1,53 @@
+name: Deploy to GitHub Pages
+
+# Site vitrine statique (HTML/CSS pur, aucune etape de build).
+# Migration depuis Netlify (credits epuises, voir issue #4) : ce workflow
+# publie le contenu du repo tel quel sur GitHub Pages a chaque push sur main.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Preparer le contenu publiable
+        # On ne publie que les fichiers du site : exclure .git, .github et
+        # le dossier local .netlify (CLI Netlify, deja ignore par git) evite
+        # qu'ils se retrouvent servis publiquement par Pages.
+        run: |
+          mkdir -p "$RUNNER_TEMP/site"
+          rsync -a \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='.netlify' \
+            ./ "$RUNNER_TEMP/site/"
+
+      - name: Configurer Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ runner.temp }}/site
+
+      - name: Deploy sur GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
