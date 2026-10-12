@@ -15,7 +15,10 @@
   <meta name="twitter:title" content="CareWay | Le transport sanitaire, enfin coordonné" />
   <meta name="twitter:description" content="CareWay connecte prescripteurs, patients et transporteurs sanitaires en une plateforme unifiée. FHIR R4, RGPD." />
   <meta name="twitter:image" content="https://carewaytransport.fr/photos/pousser_fauteuil.jpeg" />
-  <link rel="icon" type="image/png" href="./photos/logo_CW_officiel.png" />
+  <link rel="icon" href="./favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicons/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="./favicons/favicon-192x192.png" />
+  <link rel="apple-touch-icon" href="./favicons/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -102,7 +105,12 @@
 
     .nav-logo { line-height: 0; }
     .nav-logo img {
-      height: 80px; max-width: 200px; width: auto; display: block;
+      /* max-width releve a 300px (au lieu de 200px) : le logo horizontal
+         officiel (919x271) ecrit a height:80px mesure ~271px de large,
+         l'ancien max-width:200px l'ecrasait hors ratio (CareWay signale
+         "logo trop petit/tasse" le 2026-10-13). 300px laisse la hauteur
+         cible s'exprimer sans deformer le ratio. */
+      height: 80px; max-width: 300px; width: auto; display: block;
       transition: height 0.35s ease;
     }
     nav.scrolled .nav-logo img { height: 48px; }
@@ -120,6 +128,14 @@
     }
     .nav-login-btn:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.5); color: var(--white); }
     @media (max-width: 768px) { .nav-desktop-cta { display: none; } }
+    /* Le logo horizontal (ratio ~3.39:1) est plus large que l'ancienne icone
+       carree : sous 480px il talonnait le bouton burger (teste a 320px).
+       On reduit la hauteur pour degager de la marge, sans repasser sous le
+       minimum largeur 120px de BRAND.md (52px de haut = ~176px de large). */
+    @media (max-width: 480px) {
+      .nav-logo img { height: 52px; }
+      nav.scrolled .nav-logo img { height: 40px; }
+    }
 
     /* Burger button */
     .burger {
@@ -452,7 +468,12 @@
     =========================================================== */
     footer { background: var(--dark); color: rgba(255,255,255,0.6); padding: 60px 0 28px; }
     .footer-top { display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 48px; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.1); }
-    .footer-brand img { height: 34px; margin-bottom: 16px; }
+    /* 44px = meme hauteur que le logo horizontal sur LoginPage.vue (pm-web),
+       qui respecte la regle BRAND.md "largeur mini 120px a l'ecran pour le
+       logo horizontal". A 34px (ancienne valeur, dimensionnee pour l'icone
+       carree) le texte du logo retombait a ~115px de large, sous le minimum,
+       d'ou le retour "logo minuscule" de CareWay le 2026-10-13. */
+    .footer-brand img { height: 44px; margin-bottom: 16px; }
     .footer-brand p { font-size: 0.85rem; line-height: 1.68; max-width: 280px; }
     .footer-social { margin-top: 22px; }
     .footer-social-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 10px; }
@@ -685,7 +706,7 @@
   <div class="container">
     <div class="nav-inner">
       <a href="#hero" class="nav-logo">
-        <img src="./photos/logo_CW_officiel.png" alt="CareWay" />
+        <img src="./photos/careway-logo-horizontal-blanc.png" alt="CareWay" />
       </a>
       <div class="nav-desktop-cta">
         <a href="https://pm.carewaytransport.fr/login" class="nav-login-btn">
@@ -1264,7 +1285,7 @@
   <div class="container">
     <div class="footer-top">
       <div class="footer-brand">
-        <img src="./photos/logo_CW_officiel.png" alt="CareWay" loading="lazy" />
+        <img src="./photos/careway-logo-horizontal-blanc.png" alt="CareWay" loading="lazy" />
         <p>CareWay connecte l'ensemble des acteurs du transport sanitaire dans une plateforme numérique unifiée, basée sur le standard FHIR R4 et respectueuse du RGPD.</p>
         <div class="footer-social">
           <p class="footer-social-label">Suivez-nous</p>
