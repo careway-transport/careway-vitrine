@@ -52,7 +52,9 @@
       padding: 16px 32px;
       z-index: 10;
     }
-    .top-bar img { height: 72px; width: auto; }
+    /* 72px rendait le logo disproportionne par rapport au reste de la
+       top-bar : retour CareWay "logo beaucoup trop gros" le 2026-10-13. */
+    .top-bar img { height: 36px; width: auto; }
     .top-bar a {
       font-size: 0.82rem; font-weight: 500; color: rgba(255,255,255,0.4);
       display: flex; align-items: center; gap: 6px;
@@ -302,7 +304,7 @@
     @media (max-width: 480px) {
       .profile-grid { grid-template-columns: 1fr; }
       .top-bar { padding: 14px 20px; }
-      .top-bar img { height: 44px; }
+      .top-bar img { height: 28px; }
     }
   </style>
 </head>
@@ -311,7 +313,7 @@
   <div class="progress-bar"><div class="progress-fill" id="progress" style="width:33%"></div></div>
 
   <div class="top-bar">
-    <a href="/"><img src="./photos/careway-logo-horizontal-blanc.png" alt="CareWay" /></a>
+    <a href="/"><img src="./photos/careway-logo-horizontal.png" alt="CareWay" /></a>
     <a href="/login">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
       Déjà un compte

@@ -82,8 +82,11 @@
       z-index: 2;
       margin-bottom: auto;
     }
+    /* 120px rendait le logo demesure par rapport au titre "Connexion" du
+       panneau de droite : retour CareWay "logo beaucoup trop gros" le
+       2026-10-13. */
     .left-logo img {
-      height: 120px;
+      height: 44px;
       width: auto;
       display: block;
     }
@@ -455,7 +458,7 @@
       }
       .left::before, .left::after { display: none; }
       .left-grid-overlay { display: none; }
-      .left-logo img { height: 72px; }
+      .left-logo img { height: 36px; }
       .left-content, .feat-list, .left-sub, .left-footer { display: none; }
       .left-overline { display: none; }
       .left-title { font-size: 1.1rem; margin: 0; }
@@ -477,7 +480,7 @@
     <div class="left-grid-overlay"></div>
 
     <div class="left-logo">
-      <a href="/"><img src="./photos/careway-logo-horizontal-blanc.png" alt="CareWay" /></a>
+      <a href="/"><img src="./photos/careway-logo-horizontal.png" alt="CareWay" /></a>
     </div>
 
     <div class="left-content">
