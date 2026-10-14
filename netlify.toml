@@ -1,0 +1,13 @@
+[build]
+  publish = "."
+
+# Le site est uniquement accessible via le domaine officiel. L'URL
+# auto-generee par Netlify (carewaytransport.netlify.app) redirige vers le
+# domaine officiel plutot que de servir le meme contenu en double (demande
+# Romane, 2026-10-14 : eviter la confusion utilisateur et le doublon
+# d'URL).
+[[redirects]]
+  from = "https://carewaytransport.netlify.app/*"
+  to = "https://carewaytransport.fr/:splat"
+  status = 301
+  force = true
