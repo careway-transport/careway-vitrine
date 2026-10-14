@@ -555,8 +555,15 @@
     .actor-cta-blue:hover { background: var(--blue-mid); color: var(--white); }
     .actor-cta-white { color: var(--white); border-color: rgba(255,255,255,0.4); }
     .actor-cta-white:hover { background: var(--white); color: var(--dark); }
-    .actor-cta-teal { color: var(--teal-dark); }
-    .actor-cta-teal:hover { background: var(--teal); color: var(--white); }
+    /* --teal-dark (#008F84) sur --blue-light ne passait pas le seuil WCAG
+       AA texte normal (3.64:1, mesure avec la meme formule que
+       src/utils/contrastRatio.ts de pm-web) : retour CareWay "contrastes
+       pas respectes" le 2026-10-14. --teal-btn (#007A70) est deja le ton
+       accessible du design system (utilise par .btn-primary) : 4.76:1 au
+       repos, 7.57:1 au survol avec --teal-btn-hover + texte blanc (l'ancien
+       survol, blanc sur --teal, ne faisait que 2.60:1). */
+    .actor-cta-teal { color: var(--teal-btn); }
+    .actor-cta-teal:hover { background: var(--teal-btn-hover); color: var(--white); }
     .app-badges { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
     .app-badge-official { display: inline-flex; align-items: center; gap: 10px; padding: 10px 20px; background: #111; border: none; border-radius: 12px; cursor: pointer; transition: transform 0.2s, opacity 0.2s; box-shadow: 0 2px 12px rgba(0,0,0,0.3); }
     .app-badge-official:hover { transform: translateY(-2px); opacity: 0.88; }
