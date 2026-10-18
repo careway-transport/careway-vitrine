@@ -53,15 +53,13 @@
   <main>
     <div class="container">
       <h1>Politique de confidentialité</h1>
-      <p class="updated">Dernière mise à jour : 3 octobre 2026</p>
+      <p class="updated">Dernière mise à jour : 18 octobre 2026</p>
 
       <p>
-        Cette politique concerne uniquement les données collectées sur ce site vitrine
-        (carewaytransport.fr). Elle ne couvre pas les données de santé traitées au sein de
-        l'application CareWay elle-même (prescriptions, transports, dossiers patients), dont le
-        traitement est conçu pour respecter des garanties spécifiques (hébergement de données de
-        santé, standard FHIR R4) et fera l'objet d'une politique de confidentialité dédiée,
-        communiquée à chaque utilisateur lors de la création de son compte.
+        Cette politique couvre deux périmètres distincts : les données collectées sur ce site
+        vitrine (carewaytransport.fr), détaillées ci-dessous, et les données traitées par
+        l'application mobile <strong>CareWay Patient</strong>, détaillées dans la section
+        « Application mobile CareWay Patient » plus bas sur cette page.
       </p>
 
       <h2>Responsable du traitement</h2>
@@ -136,6 +134,147 @@
         <a class="link" href="mailto:contact@carewaytransport.fr">contact@carewaytransport.fr</a>.
         Vous disposez également du droit d'introduire une réclamation auprès de la CNIL
         (<a class="link" href="https://www.cnil.fr" target="_blank" rel="noopener">cnil.fr</a>).
+      </p>
+
+      <h2>Application mobile CareWay Patient</h2>
+      <p>
+        Cette section décrit les données traitées par l'application mobile
+        <strong>CareWay Patient</strong> (iOS/Android), utilisée par les patients et leurs
+        aidants pour la coordination de leurs transports médicaux. Elle ne couvre pas les autres
+        applications CareWay, destinées aux transporteurs ou aux professionnels de santé : leurs
+        pratiques de collecte diffèrent (par exemple, l'application utilisée par les transporteurs
+        a recours à la géolocalisation pour le suivi des courses, ce que l'application Patient ne
+        fait jamais) et font l'objet de leurs propres mentions.
+      </p>
+
+      <h2>Responsable du traitement (application)</h2>
+      <p>
+        Romane Cano, porteuse du projet CareWay, est également responsable du traitement des
+        données de l'application. Même contact :
+        <a class="link" href="mailto:contact@carewaytransport.fr">contact@carewaytransport.fr</a>.
+      </p>
+
+      <h2>Données collectées par l'application</h2>
+      <p>Lors de la création de votre compte et de l'utilisation de l'application, nous collectons :</p>
+      <table>
+        <thead><tr><th>Donnée</th><th>Finalité</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Nom, prénom, email, téléphone, adresse, genre</td>
+            <td>Créer et authentifier votre compte (via <strong>Clerk</strong>, notre prestataire
+              d'authentification) et vous permettre d'être contacté·e par l'équipe soignante ou le
+              transporteur dans le cadre d'un transport</td>
+          </tr>
+          <tr>
+            <td>Numéro de sécurité sociale</td>
+            <td>Identifier votre dossier auprès de l'Assurance Maladie pour la prise en charge du
+              transport</td>
+          </tr>
+          <tr>
+            <td>Pathologie déclarée à l'inscription, motif médical et type de transport indiqués
+              sur vos prescriptions (bons de transport)</td>
+            <td>Coordonner un transport adapté à votre état de santé</td>
+          </tr>
+          <tr>
+            <td>Messages échangés avec l'équipe soignante, messages avec vos aidants, entrées du
+              journal de suivi</td>
+            <td>Assurer le suivi et la coordination entre vous, vos aidants et l'équipe soignante.
+              Ces contenus sont conservés sur nos serveurs et visibles uniquement par les personnes
+              rattachées à votre parcours de soin</td>
+          </tr>
+          <tr>
+            <td>Documents et photos que vous importez dans l'application (ordonnances, bons de
+              transport, photos de documents)</td>
+            <td>Vous permettre de les retrouver dans l'application. <strong>Ces fichiers restent
+              uniquement sur votre téléphone et ne sont jamais transmis à nos serveurs</strong></td>
+          </tr>
+          <tr>
+            <td>Photo de profil</td>
+            <td>Afficher votre photo dans l'application. C'est la seule image que l'application
+              envoie réellement à nos serveurs</td>
+          </tr>
+          <tr>
+            <td>Identifiant de compte (Clerk) et identifiant patient interne</td>
+            <td>Authentification et fonctionnement technique de votre compte, jamais utilisés à
+              d'autres fins</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Diagnostic technique (Sentry)</h2>
+      <p>
+        En production uniquement (jamais lorsque nous développons l'application), celle-ci envoie
+        à <strong>Sentry</strong> (Functional Software, Inc.) des rapports techniques lorsqu'une
+        erreur ou un plantage survient, afin que nous puissions corriger les problèmes. Ces
+        rapports ne contiennent ni capture d'écran, ni structure de l'écran affiché&nbsp;; un
+        filtrage automatique retire toute donnée identifiante reconnaissable (email, téléphone,
+        numéro de sécurité sociale, nom donné à votre appareil) avant leur envoi. Seul un
+        identifiant technique opaque de votre compte est conservé, pour relier plusieurs rapports
+        d'erreur à une même session sans connaître votre identité.
+      </p>
+
+      <h2>Ce que l'application ne collecte pas</h2>
+      <p>L'application CareWay Patient ne collecte jamais :</p>
+      <ul>
+        <li>votre position géographique (GPS) ;</li>
+        <li>votre carnet de contacts ;</li>
+        <li>votre historique de navigation ;</li>
+        <li>vos moyens de paiement : l'écran « Mes transactions » affiche le statut et le montant
+          de vos remboursements de transport calculés par nos services, mais l'application ne vous
+          demande et ne stocke aucune donnée bancaire ;</li>
+        <li>aucune donnée à des fins de publicité ou de mesure d'audience comportementale (aucun
+          outil d'analytics ou de tracking publicitaire n'est intégré à l'application).</li>
+      </ul>
+
+      <h2>Destinataires (application)</h2>
+      <p>
+        Vos données ne sont jamais vendues. Elles sont partagées uniquement dans la mesure
+        nécessaire à la coordination de votre transport :
+      </p>
+      <ul>
+        <li>
+          <strong>L'entreprise de transport qui vous est affectée</strong> voit les informations
+          nécessaires à la réalisation de la course (identité, adresses, horaires, type de
+          transport). Votre numéro de téléphone ne lui est communiqué que si vous y avez
+          explicitement consenti lors de votre inscription. Elle n'a en revanche jamais accès à
+          votre motif médical, à votre numéro de sécurité sociale, à vos messages ni à votre
+          journal de suivi.
+        </li>
+        <li>
+          <strong>L'équipe soignante rattachée à votre dossier</strong> (médecin, secrétariat) voit
+          les messages et entrées de journal que vous partagez avec elle dans l'application.
+        </li>
+        <li>
+          <strong>Clerk, Inc.</strong> (authentification) et <strong>Sentry (Functional Software,
+          Inc.)</strong> (diagnostic technique) sont nos sous-traitants techniques.
+        </li>
+      </ul>
+
+      <h2>Transfert hors Union européenne (application)</h2>
+      <p>
+        Clerk, Inc. et Functional Software, Inc. (Sentry) sont des sociétés américaines. Le
+        transfert des données qu'elles traitent pour notre compte est encadré par les clauses
+        contractuelles types de la Commission européenne, comme pour Netlify (voir la section
+        « Transfert hors Union européenne » plus haut sur cette page).
+      </p>
+
+      <h2>Conservation des données et vos droits (application)</h2>
+      <p>
+        Vous pouvez demander la suppression de votre compte directement depuis l'application
+        (Profil → Supprimer mon compte). Cette demande déclenche une période de grâce de 30 jours,
+        annulable à tout moment pendant ce délai depuis l'application. Passé ce délai sans
+        annulation, votre compte est désactivé et vous ne pouvez plus vous y connecter.
+      </p>
+      <p>
+        <strong>À ce jour</strong>, l'automatisation de l'anonymisation définitive de vos données
+        personnelles à l'issue de cette période de grâce est en cours de finalisation. Si vous
+        souhaitez l'effacement définitif de vos données personnelles, écrivez-nous à
+        <a class="link" href="mailto:contact@carewaytransport.fr">contact@carewaytransport.fr</a>&nbsp;:
+        nous traitons ces demandes manuellement, dans les limites des obligations légales de
+        conservation qui peuvent s'appliquer (notamment en matière comptable, pour les pièces
+        liées à la facturation). Vous disposez par ailleurs des mêmes droits d'accès, de
+        rectification, de limitation et d'opposition, ainsi que du droit de réclamation auprès de
+        la CNIL, décrits plus haut pour les données du site.
       </p>
 
       <h2>Cookies</h2>
