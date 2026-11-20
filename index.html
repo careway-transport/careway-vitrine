@@ -518,7 +518,7 @@
     .actu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
     .actu-card { display: flex; flex-direction: column; background: var(--white); border: 1.5px solid var(--border); border-radius: var(--r-lg); padding: 28px; transition: box-shadow 0.2s, transform 0.2s; }
     .actu-card:hover { box-shadow: var(--sh-md); transform: translateY(-4px); }
-    .actu-photo { width: calc(100% + 56px); margin: -28px -28px 16px; max-width: none; aspect-ratio: 4/3; object-fit: cover; object-position: center 25%; border-radius: var(--r-lg) var(--r-lg) 0 0; }
+    .actu-photo { width: calc(100% + 56px); margin: -28px -28px 16px; max-width: none; aspect-ratio: 1/1; object-fit: cover; object-position: center; border-radius: var(--r-lg) var(--r-lg) 0 0; }
     .actu-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal-dark); background: var(--teal-light); padding: 5px 12px; border-radius: 100px; width: fit-content; margin-bottom: 14px; }
     .actu-title { font-family: 'Sora', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--dark); line-height: 1.35; margin-bottom: 10px; }
     .actu-desc { font-size: 0.87rem; color: var(--text-mid); line-height: 1.65; margin-bottom: 8px; }
@@ -1216,6 +1216,7 @@
         </div>
       </div>
       <div class="actu-card reveal" style="transition-delay:0.15s">
+        <img class="actu-photo" src="./photos/RomaneCrece2026.jpg" alt="Romane Cano recevant le 1er prix du concours CRECE 2026, aux côtés d'une représentante du jury" loading="lazy" />
         <span class="actu-badge">Distinction · 2026</span>
         <h3 class="actu-title">CareWay, lauréate du CRECE 2026</h3>
         <p class="actu-desc">1ʳᵉ place au 25ᵉ Concours Régional des Étudiants Créateurs d'Entreprises (CRECE), organisé par la CCI Toulouse Haute-Garonne - 4 500 € de prix. Deuxième année consécutive qu'un·e étudiant·e ISIS remporte le premier prix du concours.</p>
