@@ -518,6 +518,7 @@
     .actu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
     .actu-card { display: flex; flex-direction: column; background: var(--white); border: 1.5px solid var(--border); border-radius: var(--r-lg); padding: 28px; transition: box-shadow 0.2s, transform 0.2s; }
     .actu-card:hover { box-shadow: var(--sh-md); transform: translateY(-4px); }
+    .actu-photo { width: calc(100% + 56px); margin: -28px -28px 16px; max-width: none; aspect-ratio: 16/10; object-fit: cover; object-position: top; border-radius: var(--r-lg) var(--r-lg) 0 0; }
     .actu-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal-dark); background: var(--teal-light); padding: 5px 12px; border-radius: 100px; width: fit-content; margin-bottom: 14px; }
     .actu-title { font-family: 'Sora', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--dark); line-height: 1.35; margin-bottom: 10px; }
     .actu-desc { font-size: 0.87rem; color: var(--text-mid); line-height: 1.65; margin-bottom: 8px; }
@@ -700,7 +701,9 @@
        "ca fait tres IA" le 2026-10-13) : meme logique que .fd-quote plus
        bas sur la page (accent de couleur a gauche, border-radius asymetrique),
        pour rester dans le langage de forme deja etabli sur le site. */
-    .hero-award { display: inline-flex; align-items: center; gap: 8px; padding: 7px 16px 7px 13px; background: rgba(255,215,0,0.13); border: 1px solid rgba(255,215,0,0.38); border-left: 3px solid #FFD700; border-radius: 0 var(--r-sm) var(--r-sm) 0; color: #FFD700; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.02em; }
+    .hero-award { display: inline-flex; align-items: center; gap: 7px; padding: 7px 16px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.18); border-radius: 100px; color: rgba(255,255,255,0.92); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.03em; white-space: nowrap; }
+    .hero-award .award-icon { color: #E8B923; flex-shrink: 0; }
+    .hero-award-top { background: rgba(232,185,35,0.14); border-color: rgba(232,185,35,0.4); color: #FBE8A6; }
     .award-icon { width: 14px; height: 14px; flex-shrink: 0; }
     .prob-icon-blue { background: var(--blue-light) !important; color: var(--blue) !important; }
 
@@ -781,9 +784,9 @@
   <div class="container">
     <div class="hero-content">
       <div class="hero-awards">
-        <div class="hero-award"><svg class="award-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="5.5"/><path d="M9 12.5 7 21l5-2.5L17 21l-2-8.5"/></svg> Lauréate nationale · Prix Pépite 2026</div>
         <div class="hero-award"><svg class="award-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="5.5"/><path d="M9 12.5 7 21l5-2.5L17 21l-2-8.5"/></svg> Prix Coup de Cœur · Trophées e-Santé 2025</div>
         <div class="hero-award"><svg class="award-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="5.5"/><path d="M9 12.5 7 21l5-2.5L17 21l-2-8.5"/></svg> Lauréate CRECE 2026</div>
+        <div class="hero-award hero-award-top"><svg class="award-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="5.5"/><path d="M9 12.5 7 21l5-2.5L17 21l-2-8.5"/></svg> Lauréate nationale · Prix Pépite 2026</div>
       </div>
       <div class="hero-overline">La plateforme de coordination du transport sanitaire</div>
       <div class="hero-brand">CareWay</div>
@@ -1202,9 +1205,15 @@
     </div>
     <div class="actu-grid">
       <div class="actu-card reveal" style="transition-delay:0.05s">
+        <img class="actu-photo" src="./photos/RomanePrixPepite2026.png" alt="Romane Cano sur scène lors de la cérémonie de remise du Prix Pépite, 17 novembre 2026" loading="lazy" />
         <span class="actu-badge">Distinction · 2026</span>
         <h3 class="actu-title">CareWay, lauréate régionale et nationale du Prix Pépite 2026</h3>
         <p class="actu-desc">Romane Cano, fondatrice de CareWay, désignée lauréate régionale puis lauréate nationale du Prix Pépite 2026 (ministère de l'Enseignement supérieur et de la Recherche / Bpifrance), qui distingue chaque année les meilleurs projets entrepreneuriaux étudiants en France.</p>
+        <div class="actu-links">
+          <a href="https://lnkd.in/p/eczvjSiW" target="_blank" rel="noopener" class="actu-link">Voir la publication LinkedIn →</a>
+          <a href="https://lnkd.in/p/eBAhiHhY" target="_blank" rel="noopener" class="actu-link">Voir la publication LinkedIn →</a>
+          <a href="https://lnkd.in/p/euR5mkpC" target="_blank" rel="noopener" class="actu-link">Voir la publication LinkedIn →</a>
+        </div>
       </div>
       <div class="actu-card reveal" style="transition-delay:0.15s">
         <span class="actu-badge">Distinction · 2026</span>
